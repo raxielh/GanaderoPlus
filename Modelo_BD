@@ -1,0 +1,305 @@
+php artisan serve --host=192.168.0.5 --port=8000
+php artisan infyom:scaffold $MODEL_NAME
+
+php artisan infyom:scaffold EstadoProtrero
+	descripcion string,100 text
+
+php artisan infyom:scaffold TipoGanado
+	descripcion string,100 text
+
+php artisan infyom:scaffold estado_compra
+	descripcion string,100 text
+	corta string,100 text
+
+php artisan infyom:scaffold presentacion
+	descripcion string,100 text
+		required
+
+php artisan infyom:scaffold Potreros
+	codigo string,100 text
+		required
+	area string,100 text
+		required
+	estado_id integer:unsigned:foreign,estado_protreros,id select
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+	 $table->unique('codigo', 'user_id');
+
+
+php artisan infyom:scaffold tipo_medicamentos
+	descripcion string,100 text
+		required
+
+
+php artisan infyom:scaffold Medicamentos
+	descripcion string,100 text
+		required
+	tipo_medicamentos_id integer:unsigned:foreign,tipo_medicamentos,id select
+		required
+	valor integer,100 text
+		required	
+	presentacion string,100 text
+		required
+	unidad string,100 text
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+php artisan infyom:scaffold Dosificaciones
+	peso_inicial string text
+		required	
+	peso_final string text
+		required
+	dosis string,100 text
+		required
+	medicamento_id integer:unsigned:foreign,medicamentos,id hidden
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+php artisan infyom:scaffold CompraMedicamento
+	precio integer text
+		required	
+	cantidad integer text
+		required	
+	fecha date date
+		required
+	medicamento_id integer:unsigned:foreign,medicamentos,id select
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+	 $table->unique('codigo', 'user_id');
+
+
+php artisan infyom:scaffold Empresa
+	nit string,100 text
+		required
+	razon_social string,100 text
+		required
+	direccion string,100 text
+		required
+	telefono string,100 text
+		required
+	logo string,250 text
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+php artisan infyom:scaffold ControlLLuvias
+	dia string,100 text
+		required
+	cantidad string,100 text
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+
+
+php artisan infyom:scaffold Hierro
+	hierro string,500 text
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+
+php artisan infyom:scaffold Vendedores
+	nombre string,100 text
+		required
+	identificacion string,100 text
+	direccion string,100 text
+		required
+	contacto string,100 text
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+
+php artisan infyom:scaffold Compradores
+	nombre string,100 text
+		required
+	identificacion string,100 text
+	direccion string,100 text
+		required
+	contacto string,100 text
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+
+php artisan infyom:scaffold ResponsableCompras
+	nombre string,100 text
+		required
+	identificacion string,100 text
+		required
+	direccion string,100 text
+		required
+	contacto string,100 text
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+
+
+
+php artisan infyom:scaffold RegistroCompra
+	fecha_compra date,100 text
+		required
+	fecha_ingreso date,100 text
+		required
+	lugar_procedencia_id integer:unsigned:foreign,lugar_procedencias,id select
+		required
+	vendedor_id integer:unsigned:foreign,vendedores,id select
+		required
+	comprador_id integer:unsigned:foreign,compradores,id select
+		required
+	responsable_id integer:unsigned:foreign,responsable_compras,id select
+		required
+	estado_id integer:unsigned:foreign,estado_compras,id select
+		required
+	hierro_id integer:unsigned:foreign,hierros,id select
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+** EstadoFactura
+	descripcion char,100 text
+	required
+	users_id integer:unsigned:foreign,users,id hidden
+
+** EstadoComanda
+	descripcion char,100 text
+	required
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+	// caho
+ ** Comanda
+	persona_id integer:unsigned:foreign,personas,id select
+	required
+	vehiculo_id integer:unsigned:foreign,vehiculos,id select
+	required
+	estado_id integer:unsigned:foreign,estado_comandas,id select
+	required
+	observacion char,100 text
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+** ComandaDetalle
+	comanda_id integer:unsigned:foreign,comandas,id hidden
+	concepto_id integer:unsigned:foreign,conceptos,id select
+		required
+	descuentos_id integer:unsigned:foreign,descuentos,id select
+		required
+	valor char,100 text
+		required
+	users_id integer:unsigned:foreign,users,id hidden
+
+** Descuento
+	codigo char,100 text
+		required
+	descripcion char,100 text
+		required
+	porcentaje integer number
+	required
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+//caho
+** Lavado
+	comanda_id integer:unsigned:foreign,comandas,id select
+	required
+	equipo_id integer:unsigned:foreign,equipos,id select
+	required
+	users_id integer:unsigned:foreign,users,id hidden
+
+faturacion
+	persona
+	vehiculo
+	estado
+	users_id integer:unsigned:foreign,users,id hidden
+
+faturacion_detalle
+	factura
+	concepto
+	descuento 
+	valor
+	users_id integer:unsigned:foreign,users,id hidden
+
+*** Proveedores
+	codigo char,100 text
+	required
+	persona_id integer:unsigned:foreign,personas,id select
+	required
+	razon_social char,100 text
+	required
+	nit char,100 text
+	required
+	direccion char,100 text
+	telefono2 char,100 text
+	telefono1 char,100 text
+	users_id integer:unsigned:foreign,users,id hidden
+
+*Marca
+	descripcion char,100 textarea
+		required
+	users_id integer:unsigned:foreign,users,id hidden
+
+*Linea
+	marca_id integer:unsigned:foreign,marcas,id select
+		required
+	descripcion char,100 textarea
+		required
+	users_id integer:unsigned:foreign,users,id hidden
+
+*Remision
+	descripcion char,100 textarea
+		required
+	persona_id integer:unsigned:foreign,personas,id select
+		required
+	proveedor_id integer:unsigned:foreign,proveedores,id select
+		required
+	concepto_id integer:unsigned:foreign,conceptos,id select
+		required
+	tipo_remision_id integer:unsigned:foreign,tipo_remision,id select
+		required
+	fecha date,100 text
+		required
+	valor integer number
+		required
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+*Administrativo
+	persona_id integer:unsigned:foreign,personas,id select
+		required
+	comision integer number
+		required
+	estado_id integer:unsigned:foreign,estados,id select
+		required
+
+
+GananciaAdministrivo
+	valorini integer number
+		required
+	valorfin integer number
+		required
+	porcenganancia integer number
+		required
+
+
+
+
+*validar en personas la fecha nacimiento
+*agregar marca del vehiculo
+*linea del vehiculo
+reporte de equipo carros lavados
+*en la comanda colocar cantidad de conceptos
+diseño factura depende del modelo que envio diego
+*modelo de impresion de comanda que envia diego
+*porcentage de comision en los conceptos para los equipos
+diego va diseñar del informe final de egresos e ingresos
+
+*crear adminsitradores que ganarian comision con respecto a : el producido de los servicios no incluidas las bebidas y aliments
+
+*en el formulario de proveedor en el campo persona que salga el nombre en la busqueda
+en formulario concepto que se puedan agregar los valores
+
+*en los combobox de comcepto de todos los furmularios que salga el codigo y la descripcion
+
+
+
