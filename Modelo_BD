@@ -27,6 +27,18 @@ php artisan infyom:scaffold Potreros
 	 $table->unique('codigo', 'user_id');
 
 
+php artisan infyom:scaffold IngresoAnimal
+	fecha date date
+		required
+	potreros_id integer:unsigned:foreign,potreros,id select
+		required
+	registro_compra_id integer:unsigned:foreign,registro_compras,id select
+		required
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+
+
 php artisan infyom:scaffold tipo_medicamentos
 	descripcion string,100 text
 		required
@@ -62,6 +74,13 @@ php artisan infyom:scaffold CompraMedicamento
 		required	
 	cantidad integer text
 		required	
+	fecha date date
+		required
+	medicamento_id integer:unsigned:foreign,medicamentos,id select
+	fincas_id integer:unsigned:foreign,fincas,id hidden
+	users_id integer:unsigned:foreign,users,id hidden
+
+php artisan infyom:scaffold IngresoAnimal
 	fecha date date
 		required
 	medicamento_id integer:unsigned:foreign,medicamentos,id select

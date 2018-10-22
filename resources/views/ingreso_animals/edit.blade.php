@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h4>
-            Responsable Ingreso
+            Ingreso de Animales
         </h4>
    </section>
    <div class="content">
@@ -11,9 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($responsableCompras, ['route' => ['responsableCompras.update', $responsableCompras->id], 'method' => 'patch']) !!}
+                   {!! Form::model($ingresoAnimal, ['route' => ['ingresoAnimals.update', $ingresoAnimal->id], 'method' => 'patch']) !!}
 
-                        @include('responsable_compras.fields')
+                        @include('ingreso_animals.fields')
 
                    {!! Form::close() !!}
                </div>

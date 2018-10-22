@@ -15,7 +15,6 @@ use Eloquent as Model;
  * @property integer lugar_procedencia_id
  * @property integer vendedor_id
  * @property integer comprador_id
- * @property integer responsable_id
  * @property integer estado_id
  * @property integer hierro_id
  * @property integer fincas_id
@@ -33,16 +32,16 @@ class RegistroCompra extends Model
 
     public $fillable = [
         'fecha_compra',
-        'fecha_ingreso',
+        'factura',
         'deduccion',
+        'estado_id',
         'lugar_procedencia_id',
         'vendedor_id',
         'comprador_id',
-        'responsable_id',
-        'estado_id',
+        'tipo_compras_id',
+        'empresas_id',
         'hierro_id',
-        'fincas_id',
-        'factura',
+        'fincas_id',  
         'users_id'
     ];
 
@@ -53,17 +52,18 @@ class RegistroCompra extends Model
      */
     protected $casts = [
         'fecha_compra' => 'date',
-        'fecha_ingreso' => 'date',
+        'factura' => 'string',
         'deduccion' => 'integer',
+        'estado_id' => 'integer',
         'lugar_procedencia_id' => 'integer',
         'vendedor_id' => 'integer',
-        'comprador_id' => 'integer',
-        'responsable_id' => 'integer',
-        'estado_id' => 'integer',
+        'comprador_id' => 'integer',   
+        'tipo_compras_id' => 'integer',
+        'empresas_id' => 'integer',        
         'hierro_id' => 'integer',
         'fincas_id' => 'integer',
         'users_id' => 'integer',
-        'factura' => 'string',
+        
     ];
 
     /**
@@ -73,12 +73,12 @@ class RegistroCompra extends Model
      */
     public static $rules = [
         'fecha_compra' => 'required',
-        'fecha_ingreso' => 'required',
         'deduccion' => 'required',
         'lugar_procedencia_id' => 'required',
         'vendedor_id' => 'required',
         'comprador_id' => 'required',
-        'responsable_id' => 'required',
+        'tipo_compras_id' => 'required',   
+        'empresas_id' => 'required',
         'estado_id' => 'required',
         'hierro_id' => 'required',
         'factura' => 'required',

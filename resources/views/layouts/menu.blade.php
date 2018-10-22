@@ -13,6 +13,7 @@
                     {{ Request::is('tipoMedicamentos*') ? 'active' : '' }}
                     {{ Request::is('unidades*') ? 'active' : '' }}
                     {{ Request::is('presentacions*') ? 'active' : '' }}
+                    {{ Request::is('tipoCompra*') ? 'active' : '' }}
 ">
   <a href="#">
     <i class="fa fa-folder"></i> <span>Administración</span>
@@ -20,7 +21,7 @@
       <i class="fa fa-angle-left pull-right"></i>
     </span>
   </a>
-  <ul class="treeview-menu">
+  <ul class="treeview-menu" style="padding-top: 1.2em;padding-bottom: 1.2em;">
 
     <li class="{{ Request::is('estadoProtreros*') ? 'active' : '' }}"><a href="{!! route('estadoProtreros.index') !!}"><i class="fa fa-gear"></i> <span>Estado potreros</span></a></li>
     <li class="{{ Request::is('estadoCompras*') ? 'active' : '' }}"><a href="{!! route('estadoCompras.index') !!}"><i class="fa fa-gear"></i> <span>Estado Compra</span></a></li>
@@ -29,6 +30,9 @@
     </li>
     <li class="{{ Request::is('tipoMedicamentos*') ? 'active' : '' }}">
       <a href="{!! route('tipoMedicamentos.index') !!}"><i class="fa fa-gear"></i><span>Tipos de Medicamentos</span></a>
+    </li>
+    <li class="{{ Request::is('tipoCompra*') ? 'active' : '' }}">
+        <a href="{!! route('tipoCompra.index') !!}"><i class="fa fa-gear"></i><span>Tipos de compra</span></a>
     </li>
     <li class="{{ Request::is('unidades*') ? 'active' : '' }}">
       <a href="{!! route('unidades.index') !!}"><i class="fa fa-gear"></i><span>Unidades</span></a>
@@ -61,12 +65,12 @@
                     
 ">
   <a href="#">
-    <i class="fa fa-folder"></i> <span>Parametrización</span>
+    <i class="fa fa-folder"></i> <span>Configura tu finca</span>
     <span class="pull-right-container">
       <i class="fa fa-angle-left pull-right"></i>
     </span>
   </a>
-  <ul class="treeview-menu">
+  <ul class="treeview-menu" style="padding-top: 1.2em;padding-bottom: 1.2em;">
 
     <li class="{{ Request::is('empresas*') ? 'active' : '' }}">
         <a href="{!! route('empresas.index') !!}"><i class="fa fa-archive"></i><span>Empresa</span></a>
@@ -76,7 +80,7 @@
     <li class="{{ Request::is('lugarProcedencias*') ? 'active' : ''}}"><a href="{!! route('lugarProcedencias.index') !!}"><i class="fa fa-globe"></i> <span>Lugar Procedencias</span></a></li>
     <li class="{{ Request::is('vendedores*') ? 'active' : '' }}"><a href="{!! route('vendedores.index') !!}"><i class="fa fa-user-secret"></i> <span>Vendedores</span></a></li>
     <li class="{{ Request::is('compradores*') ? 'active' : '' }}"><a href="{!! route('compradores.index') !!}"><i class="fa fa-user-secret"></i> <span>Compradores</span></a></li>
-    <li class="{{ Request::is('responsableCompras*') ? 'active' : '' }}"><a href="{!! route('responsableCompras.index') !!}"><i class="fa fa-user-secret"></i> <span>Responsable de compras</span></a></li>
+    <li class="{{ Request::is('responsableCompras*') ? 'active' : '' }}"><a href="{!! route('responsableCompras.index') !!}"><i class="fa fa-user-secret"></i> <span>Responsable de ingreso</span></a></li>
     <li class="{{ Request::is('medicamentos*') ? 'active' : '' }}">
       <a href="{!! route('medicamentos.index') !!}"><i class="fa fa-stethoscope"></i><span>Medicamentos</span></a>
     </li>
@@ -88,18 +92,49 @@
   </ul>
 </li>
 
-<li class="{{ Request::is('registroCompras*') ? 'active' : '' }}">
-  <a href="{!! route('registroCompras.index') !!}">
-    <i class="fa fa-shopping-cart"></i>
-      <span> Compra de Animales</span>
+
+
+
+<li class="treeview  
+  {{ Request::is('registroCompras*') ? 'active' : '' }}
+  {{ Request::is('compraMedicamentos*') ? 'active' : '' }}                 
+">
+  <a href="#">
+    <i class="fa fa-folder"></i> <span>Compras</span>
+    <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+    </span>
   </a>
+  <ul class="treeview-menu" style="padding-top: 1.2em;padding-bottom: 1.2em;">
+    <li class="{{ Request::is('registroCompras*') ? 'active' : '' }}">
+      <a href="{!! route('registroCompras.index') !!}">
+        <i class="fa fa-shopping-cart"></i>
+          <span> Compra de Animales</span>
+      </a>
+    </li>
+    <li class="{{ Request::is('compraMedicamentos*') ? 'active' : '' }}">
+      <a href="{!! route('compraMedicamentos.index') !!}"><i class="fa fa-shopping-cart"></i><span>Compra de Medicamentos</span></a>
+    </li>
+
+
+  </ul>
 </li>
-<li class="{{ Request::is('compraMedicamentos*') ? 'active' : '' }}">
-  <a href="{!! route('compraMedicamentos.index') !!}"><i class="fa fa-shopping-cart"></i><span>Compra de Medicamentos</span></a>
+
+<li class="{{ Request::is('ingresoAnimals*') ? 'active' : '' }}">
+    <a href="{!! route('ingresoAnimals.index') !!}"><i class="fa fa-truck"></i><span>Ingreso de Animales</span></a>
 </li>
+
+
+
+
+
 
 
 <li class="{{ Request::is('controlLLuvias*') ? 'active' : '' }}">
     <a href="{!! route('controlLLuvias.index') !!}"><i class="fa fa-thermometer-half"></i><span> Control de lluvias</span></a>
 </li>
+
+
+
+
 

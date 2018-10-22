@@ -34,6 +34,7 @@ Route::delete('registroCompras/delete_animal/{id}', 'RegistroCompraController@de
 /* Fin registroCompras */
 
 Route::resource('tipoGanados', 'TipoGanadoController');
+Route::resource('tipoCompra', 'TipoCompraController');
 
 Route::resource('empresas', 'EmpresaController');
 
@@ -54,3 +55,24 @@ Route::resource('dosificaciones', 'DosificacionesController');
 Route::resource('compraMedicamentos', 'CompraMedicamentoController');
 
 Route::get('api/buscar/precio/medicamento/{id}', 'MedicamentosController@buscar_precio');
+
+Route::resource('ingresoAnimals', 'IngresoAnimalController');
+Route::post('ingresoAnimals/ingreso', 'IngresoAnimalController@ingreso')->name('ingresar_ganado');
+Route::delete('ingresoAnimals/ingreso/{id}', 'IngresoAnimalController@delete_ingreso')->name('ingreso.destroy');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

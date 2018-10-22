@@ -4,14 +4,14 @@
             <table class="table table-striped">
     <thead>
         <tr>
-            <th width="85px">Compra</th>
-            <th width="85px">Ingreso</th>
+            <th width="85px">Fecha</th>
+            <th width="85px">Factura</th>
             <th>Procedencia</th>
             <th>Vendedor</th>
             <th>Comprador</th>
-            <th>Responsable</th>
+            <th>Empresa</th>
             <th width="75px">Estado</th>
-            <!--<th>Hierro</th>-->
+            <th width="75px">Hierro</th>
             <th width="90px">Acciones</th>
         </tr>
     </thead>
@@ -19,15 +19,15 @@
     @foreach($registroCompras as $registroCompra)
         <tr>
             <td>{!! $registroCompra->fecha_compra !!}</td>
-            <td>{!! $registroCompra->fecha_ingreso !!}</td>
+            <td>{!! $registroCompra->factura !!}</td>
             <td>{!! $registroCompra->lugar_procedencias !!}</td>
             <td>{!! $registroCompra->vendedor !!}</td>
             <td>{!! $registroCompra->comprador !!}</td>
-            <td>{!! $registroCompra->responsable_compra !!}</td>
+            <td>{!! $registroCompra->razon_social !!}</td>
             <td>
                 {{$registroCompra->estado_compra}}
             </td>
-            <!--<td><img width="80%" src="{{ Storage::url($registroCompra->hierro) }}"></td>-->
+            <td style="text-align: center;"><img width="50%" src="{{ Storage::url($registroCompra->hierro) }}"></td>
             <td>
                 {!! Form::open(['route' => ['registroCompras.destroy', $registroCompra->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

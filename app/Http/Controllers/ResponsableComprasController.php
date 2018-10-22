@@ -75,7 +75,7 @@ class ResponsableComprasController extends AppBaseController
 
         $responsableCompras = $this->responsableComprasRepository->create($input);
 
-        Flash::success('Responsable Compras Guardado exitosamente.');
+        Flash::success('Responsable de Ingreso Guardado exitosamente.');
 
         return redirect(route('responsableCompras.index'));
     }
@@ -92,7 +92,7 @@ class ResponsableComprasController extends AppBaseController
         $responsableCompras = $this->responsableComprasRepository->findWithoutFail($id);
 
         if (empty($responsableCompras)) {
-            Flash::error('Responsable Compras not found');
+            Flash::error('Responsable de Ingreso not found');
 
             return redirect(route('responsableCompras.index'));
         }
@@ -117,7 +117,7 @@ class ResponsableComprasController extends AppBaseController
         $responsableCompras = $this->responsableComprasRepository->findWithoutFail($id);
 
         if (empty($responsableCompras)) {
-            Flash::error('Responsable Compras not found');
+            Flash::error('Responsable de Ingreso not found');
 
             return redirect(route('responsableCompras.index'));
         }
@@ -143,14 +143,14 @@ class ResponsableComprasController extends AppBaseController
         $responsableCompras = $this->responsableComprasRepository->findWithoutFail($id);
 
         if (empty($responsableCompras)) {
-            Flash::error('Responsable Compras not found');
+            Flash::error('Responsable de Ingreso not found');
 
             return redirect(route('responsableCompras.index'));
         }
 
         $responsableCompras = $this->responsableComprasRepository->update($request->all(), $id);
 
-        Flash::success('Responsable Compras Actualizado con exito.');
+        Flash::success('Responsable de Ingreso Actualizado con exito.');
 
         return redirect(route('responsableCompras.index'));
     }
@@ -167,14 +167,14 @@ class ResponsableComprasController extends AppBaseController
         $responsableCompras = $this->responsableComprasRepository->findWithoutFail($id);
 
         if (empty($responsableCompras)) {
-            Flash::error('Responsable Compras not found');
+            Flash::error('Responsable de Ingreso not found');
 
             return redirect(route('responsableCompras.index'));
         }
 
         $this->responsableComprasRepository->delete($id);
 
-        Flash::success('Responsable Compras Borrado con exito.');
+        Flash::success('Responsable de Ingreso Borrado con exito.');
 
         return redirect(route('responsableCompras.index'));
     }

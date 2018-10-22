@@ -22,6 +22,8 @@ use App\Models\Hierro;
 use App\Models\RegistroCompra;
 use App\Models\CompraLote;
 use App\Models\CompraLoteGanado;
+use App\Models\Empresa;
+use App\Models\TipoCompra;
 use Session;
 
 
@@ -48,17 +50,21 @@ class RegistroCompraController extends AppBaseController
 
         $data = Session::all();
         
+        
         $registroCompras = DB::table('registro_compras')
                     ->join('lugar_procedencias', 'registro_compras.lugar_procedencia_id', '=', 'lugar_procedencias.id')
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
                     ->join('compradores', 'registro_compras.comprador_id', '=', 'compradores.id')
-                    ->join('responsable_compras', 'registro_compras.responsable_id', '=', 'responsable_compras.id')
                     ->join('estado_compras', 'registro_compras.estado_id', '=', 'estado_compras.id')
                     ->join('hierros', 'registro_compras.hierro_id', '=', 'hierros.id')
+                    ->join('empresas', 'registro_compras.empresas_id', '=', 'empresas.id')
                     ->where('registro_compras.fincas_id',$data['finca'])
-                    ->select('vendedores.nombre as vendedor','compradores.nombre as comprador','responsable_compras.nombre as responsable_compra','estado_compras.descripcion as estado_compra','hierros.hierro','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
+                    ->select('vendedores.nombre as vendedor','compradores.nombre as comprador','estado_compras.descripcion as estado_compra','empresas.razon_social as razon_social','hierros.hierro','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
+        
+
+        #$registroCompras = DB::table('registro_compras')->get();
 
         //dd($registroCompras);
 
@@ -81,6 +87,9 @@ class RegistroCompraController extends AppBaseController
                ->where('id',$data['finca'])->get();
 
         $estado_compra = estado_compra::all()->pluck('descripcion','id');
+        $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
+        
+        $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
         $Compradores=Compradores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
         $Vendedores = Vendedores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
         $ResponsableCompras=ResponsableCompras::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
@@ -89,8 +98,10 @@ class RegistroCompraController extends AppBaseController
 
         return view('registro_compras.create')
                     ->with('Fincas', $Fincas)
+                    ->with('empresa', $empresa)
                     ->with('registroCompra', 0)
                     ->with('estado_compra', $estado_compra)
+                    ->with('tipo_compras', $tipo_compras)
                     ->with('Compradores', $Compradores)
                     ->with('Vendedores', $Vendedores)
                     ->with('ResponsableCompras', $ResponsableCompras)
@@ -114,7 +125,7 @@ class RegistroCompraController extends AppBaseController
 
         $input['fincas_id']=$data['finca'];
 
-        //dd($input);
+        #dd($input);
 
         $registroCompra = $this->registroCompraRepository->create($input);
 
@@ -169,7 +180,7 @@ class RegistroCompraController extends AppBaseController
 
         $registroCompras = DB::table('registro_compras')
                     ->where('registro_compras.fincas_id',$data['finca'])
-                    ->select('registro_compras.*',DB::raw("to_char(registro_compras.fecha_compra,'YYYY-MM-DD') as fecha_compra"),DB::raw("to_char(registro_compras.fecha_ingreso,'YYYY-MM-DD') as fecha_ingreso"))
+                    ->select('registro_compras.*',DB::raw("to_char(registro_compras.fecha_compra,'YYYY-MM-DD') as fecha_compra"))
                     ->get();
 
         //dd($registroCompras);
@@ -184,6 +195,10 @@ class RegistroCompraController extends AppBaseController
         $LugarProcedencia=LugarProcedencia::all()->where('fincas_id',$data['finca'])->pluck('descripcion','id');
         $Hierro=Hierro::all()->where('fincas_id',$data['finca']);
 
+        $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
+        
+        $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
+
         return view('registro_compras.edit')    
                     ->with('registroCompra', $registroCompra)
                     ->with('Fincas', $Fincas)
@@ -192,6 +207,8 @@ class RegistroCompraController extends AppBaseController
                     ->with('Vendedores', $Vendedores)
                     ->with('ResponsableCompras', $ResponsableCompras)
                     ->with('LugarProcedencia', $LugarProcedencia)
+                    ->with('tipo_compras', $tipo_compras)
+                    ->with('empresa', $empresa)
                     ->with('Hierro', $Hierro);
     }
 
@@ -253,11 +270,11 @@ class RegistroCompraController extends AppBaseController
                     ->join('lugar_procedencias', 'registro_compras.lugar_procedencia_id', '=', 'lugar_procedencias.id')
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
                     ->join('compradores', 'registro_compras.comprador_id', '=', 'compradores.id')
-                    ->join('responsable_compras', 'registro_compras.responsable_id', '=', 'responsable_compras.id')
                     ->join('estado_compras', 'registro_compras.estado_id', '=', 'estado_compras.id')
                     ->join('hierros', 'registro_compras.hierro_id', '=', 'hierros.id')
+                    ->join('empresas', 'registro_compras.empresas_id', '=', 'empresas.id')
                     ->where('registro_compras.id',$id)
-                    ->select('vendedores.nombre as vendedor','vendedores.direccion as direccion_v','vendedores.contacto as contacto_v','compradores.nombre as comprador','responsable_compras.nombre as responsable_compra','estado_compras.descripcion as estado_compra','hierros.hierro','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
+                    ->select('vendedores.nombre as vendedor','vendedores.direccion as direccion_v','vendedores.contacto as contacto_v','compradores.nombre as comprador','empresas.razon_social as razon_social','empresas.logo as logo','estado_compras.descripcion as estado_compra','hierros.hierro','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
                     ->get();
 
         $tipo_ganado = DB::table('tipo_ganados')->pluck('descripcion','id');
@@ -303,19 +320,45 @@ class RegistroCompraController extends AppBaseController
     public function add_lote_ganado(Request $request)
     {
 
-        $data = Session::all();
-        $CompraLoteGanado = new CompraLoteGanado;
-        $CompraLoteGanado->peso = $request->peso;
-        $CompraLoteGanado->observaciones = $request->observaciones;
-        $CompraLoteGanado->fincas_id = $data['finca'];
-        $CompraLoteGanado->users_id = Auth::id();
-        $CompraLoteGanado->compra_lote_id = $request->registro_compra;
-        //return $CompraLoteGanado;
-        $CompraLoteGanado->save();
+        if($request->tipo==1){
 
-        Flash::success('Animal Guardado exitosamente.');
+            for ($i = 1; $i <= $request->cantidad; $i++) {
 
-        return redirect()->back();
+                $data = Session::all();
+                $CompraLoteGanado = new CompraLoteGanado;
+                $CompraLoteGanado->peso = $request->peso;
+                $CompraLoteGanado->observaciones = $request->observaciones;
+                $CompraLoteGanado->fincas_id = $data['finca'];
+                $CompraLoteGanado->users_id = Auth::id();
+                $CompraLoteGanado->compra_lote_id = $request->registro_compra;
+            
+                $CompraLoteGanado->save();
+            }
+
+            Flash::success('Animales Guardado exitosamente.');
+
+            return redirect()->back();
+        
+
+
+        }else{
+
+            $data = Session::all();
+            $CompraLoteGanado = new CompraLoteGanado;
+            $CompraLoteGanado->peso = $request->peso;
+            $CompraLoteGanado->observaciones = $request->observaciones;
+            $CompraLoteGanado->fincas_id = $data['finca'];
+            $CompraLoteGanado->users_id = Auth::id();
+            $CompraLoteGanado->compra_lote_id = $request->registro_compra;
+            //return $CompraLoteGanado;
+            $CompraLoteGanado->save();
+
+            Flash::success('Animal Guardado exitosamente.');
+
+            return redirect()->back();
+
+        }
+
     }
 
     public function delete_lote($id)

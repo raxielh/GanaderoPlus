@@ -23,7 +23,7 @@
         display: none;
       }
       #map {
-        height: 300px;
+        height: 250px;
         width: 100%;
         margin-bottom: 10px;
       }
@@ -104,11 +104,11 @@
       </h2>
       <div class="row">@include('flash::message')</div>
     </div>
-    <div style="padding: 1em">
+    <div style="padding: 1em" class="container">
       <div class="row" style="margin-top: 1em;">
 
         @foreach ($Fincas as $Finca)
-              <div class="col-md-3">
+              <div class="col-md-4">
                 <div class="card card-statistics" style="background-color: #FFF;margin: 10px;padding: 1em;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10);" >
                   <div class="card-body">
                     <h4 style="text-align: center;font-weight: bold;">Finca {{ $Finca->nombre }}</h4>
@@ -165,7 +165,7 @@
 
                         <div class="form-group">
                           <label for="exampleInputPassword1">Descripcion</label>
-                          <input type="text" class="form-control" name="descripcion" placeholder="" value="{{ $Finca->descripcion }}" >
+                          <input type="text" class="form-control" name="descripcion" rows="4" placeholder="" value="{{ $Finca->descripcion }}" >
                         </div>
 
                         <div class="form-group">
@@ -208,7 +208,7 @@
                 </div>
                 <div class="form-group">
                   {!! Form::label('descripcion', 'Descripcion:') !!}
-                  {!! Form::textarea('descripcion', null, ['class' => 'form-control','autofocus'=>'autofocus','placeholder'=>'Descripcion...']) !!}
+                  {!! Form::textarea('descripcion', null, ['class' => 'form-control','rows' => '4','autofocus'=>'autofocus','placeholder'=>'Descripcion...']) !!}
                 </div>
 
                 <input type="hidden" name="lat" id="lat">

@@ -3,15 +3,20 @@
 @section('content')
     <section class="content-header">
         <h4>
-            Responsable Ingreso
+            Tipo Compra
         </h4>
     </section>
     <div class="content">
+        @include('adminlte-templates::common.errors')
         <div class="box box-primary">
+
             <div class="box-body">
-                <div class="row" style="padding-left: 20px">
-                    @include('responsable_compras.show_fields')
-                    <a href="{!! route('responsableCompras.index') !!}" class="btn btn-default">Atras</a>
+                <div class="row">
+                    {!! Form::open(['route' => 'tipoCompra.store']) !!}
+
+                        @include('tipo_compra.fields')
+
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

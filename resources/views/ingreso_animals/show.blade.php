@@ -3,15 +3,15 @@
 @section('content')
     <section class="content-header">
         <h4>
-            Responsable Ingreso
+            <a href="{!! route('ingresoAnimals.index') !!}" class="btn btn-danger"><i class="fa fa-arrow-left"></i>  Atras</a> Ingreso de Animales
         </h4>
     </section>
     <div class="content">
+        @include('flash::message')
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row" style="padding-left: 20px">
-                    @include('responsable_compras.show_fields')
-                    <a href="{!! route('responsableCompras.index') !!}" class="btn btn-default">Atras</a>
+                    @include('ingreso_animals.show_fields')
                 </div>
             </div>
         </div>

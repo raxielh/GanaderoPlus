@@ -18,8 +18,8 @@ class CreateTableFinca extends Migration
             $table->string('nombre');
             $table->string('descripcion')->nullable();
             //$table->string('hierro')->nullable();
-            $table->string('lat');
-            $table->string('lon');
+            $table->string('lat')->nullable();
+            $table->string('lon')->nullable();
             $table->integer('users_id')->unsigned();
             $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();

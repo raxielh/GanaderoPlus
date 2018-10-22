@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTipoGanadosTable extends Migration
+class CreateTipoComprasTable extends Migration
 {
 
     /**
@@ -13,15 +13,17 @@ class CreateTipoGanadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_ganados', function (Blueprint $table) {
+        Schema::create('tipo_compras', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion', 100);
-            $table->string('descripcion_corta', 100);
             $table->timestamps();
         });
-        DB::table('tipo_ganados')->insert([
-            'descripcion' => 'Macho de Levante',
-            'descripcion_corta' => 'ML',
+
+        DB::table('tipo_compras')->insert([
+            'descripcion' => 'Global',
+        ]);
+        DB::table('tipo_compras')->insert([
+            'descripcion' => 'Uno a Uno',
         ]);
     }
 
@@ -32,6 +34,6 @@ class CreateTipoGanadosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tipo_ganados');
+        Schema::drop('tipo_compras');
     }
 }

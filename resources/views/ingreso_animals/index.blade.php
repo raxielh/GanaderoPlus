@@ -2,9 +2,9 @@
 
 @section('content')
     <section class="content-header">
-        <h4 class="pull-left">Responsable Ingreso</h4>
+        <h4 class="pull-left">Ingreso de Animales</h4>
         <h1 class="pull-right">
-           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('responsableCompras.create') !!}"><i class="mdi mdi-plus"></i>Agregar nuevo</a>
+           <a class="btn btn-primary pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('ingresoAnimals.create') !!}"><i class="mdi mdi-plus"></i>Agregar nuevo</a>
         </h1>
     </section>
     <div class="content">
@@ -15,7 +15,7 @@
         <div class="clearfix"></div>
         <div class="box box-primary">
             <div class="box-body">
-                    @include('responsable_compras.table')
+                    @include('ingreso_animals.table')
             </div>
         </div>
         <div class="text-center">
