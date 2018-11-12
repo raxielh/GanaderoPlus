@@ -56,10 +56,9 @@ class RegistroCompraController extends AppBaseController
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
                     ->join('compradores', 'registro_compras.comprador_id', '=', 'compradores.id')
                     ->join('estado_compras', 'registro_compras.estado_id', '=', 'estado_compras.id')
-                    ->join('hierros', 'registro_compras.hierro_id', '=', 'hierros.id')
                     ->join('empresas', 'registro_compras.empresas_id', '=', 'empresas.id')
                     ->where('registro_compras.fincas_id',$data['finca'])
-                    ->select('vendedores.nombre as vendedor','compradores.nombre as comprador','estado_compras.descripcion as estado_compra','empresas.razon_social as razon_social','hierros.hierro','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
+                    ->select('vendedores.nombre as vendedor','compradores.nombre as comprador','estado_compras.descripcion as estado_compra','empresas.razon_social as razon_social','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
         

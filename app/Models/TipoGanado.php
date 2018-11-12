@@ -23,7 +23,8 @@ class TipoGanado extends Model
 
 
     public $fillable = [
-        'descripcion'
+        'descripcion',
+        'descripcion_corta'
     ];
 
     /**
@@ -32,7 +33,8 @@ class TipoGanado extends Model
      * @var array
      */
     protected $casts = [
-        'descripcion' => 'string'
+        'descripcion' => 'string',
+        'descripcion_corta' => 'string'
     ];
 
     /**
@@ -41,7 +43,8 @@ class TipoGanado extends Model
      * @var array
      */
     public static $rules = [
-        'descripcion' => 'required'
+        'descripcion' => 'required',
+        'descripcion_corta'  => 'required'
     ];
 
     

@@ -90,6 +90,7 @@
     </div>
 </div>
 
+<!--
 <div class="form-group col-sm-6" style="z-index: 0">
     
      <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
@@ -120,7 +121,7 @@
     </div>
 
 </div>
-
+-->
 <br><br><br>
 
 

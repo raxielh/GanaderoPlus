@@ -24,7 +24,6 @@ class CreateRegistroComprasTable extends Migration
             $table->integer('vendedor_id')->unsigned();
             $table->integer('comprador_id')->unsigned();
             $table->integer('estado_id')->unsigned();
-            $table->integer('hierro_id')->unsigned();
             $table->integer('fincas_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->timestamps();
@@ -34,7 +33,6 @@ class CreateRegistroComprasTable extends Migration
             $table->foreign('vendedor_id')->references('id')->on('vendedores');
             $table->foreign('comprador_id')->references('id')->on('compradores');
             $table->foreign('estado_id')->references('id')->on('estado_compras');
-            $table->foreign('hierro_id')->references('id')->on('hierros');
             $table->foreign('fincas_id')->references('id')->on('fincas');
             $table->foreign('users_id')->references('id')->on('users');
         });

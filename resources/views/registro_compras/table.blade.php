@@ -11,7 +11,6 @@
             <th>Comprador</th>
             <th>Empresa</th>
             <th width="75px">Estado</th>
-            <th width="75px">Hierro</th>
             <th width="90px">Acciones</th>
         </tr>
     </thead>
@@ -27,7 +26,6 @@
             <td>
                 {{$registroCompra->estado_compra}}
             </td>
-            <td style="text-align: center;"><img width="50%" src="{{ Storage::url($registroCompra->hierro) }}"></td>
             <td>
                 {!! Form::open(['route' => ['registroCompras.destroy', $registroCompra->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

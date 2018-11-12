@@ -40,7 +40,6 @@ class RegistroCompra extends Model
         'comprador_id',
         'tipo_compras_id',
         'empresas_id',
-        'hierro_id',
         'fincas_id',  
         'users_id'
     ];
@@ -60,7 +59,6 @@ class RegistroCompra extends Model
         'comprador_id' => 'integer',   
         'tipo_compras_id' => 'integer',
         'empresas_id' => 'integer',        
-        'hierro_id' => 'integer',
         'fincas_id' => 'integer',
         'users_id' => 'integer',
         
@@ -80,7 +78,6 @@ class RegistroCompra extends Model
         'tipo_compras_id' => 'required',   
         'empresas_id' => 'required',
         'estado_id' => 'required',
-        'hierro_id' => 'required',
         'factura' => 'required',
     ];
 

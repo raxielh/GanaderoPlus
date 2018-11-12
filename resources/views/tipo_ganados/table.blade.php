@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>Descripcion</th>
+            <th>Descripcion Corta</th>
             <th width="90px">Acciones</th>
         </tr>
     </thead>
@@ -9,6 +10,7 @@
     @foreach($tipoGanados as $tipoGanado)
         <tr>
             <td>{!! $tipoGanado->descripcion !!}</td>
+            <td>{!! $tipoGanado->descripcion_corta !!}</td>
             <td>
                 {!! Form::open(['route' => ['tipoGanados.destroy', $tipoGanado->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
