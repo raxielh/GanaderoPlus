@@ -16,7 +16,7 @@
             <td>{!! $empresa->razon_social !!}</td>
             <td>{!! $empresa->direccion !!}</td>
             <td>{!! $empresa->telefono !!}</td>
-            <td><img width="100px" src="{{ Storage::url($empresa->logo) }}"></td>
+            <td><img width="100px" src="{{ env('APP_URL') }}{{ Storage::url($empresa->logo) }}"></td>
             <td>
                 {!! Form::open(['route' => ['empresas.destroy', $empresa->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

@@ -29,7 +29,7 @@
             <td>
                 {!! Form::open(['route' => ['registroCompras.destroy', $registroCompra->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
-                    <a href="/registroCompras/ficha/{{$registroCompra->id}}/ver" class='btn btn-default btn-xs'><i class="mdi mdi-eye"></i></a>
+                    <a href="{{ env('APP_URL') }}/registroCompras/ficha/{{$registroCompra->id}}/ver" class='btn btn-default btn-xs'><i class="mdi mdi-eye"></i></a>
                     <a href="{!! route('registroCompras.edit', [$registroCompra->id]) !!}" class='btn btn-default btn-xs'><i class="mdi mdi-pencil"></i></a>
                     {!! Form::button('<i class="mdi mdi-delete"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
                 </div>

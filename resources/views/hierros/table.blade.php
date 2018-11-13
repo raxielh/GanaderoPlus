@@ -11,7 +11,7 @@
     <tbody>
     @foreach($hierros as $hierro)
         <tr>
-            <td><img width="80px" src="{{ Storage::url($hierro->hierro) }}"></td>
+            <td><img width="80px" src="{{ env('APP_URL') }}{{ Storage::url($hierro->hierro) }}"></td>
             <td width="10%">
                 {!! Form::open(['route' => ['hierros.destroy', $hierro->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
