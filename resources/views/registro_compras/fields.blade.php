@@ -7,7 +7,7 @@
     {!! Form::label('fecha_compra', 'Fecha Compra:') !!}
     
     @if ($registroCompra === 0)
-        {!! Form::date('fecha_compra', date('Y-m-d'), ['class' => 'form-control']) !!}
+        {!! Form::date('fecha_compra', date('Y-m-d'), ['class' => 'form-control','value' => old('fecha_compra')]) !!}
     @else
         {!! Form::date('fecha_compra', \Carbon\Carbon::parse($registroCompra->fecha_compra)->format('Y-m-d'), ['class' => 'form-control']) !!}
     @endif
@@ -16,7 +16,7 @@
 <!-- Estado Id Field -->
 <div class="form-group col-sm-3" style="z-index: 1">
     {!! Form::label('factura', 'Numero de factura:') !!}
-     {!! Form::text('factura', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Numero de factura']) !!}
+     {!! Form::text('factura', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Numero de factura','value' => old('factura')]) !!}
 </div>
 
 <!-- Estado Id Field -->
@@ -35,7 +35,7 @@
 <div class="form-group col-sm-6" style="z-index: 1">
     <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
         {!! Form::label('lugar_procedencia_id', 'Lugar Procedencia:') !!}
-        {!! Form::select('lugar_procedencia_id',$LugarProcedencia, null, ['class' => 'form-control chosen-select']) !!}
+        {!! Form::select('lugar_procedencia_id',$LugarProcedencia, old('lugar_procedencia_id'), ['class' => 'form-control chosen-select']) !!}
     </div>
     <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
         <br>
@@ -51,7 +51,7 @@
     </div>
     <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
         <br>
-        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></a>
+        <a href="#" class="btn btn-info btn-sm"  data-toggle="modal" data-target="#ve"><i class="fa fa-plus"></i></a>
     </div>
 </div>
 
@@ -63,19 +63,15 @@
     </div>
     <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
         <br>
-        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></a>
+        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#co"><i class="fa fa-plus"></i></a>
     </div>
 </div>
 
 <!-- Responsable Id Field -->
 <div class="form-group col-sm-6" style="z-index: 1">
-    <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
+    <div class="col-md-12 col-xs-12 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
     {!! Form::label('empresas_id', 'Empresa:') !!}
     {!! Form::select('empresas_id',$empresa, null, ['class' => 'form-control chosen-select']) !!}
-    </div>
-    <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
-        <br>
-        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></a>
     </div>
 </div>
 
@@ -83,10 +79,6 @@
     <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
     {!! Form::label('tipo_compras_id', 'Tipo de Compra:') !!}
     {!! Form::select('tipo_compras_id',$tipo_compras, null, ['class' => 'form-control chosen-select']) !!}
-    </div>
-    <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
-        <br>
-        <a href="#" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></a>
     </div>
 </div>
 

@@ -10,7 +10,7 @@
 
 <!-- Identificacion Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('identificacion', 'Identificacion:') !!}
+    {!! Form::label('identificacion', 'No. de identidad o Nit de la empresa:') !!}
     {!! Form::text('identificacion', null, ['class' => 'form-control']) !!}
 </div>
 
@@ -23,7 +23,7 @@
 <!-- Contacto Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('contacto', 'Contacto:') !!}
-    {!! Form::text('contacto', null, ['class' => 'form-control']) !!}
+    {!! Form::text('contacto', null, ['class' => 'form-control','placeholder' => 'Telefono Fijo ó Celular']) !!}
 </div>
 
 <!-- Submit Field -->

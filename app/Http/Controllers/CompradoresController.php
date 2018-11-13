@@ -9,6 +9,8 @@ use App\Repositories\CompradoresRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Fincas;
@@ -77,7 +79,11 @@ class CompradoresController extends AppBaseController
 
         Flash::success('Compradores Guardado exitosamente.');
 
-        return redirect(route('compradores.index'));
+        if($request->op==1){
+            return Redirect::back()->withInput(Input::all());
+        }else{
+            return redirect(route('compradores.index'));
+        }
     }
 
     /**

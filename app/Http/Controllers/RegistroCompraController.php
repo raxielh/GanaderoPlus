@@ -270,10 +270,9 @@ class RegistroCompraController extends AppBaseController
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
                     ->join('compradores', 'registro_compras.comprador_id', '=', 'compradores.id')
                     ->join('estado_compras', 'registro_compras.estado_id', '=', 'estado_compras.id')
-                    ->join('hierros', 'registro_compras.hierro_id', '=', 'hierros.id')
                     ->join('empresas', 'registro_compras.empresas_id', '=', 'empresas.id')
                     ->where('registro_compras.id',$id)
-                    ->select('vendedores.nombre as vendedor','vendedores.direccion as direccion_v','vendedores.contacto as contacto_v','compradores.nombre as comprador','empresas.razon_social as razon_social','empresas.logo as logo','estado_compras.descripcion as estado_compra','hierros.hierro','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
+                    ->select('vendedores.nombre as vendedor','vendedores.direccion as direccion_v','vendedores.contacto as contacto_v','compradores.nombre as comprador','empresas.razon_social as razon_social','empresas.logo as logo','estado_compras.descripcion as estado_compra','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
                     ->get();
 
         $tipo_ganado = DB::table('tipo_ganados')->pluck('descripcion','id');

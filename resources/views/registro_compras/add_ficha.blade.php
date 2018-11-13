@@ -55,9 +55,6 @@ table td {
                                 <p><strong># Factura: </strong> {{$registroCompras->factura}}</p>
                                 <p><strong>Empresa: </strong> {{$registroCompras->razon_social}}</p>
                             </div>
-                            <div class="col-md-3" style="text-align: center;">
-                                <p><img height="60px" src="{{ Storage::url($registroCompras->logo) }}"> <img height="60px" src="{{ Storage::url($registroCompras->hierro) }}"></p>
-                            </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
                             </div>
@@ -271,9 +268,6 @@ table td {
                                 <p><strong>Comprador: </strong> {{$registroCompras->comprador}}</p>
                                 <p><strong># Factura: </strong> {{$registroCompras->factura}}</p>
                                 <p><strong>Empresa: </strong> {{$registroCompras->razon_social}}</p>
-                            </div>
-                            <div class="col-md-3" style="text-align: center;">
-                                <p><img height="60px" src="{{ Storage::url($registroCompras->logo) }}"> <img height="60px" src="{{ Storage::url($registroCompras->hierro) }}"></p>
                             </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>

@@ -9,6 +9,8 @@ use App\Repositories\VendedoresRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Fincas;
@@ -77,7 +79,12 @@ class VendedoresController extends AppBaseController
 
         Flash::success('Vendedores Guardado exitosamente.');
 
-        return redirect(route('vendedores.index'));
+        if($request->op==1){
+            return Redirect::back()->withInput(Input::all());
+        }else{
+            return redirect(route('vendedores.index'));
+        }
+
     }
 
     /**

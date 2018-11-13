@@ -9,6 +9,8 @@ use App\Repositories\LugarProcedenciaRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Input;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Fincas;
@@ -79,7 +81,13 @@ class LugarProcedenciaController extends AppBaseController
 
         Flash::success('Lugar Procedencia Guardado exitosamente.');
 
-        return redirect(route('lugarProcedencias.index'));
+        if($request->op==1){
+            return Redirect::back()->withInput(Input::all());
+        }else{
+            return redirect(route('lugarProcedencias.index'));
+        }
+
+        
     }
 
     /**

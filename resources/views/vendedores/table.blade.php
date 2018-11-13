@@ -5,7 +5,7 @@
     <thead>
         <tr>
             <th>Nombre</th>
-        <th>Identificacion</th>
+        <th>No. de identidad o Nit de la empresa</th>
         <th>Direccion</th>
         <th>Contacto</th>
             <th width="90px">Acciones</th>

@@ -6,7 +6,7 @@
 
 <!-- Codigo Field -->
 <div class="form-group">
-    {!! Form::label('codigo', 'Codigo:') !!}
+    {!! Form::label('codigo', 'Nombre:') !!}
     <p>{!! $potreros->codigo !!}</p>
 </div>
 

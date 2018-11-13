@@ -4,14 +4,16 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Codigo</th>
+                        <th>Nombre</th>
                         <th>Area mts2</th>
                         <th>Estado</th>
                         <th width="90px">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                <?php $x=0; ?>
                 @foreach($potreros as $potreros)
+                <?php $x=$x+$potreros->area; ?>
                     <tr>
                         <td>{!! $potreros->codigo !!}</td>
                         <td>{!! $potreros->area !!}</td>
@@ -27,6 +29,12 @@
                     </tr>
                 @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                      <td><strong>Total</strong></td>
+                      <td><?php echo $x; ?></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
