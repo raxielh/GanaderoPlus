@@ -15,6 +15,11 @@ php artisan infyom:scaffold presentacion
 	descripcion string,100 text
 		required
 
+php artisan infyom:scaffold deduccion
+	descripcion string,100 text
+		required
+
+
 php artisan infyom:scaffold Potreros
 	codigo string,100 text
 		required

@@ -21,12 +21,14 @@ class CreateRegistroComprasTable extends Migration
             $table->integer('lugar_procedencia_id')->unsigned();
             $table->integer('tipo_compras_id')->unsigned();
             $table->integer('empresas_id')->unsigned();
+            $table->integer('deduccions_id')->unsigned();
             $table->integer('vendedor_id')->unsigned();
             $table->integer('comprador_id')->unsigned();
             $table->integer('estado_id')->unsigned();
             $table->integer('fincas_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->timestamps();
+            $table->foreign('deduccions_id')->references('id')->on('deduccions');
             $table->foreign('lugar_procedencia_id')->references('id')->on('lugar_procedencias');
             $table->foreign('tipo_compras_id')->references('id')->on('tipo_compras');
             $table->foreign('empresas_id')->references('id')->on('empresas');

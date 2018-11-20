@@ -37,7 +37,7 @@ table td {
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title" style="color: #3ca2e0">Información General de compra</h4>
+                      <h4 class="card-title" style="color: #3ca2e0">Información General de compra Uno a Uno</h4>
                       <div class="row">
                         @foreach ($registroCompras as $registroCompras)
                             <div class="col-md-3">
@@ -48,7 +48,7 @@ table td {
                             <div class="col-md-3">
                                 <p><strong>Direccion: </strong> {{$registroCompras->direccion_v}}</p>
                                 <p><strong>Contacto: </strong> {{$registroCompras->contacto_v}}</p>
-                                <p><strong>Deduccion: </strong> {{$registroCompras->deduccion}}%</p>
+                                <p><strong>Deduccion: </strong> {{$registroCompras->deduccion}}</p>
                             </div>
                             <div class="col-md-3">
                                 <p><strong>Comprador: </strong> {{$registroCompras->comprador}}</p>
@@ -114,18 +114,19 @@ table td {
                                 </tr>
                               </tbody>
                             </table>
-                            <div style="display: none;">
+                            <div>
                             <?php $suma_pesos;array_push($pesos,$suma_pesos);array_push($cantidad,$x); ?>
-                            <p style="text-align: center;margin-bottom: -3px;display: none;"><strong>Peso Acumulado (kilos): </strong> {{number_format($suma_pesos)}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;display: none;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
+                            <p style="text-align: center;margin-bottom: -3px;"><strong>Peso Acumulado (kilos): </strong> {{number_format($suma_pesos)}}</p>
+                            <p style="text-align: center;margin-bottom: -3px;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
                             <?php $suma_pesos_total=$suma_pesos_total+$suma_pesos; ?>
 
                             <?php if($x<>0){ ?>
-                            <p style="text-align: center;margin-bottom: -3px;display: none;"><strong>Peso Promedio: </strong> {{$peso_promedio=$suma_pesos/$x}}</p>
+                            <p style="text-align: center;margin-bottom: -3px;"><strong>Peso Promedio: </strong> {{$peso_promedio=$suma_pesos/$x}}</p>
                             <?php $suma_pesos_promedio=$suma_pesos_promedio+$peso_promedio; ?>
                             <?php } ?>
-                            <p style="text-align: center;margin-bottom: -3px;" style="display: none;"><strong>Cantidad Animales :</strong> {{$x}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;" style="display: none;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
+                            <p style="text-align: center;margin-bottom: -3px;" ><strong>Cantidad Animales :</strong> {{$x}}</p>
+                            <p style="text-align: center;margin-bottom: -3px;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
+                            <p style="text-align: center;margin-bottom: -3px;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
                             </div>
                           </div>
                         </div>
@@ -139,7 +140,7 @@ table td {
                               <div class="modal-body">
                                 {!! Form::open(['route' => 'add_lote_ganado']) !!}
                                   <div class="form-group">
-                                    <input type="number" name="peso" autofocus required="" placeholder="Peso" class="form-control">
+                                    <input type="number" name="peso" autofocus required="" placeholder="Peso en Kilos" class="form-control">
                                     <textarea name="observaciones" placeholder="Observaciones" class="form-control"></textarea>
                                     <input type="hidden" name="registro_compra" value="{{$compra_lote->id}}">
                                     <div style="margin-top: 10px"></div>
@@ -176,12 +177,12 @@ table td {
                   <th>Peso Total</th>
                   <th>Precio</th>
                   <th>Valor total lote</th>
-                  <th>% Deducción</th>
                   <th>Deducción</th>
+                  <th>Valor Deducción</th>
                   <th>No. Factura</th>
                   <th>Valor a Pagar</th>
                 </tr>
-                <?php $c=0; ?>
+                <?php $c=0;$sum=0; ?>
                 @foreach ($cl as $cl)
 
                       <tr>
@@ -202,13 +203,32 @@ table td {
                         <td>{{$registroCompras->deduccion}}</td>
                         <td>{{number_format($cl->precio*$pesos[$c]*$registroCompras->deduccion/100)}}</td>
                         <td>{{$registroCompras->factura}}</td>
-                        <td>{{number_format($cl->precio*$pesos[$c]-$cl->precio*$pesos[$c]*$registroCompras->deduccion/100)}}</td>
+                        <td><?php $ooo=$cl->precio*$pesos[$c]-$cl->precio*$pesos[$c]*$registroCompras->deduccion/100 ?>{{number_format($ooo)}}</td>
                         
                       </tr>
                       
                       <?php $c=$c+1; ?>
 
+                        <?php 
+
+                        $pt=$ooo;
+                        $sum=$sum+$pt;
+
+                        ?>
+
                 @endforeach
+                                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong>Total</strong></td>
+                  <td>{{number_format($sum)}}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -226,7 +246,8 @@ table td {
               <div class="form-group">
                 {!! Form::label('tipo_ganado', 'Tipo de Ganado:') !!}
                 {!! Form::select('tipo_ganado',$tipo_ganado, null, ['class' => 'form-control','required'=>'true']) !!} <br>
-                <input type="number" name="precio" value="" placeholder="Precio por Kilo" class="form-control" required="">
+                <input type="number" name="precio" value="" placeholder="Precio por Kilo" class="form-control" required=""><br>
+                <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Observaciones"></textarea>
                 <input type="hidden" name="registro_compra" value="{{$registroCompras->id}}">
                 <br>
                 {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
@@ -251,7 +272,7 @@ table td {
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title" style="color: #3ca2e0">Información General de compra</h4>
+                      <h4 class="card-title" style="color: #3ca2e0">Información General de compra Global</h4>
                       <div class="row">
                         @foreach ($registroCompras as $registroCompras)
                             <div class="col-md-3">
@@ -262,7 +283,7 @@ table td {
                             <div class="col-md-3">
                                 <p><strong>Direccion: </strong> {{$registroCompras->direccion_v}}</p>
                                 <p><strong>Contacto: </strong> {{$registroCompras->contacto_v}}</p>
-                                <p><strong>Deduccion: </strong> {{$registroCompras->deduccion}}%</p>
+                                <p><strong>Deduccion: </strong> {{$registroCompras->deduccion}}</p>
                             </div>
                             <div class="col-md-3">
                                 <p><strong>Comprador: </strong> {{$registroCompras->comprador}}</p>
@@ -309,15 +330,21 @@ table td {
                                 <?php $lg=$CompraLoteGanado; ?>
                                 @foreach ($CompraLoteGanado as $lote)
                                 @if ($lote->compra_lote_id==$compra_lote->id)
+
                                 <tr>
                                   <td width="5%">{{$x=$x+1}}</td>
                                   <?php $suma_pesos=$lote->peso; ?>
-                                  <td>{{$lote->peso}}</td>
+                                  <td class="cam-{{$compra_lote->id}}">{{$lote->peso}}</td>
                                   <td width="10%">
                                   {!! Form::open(['route' => ['animal.destroy', $lote->id], 'method' => 'delete']) !!}
                                       {!! Form::button('<i class="mdi mdi-delete"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
                                   {!! Form::close() !!}
                                   </td>
+                                  <script>
+                                    $(function() {
+                                      $('.cam-{{$compra_lote->id}}').text('{{$suma_pesos/$x}}');
+                                    });
+                                  </script>
                                   @endif
                                   @endforeach
                                 </tr>
@@ -326,7 +353,7 @@ table td {
                                 </tr>
                               </tbody>
                             </table>
-                            <div style="display: none;">
+                            <div>
                             <?php $suma_pesos;array_push($pesos,$suma_pesos);array_push($cantidad,$x); ?>
                             <p style="text-align: center;margin-bottom: -3px;display: block;"><strong>Peso Acumulado (kilos): </strong> {{($suma_pesos)}}</p>
                             <p style="text-align: center;margin-bottom: -3px;display: block;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
@@ -338,6 +365,7 @@ table td {
                             <?php } ?>
                             <p style="text-align: center;margin-bottom: -3px;" style="display: block;"><strong>Cantidad Animales :</strong> {{$x}}</p>
                             <p style="text-align: center;margin-bottom: -3px;" style="display: block;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
+                            <p style="text-align: center;margin-bottom: -3px;" style="display: block;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
                             </div>
                           </div>
                         </div>
@@ -352,7 +380,7 @@ table td {
                                 {!! Form::open(['route' => 'add_lote_ganado']) !!}
                                   <div class="form-group">
                                     <input type="hidden" name="tipo" value="{{ $tipo }}">
-                                    <input type="number" name="peso" autofocus required="" placeholder="Peso Total" class="form-control">
+                                    <input type="number" name="peso" autofocus required="" placeholder="Peso Total en Kilos" class="form-control">
                                     <input type="number" name="cantidad" required="" placeholder="Cantidad" class="form-control">
                                     <input type="hidden" name="registro_compra" value="{{$compra_lote->id}}">
                                     <div style="margin-top: 10px"></div>
@@ -389,12 +417,12 @@ table td {
                   <th>Peso Total</th>
                   <th>Precio</th>
                   <th>Valor total lote</th>
-                  <th>% Deducción</th>
                   <th>Deducción</th>
+                  <th>Valor Deducción</th>
                   <th>No. Factura</th>
                   <th>Valor a Pagar</th>
                 </tr>
-                <?php $c=0; ?>
+                <?php $c=0;$sum=0; ?>
                 @foreach ($cl as $cl)
 
                       <tr>
@@ -412,16 +440,58 @@ table td {
                         <td>{{$pesos[$c]}}</td>
                         <td>{{number_format($cl->precio)}}</td>
                         <td>{{number_format($cl->precio*$pesos[$c])}}</td>
-                        <td>{{$registroCompras->deduccion}}</td>
-                        <td>{{number_format($cl->precio*$pesos[$c]*$registroCompras->deduccion/100)}}</td>
+
+                        <?php
+                          if($registroCompras->deduccions_id==1){
+                        ?>
+                          <td>{{$registroCompras->deduccion}} %</td>
+                        <?php
+                          }else{
+                        ?>
+                        <td>$ {{$registroCompras->deduccion}}</td>
+                        <?php
+                          }
+                        ?>                        
+                        
+
+                        <?php
+                          if($registroCompras->deduccions_id==1){
+                        ?>
+                          <td>{{number_format($cl->precio*$pesos[$c]*$registroCompras->deduccion/100)}}</td>
+                        <?php
+                          }else{
+                        ?>
+                        <td>{{number_format($cl->precio*$pesos[$c]-$registroCompras->deduccion)}}</td>
+                        <?php
+                          }
+                        ?>
+                        
                         <td>{{$registroCompras->factura}}</td>
                         <td>{{number_format($cl->precio*$pesos[$c]-$cl->precio*$pesos[$c]*$registroCompras->deduccion/100)}}</td>
+                        <?php 
+
+                        $pt=$cl->precio*$pesos[$c]-$cl->precio*$pesos[$c]*$registroCompras->deduccion/100;
+                        $sum=$sum+$pt;
+
+                        ?>
                         
                       </tr>
                       
                       <?php $c=$c+1; ?>
 
                 @endforeach
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td><strong>Total</strong></td>
+                  <td>{{number_format($sum)}}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -441,6 +511,8 @@ table td {
                 {!! Form::label('tipo_ganado', 'Tipo de Ganado:') !!}
                 {!! Form::select('tipo_ganado',$tipo_ganado, null, ['class' => 'form-control','required'=>'true']) !!} <br>
                 <input type="text" name="precio" value="" placeholder="Precio base" class="form-control" required="">
+                <br>
+                <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Observaciones"></textarea>
                 <input type="hidden" name="registro_compra" value="{{$registroCompras->id}}">
                 <br>
                 {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}

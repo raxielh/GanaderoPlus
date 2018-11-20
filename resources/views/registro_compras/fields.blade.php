@@ -14,13 +14,20 @@
 </div>
 
 <!-- Estado Id Field -->
-<div class="form-group col-sm-3" style="z-index: 1">
+<div class="form-group col-sm-2" style="z-index: 1">
     {!! Form::label('factura', 'Numero de factura:') !!}
      {!! Form::text('factura', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Numero de factura','value' => old('factura')]) !!}
 </div>
 
+<div class="form-group col-sm-2" style="z-index: 1">
+    <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
+        {!! Form::label('deduccions_id', 'Tipo de Deduccion:') !!}
+        {!! Form::select('deduccions_id',$deduccion, old('deduccions_id'), ['class' => 'form-control chosen-select']) !!}
+    </div>
+</div>
+
 <!-- Estado Id Field -->
-<div class="form-group col-sm-3" style="z-index: 1">
+<div class="form-group col-sm-2" style="z-index: 1">
     {!! Form::label('deduccion', 'Deduccion:') !!}
     {!! Form::number('deduccion', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Porcentaje de deduccion','value' => old('deduccion')]) !!}
 </div>

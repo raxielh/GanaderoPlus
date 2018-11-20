@@ -24,6 +24,7 @@ use App\Models\CompraLote;
 use App\Models\CompraLoteGanado;
 use App\Models\Empresa;
 use App\Models\TipoCompra;
+use App\Models\deduccion;
 use Session;
 
 
@@ -87,6 +88,7 @@ class RegistroCompraController extends AppBaseController
 
         $estado_compra = estado_compra::all()->pluck('descripcion','id');
         $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
+        $deduccion=deduccion::all()->pluck('descripcion','id');
         
         $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
         $Compradores=Compradores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
@@ -103,6 +105,7 @@ class RegistroCompraController extends AppBaseController
                     ->with('tipo_compras', $tipo_compras)
                     ->with('Compradores', $Compradores)
                     ->with('Vendedores', $Vendedores)
+                    ->with('deduccion', $deduccion)
                     ->with('ResponsableCompras', $ResponsableCompras)
                     ->with('LugarProcedencia', $LugarProcedencia)
                     ->with('Hierro', $Hierro);
@@ -186,6 +189,8 @@ class RegistroCompraController extends AppBaseController
         $Fincas = Fincas::where('users_id',Auth::id())
                ->where('id',$data['finca'])->get();
 
+        $deduccion=deduccion::all()->pluck('descripcion','id');
+
 
         $estado_compra = estado_compra::all()->pluck('descripcion','id');
         $Compradores=Compradores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
@@ -207,6 +212,7 @@ class RegistroCompraController extends AppBaseController
                     ->with('ResponsableCompras', $ResponsableCompras)
                     ->with('LugarProcedencia', $LugarProcedencia)
                     ->with('tipo_compras', $tipo_compras)
+                    ->with('deduccion', $deduccion)
                     ->with('empresa', $empresa)
                     ->with('Hierro', $Hierro);
     }
@@ -305,6 +311,7 @@ class RegistroCompraController extends AppBaseController
         $CompraLote->tipo_ganados_id = $request->tipo_ganado;
         $CompraLote->compra_lote_id = $request->registro_compra;
         $CompraLote->precio = $request->precio;
+        $CompraLote->observaciones = $request->observaciones;
         $CompraLote->fincas_id = $data['finca'];
         $CompraLote->estado_lote_id = 1;
         $CompraLote->users_id = Auth::id();
