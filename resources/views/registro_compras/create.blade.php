@@ -13,7 +13,7 @@
 
             <div class="box-body">
                 <div class="row">
-                    {!! Form::open(['route' => 'registroCompras.store']) !!}
+                    {!! Form::open(['route' => 'registroCompras.store','enctype'=>'multipart/form-data']) !!}
 
                         @include('registro_compras.fields')
 

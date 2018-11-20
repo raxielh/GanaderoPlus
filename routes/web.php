@@ -81,3 +81,5 @@ Route::delete('ingresoAnimals/ingreso/{id}', 'IngresoAnimalController@delete_ing
 Route::resource('deduccions', 'deduccionController');
 
 Route::resource('deduccions', 'deduccionController');
+
+Route::resource('preguntaLicencias', 'Pregunta_licenciaController');

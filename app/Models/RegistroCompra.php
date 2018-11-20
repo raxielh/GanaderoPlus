@@ -41,6 +41,9 @@ class RegistroCompra extends Model
         'comprador_id',
         'tipo_compras_id',
         'empresas_id',
+        'pregunta_licencias_id',
+        'codigo',
+        'documento',
         'fincas_id',  
         'users_id'
     ];
@@ -60,6 +63,9 @@ class RegistroCompra extends Model
         'vendedor_id' => 'integer',
         'comprador_id' => 'integer',   
         'tipo_compras_id' => 'integer',
+        'pregunta_licencias_id' => 'integer',
+        'codigo' => 'string',
+        'documento' => 'string',
         'empresas_id' => 'integer',        
         'fincas_id' => 'integer',
         'users_id' => 'integer',

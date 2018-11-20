@@ -25,6 +25,7 @@ use App\Models\CompraLoteGanado;
 use App\Models\Empresa;
 use App\Models\TipoCompra;
 use App\Models\deduccion;
+use App\Models\Pregunta_licencia;
 use Session;
 
 
@@ -89,6 +90,7 @@ class RegistroCompraController extends AppBaseController
         $estado_compra = estado_compra::all()->pluck('descripcion','id');
         $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
         $deduccion=deduccion::all()->pluck('descripcion','id');
+        $Pregunta_licencia=Pregunta_licencia::all()->pluck('descripcion','id');
         
         $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
         $Compradores=Compradores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
@@ -108,6 +110,7 @@ class RegistroCompraController extends AppBaseController
                     ->with('deduccion', $deduccion)
                     ->with('ResponsableCompras', $ResponsableCompras)
                     ->with('LugarProcedencia', $LugarProcedencia)
+                    ->with('Pregunta_licencia', $Pregunta_licencia)
                     ->with('Hierro', $Hierro);
     }
 
@@ -127,7 +130,13 @@ class RegistroCompraController extends AppBaseController
 
         $input['fincas_id']=$data['finca'];
 
-        #dd($input);
+        if($request->file('documento')){
+            $documento=$request->file('documento')->store('public');
+            $input['documento']=$documento;
+        }
+
+
+        //dd($input);
 
         $registroCompra = $this->registroCompraRepository->create($input);
 
@@ -190,6 +199,7 @@ class RegistroCompraController extends AppBaseController
                ->where('id',$data['finca'])->get();
 
         $deduccion=deduccion::all()->pluck('descripcion','id');
+        $Pregunta_licencia=Pregunta_licencia::all()->pluck('descripcion','id');
 
 
         $estado_compra = estado_compra::all()->pluck('descripcion','id');
@@ -214,6 +224,7 @@ class RegistroCompraController extends AppBaseController
                     ->with('tipo_compras', $tipo_compras)
                     ->with('deduccion', $deduccion)
                     ->with('empresa', $empresa)
+                    ->with('Pregunta_licencia', $Pregunta_licencia)
                     ->with('Hierro', $Hierro);
     }
 

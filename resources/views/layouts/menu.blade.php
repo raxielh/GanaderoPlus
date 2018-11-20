@@ -15,6 +15,7 @@
                     {{ Request::is('presentacions*') ? 'active' : '' }}
                     {{ Request::is('tipoCompra*') ? 'active' : '' }}
                     {{ Request::is('deduccions*') ? 'active' : '' }}
+                    {{ Request::is('preguntaLicencias*') ? 'active' : '' }}
 ">
   <a href="#">
     <i class="fa fa-folder"></i> <span>Administración</span>
@@ -43,6 +44,10 @@
     </li>
     <li class="{{ Request::is('deduccions*') ? 'active' : '' }}">
         <a href="{!! route('deduccions.index') !!}"><i class="fa fa-gear"></i><span>Deducciones</span></a>
+    </li>
+
+    <li class="{{ Request::is('preguntaLicencias*') ? 'active' : '' }}">
+        <a href="{!! route('preguntaLicencias.index') !!}"><i class="fa fa-gear"></i><span>Pregunta Licencias</span></a>
     </li>
 
 
@@ -136,6 +141,7 @@
 <li class="{{ Request::is('controlLLuvias*') ? 'active' : '' }}">
     <a href="{!! route('controlLLuvias.index') !!}"><i class="fa fa-thermometer-half"></i><span> Control de lluvias</span></a>
 </li>
+
 
 
 

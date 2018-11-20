@@ -82,11 +82,31 @@
     </div>
 </div>
 
-<div class="form-group col-sm-6" style="z-index: 1">
+<div class="form-group col-sm-2" style="z-index: 1">
     <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
     {!! Form::label('tipo_compras_id', 'Tipo de Compra:') !!}
     {!! Form::select('tipo_compras_id',$tipo_compras, null, ['class' => 'form-control chosen-select']) !!}
     </div>
+</div>
+
+<!-- Estado Id Field -->
+<div class="form-group col-sm-2" style="z-index: 1">
+    {!! Form::label('pregunta_licencias_id', 'Licencia?') !!}
+    {!! Form::select('pregunta_licencias_id',$Pregunta_licencia, null, ['class' => 'form-control chosen-select']) !!}
+</div>
+
+
+<!-- Estado Id Field -->
+<div class="form-group col-sm-3" style="z-index: 1" id="c">
+    {!! Form::label('codigo', 'Codigo de asentamiento:') !!}
+     {!! Form::text('codigo', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Codigo de asentamiento','value' => old('codigo')]) !!}
+</div>
+
+
+<!-- Estado Id Field -->
+<div class="form-group col-sm-5" style="z-index: 1" id="d">
+    {!! Form::label('documento', 'Documento asentamiento de licencia:') !!}
+     {!! Form::file('documento', null, ['class' => 'form-control','required' => 'true','placeholder' => 'documento','value' => old('documento')]) !!}
 </div>
 
 <!--
@@ -123,6 +143,34 @@
 -->
 <br><br><br>
 
+<script>
+    $(function() {
+        $('#pregunta_licencias_id').change(function(event) {
+            if($('#pregunta_licencias_id').val()==1){
+                mostrar();
+            }else{
+                ocultar();
+            }
+        });
+    });
+
+    function mostrar(){
+        $('#c').show();
+        $('#d').show();
+        $("#documento").attr("required", "true");
+        $("#codigo").attr("required", "true");
+        $('#c').val('');
+        $('#d').val('');
+    }
+    function ocultar(){
+        $('#c').hide();
+        $('#d').hide();
+        $("#documento").removeAttr("required");
+        $("#codigo").removeAttr("required");
+        $('#c').val('');
+        $('#d').val('');
+    }
+</script>
 
 <!-- Submit Field -->
 <div class="form-group col-sm-12 col-xs-12">

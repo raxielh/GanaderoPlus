@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h4>
-            Registro Compra
+            Pregunta Licencia
         </h4>
    </section>
    <div class="content">
@@ -11,9 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($registroCompra, ['route' => ['registroCompras.update', $registroCompra->id], 'method' => 'patch','enctype'=>'multipart/form-data']) !!}
+                   {!! Form::model($preguntaLicencia, ['route' => ['preguntaLicencias.update', $preguntaLicencia->id], 'method' => 'patch']) !!}
 
-                        @include('registro_compras.fields')
+                        @include('pregunta_licencias.fields')
 
                    {!! Form::close() !!}
                </div>

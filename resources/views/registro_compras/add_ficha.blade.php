@@ -57,6 +57,9 @@ table td {
                             </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
+                                <?php if($registroCompras->documento){ ?>
+                                <a href="{{ env('APP_URL') }}{{ Storage::url($registroCompras->documento) }}" class="btn btn-info btn-sm" target="_new">Ver Documento {{ ($registroCompras->codigo) }}</a>
+                                <?php } ?>
                             </div>
                         @endforeach
                       </div>
@@ -292,6 +295,10 @@ table td {
                             </div>
                             <div class="col-md-12">
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
+                                <?php if($registroCompras->documento){ ?>
+                                <a href="{{ env('APP_URL') }}{{ Storage::url($registroCompras->documento) }}" class="btn btn-info btn-sm" target="_new">Ver Documento {{ ($registroCompras->codigo) }}</a>
+                                <?php } ?>
+                                
                             </div>
                         @endforeach
                       </div>
