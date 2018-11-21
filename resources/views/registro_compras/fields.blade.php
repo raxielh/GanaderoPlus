@@ -145,6 +145,11 @@
 
 <script>
     $(function() {
+        if($('#pregunta_licencias_id').val()==1){
+            mostrar();
+        }else{                
+            ocultar();
+        }
         $('#pregunta_licencias_id').change(function(event) {
             if($('#pregunta_licencias_id').val()==1){
                 mostrar();

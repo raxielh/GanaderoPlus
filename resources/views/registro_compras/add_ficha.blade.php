@@ -474,10 +474,28 @@ table td {
                         ?>
                         
                         <td>{{$registroCompras->factura}}</td>
+
+                        <?php
+                          if($registroCompras->deduccions_id==1){
+                        ?>
                         <td>{{number_format($cl->precio*$pesos[$c]-$cl->precio*$pesos[$c]*$registroCompras->deduccion/100)}}</td>
+
+                        <?php
+                        $pt=$cl->precio*$pesos[$c]-$cl->precio*$pesos[$c]*$registroCompras->deduccion/100;
+                          }else{
+                            $pt=$cl->precio*$pesos[$c]-$registroCompras->deduccion;
+                        ?>
+                        <td>{{number_format($cl->precio*$pesos[$c]-$registroCompras->deduccion)}}</td>
+                        <?php
+                          }
+                        ?>
+                        
+
+
+
                         <?php 
 
-                        $pt=$cl->precio*$pesos[$c]-$cl->precio*$pesos[$c]*$registroCompras->deduccion/100;
+                        
                         $sum=$sum+$pt;
 
                         ?>
@@ -533,7 +551,12 @@ table td {
 
 @endif
 @endforeach    
-
+<script>
+  $(function() {
+    $('.register-form').hide();
+    $('.login-form').show();
+  });
+</script>
     
 @endsection
 
