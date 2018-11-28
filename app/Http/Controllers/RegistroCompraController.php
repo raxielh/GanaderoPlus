@@ -26,6 +26,8 @@ use App\Models\Empresa;
 use App\Models\TipoCompra;
 use App\Models\deduccion;
 use App\Models\Pregunta_licencia;
+use App\Models\PreguntaFacturas;
+use Barryvdh\DomPDF\Facade as PDF;
 use Session;
 
 
@@ -61,6 +63,7 @@ class RegistroCompraController extends AppBaseController
                     ->join('empresas', 'registro_compras.empresas_id', '=', 'empresas.id')
                     ->where('registro_compras.fincas_id',$data['finca'])
                     ->select('vendedores.nombre as vendedor','compradores.nombre as comprador','estado_compras.descripcion as estado_compra','empresas.razon_social as razon_social','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
+                    ->orderByRaw('registro_compras.id DESC')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
         
@@ -87,10 +90,16 @@ class RegistroCompraController extends AppBaseController
         $Fincas = Fincas::where('users_id',Auth::id())
                ->where('id',$data['finca'])->get();
 
+        $NumeroregistroCompras = DB::table('registro_compras')
+                    ->where('registro_compras.fincas_id',$data['finca'])
+                    ->select(DB::raw("count(*)"))
+                    ->get();
+
         $estado_compra = estado_compra::all()->pluck('descripcion','id');
         $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
         $deduccion=deduccion::all()->pluck('descripcion','id');
         $Pregunta_licencia=Pregunta_licencia::all()->pluck('descripcion','id');
+        $PreguntaFacturas=PreguntaFacturas::all()->pluck('descripcion','id');
         
         $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
         $Compradores=Compradores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
@@ -101,6 +110,7 @@ class RegistroCompraController extends AppBaseController
 
         return view('registro_compras.create')
                     ->with('Fincas', $Fincas)
+                    ->with('NumeroregistroCompras', $NumeroregistroCompras)
                     ->with('empresa', $empresa)
                     ->with('registroCompra', 0)
                     ->with('estado_compra', $estado_compra)
@@ -111,6 +121,7 @@ class RegistroCompraController extends AppBaseController
                     ->with('ResponsableCompras', $ResponsableCompras)
                     ->with('LugarProcedencia', $LugarProcedencia)
                     ->with('Pregunta_licencia', $Pregunta_licencia)
+                    ->with('PreguntaFacturas', $PreguntaFacturas)
                     ->with('Hierro', $Hierro);
     }
 
@@ -135,6 +146,10 @@ class RegistroCompraController extends AppBaseController
             $input['documento']=$documento;
         }
 
+        if($request->file('documento_factura')){
+            $documento_factura=$request->file('documento_factura')->store('public');
+            $input['documento_factura']=$documento_factura;
+        }
 
         //dd($input);
 
@@ -212,6 +227,7 @@ class RegistroCompraController extends AppBaseController
         $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
         
         $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
+        $PreguntaFacturas=PreguntaFacturas::all()->pluck('descripcion','id');
 
         return view('registro_compras.edit')    
                     ->with('registroCompra', $registroCompra)
@@ -225,6 +241,7 @@ class RegistroCompraController extends AppBaseController
                     ->with('deduccion', $deduccion)
                     ->with('empresa', $empresa)
                     ->with('Pregunta_licencia', $Pregunta_licencia)
+                    ->with('PreguntaFacturas', $PreguntaFacturas)
                     ->with('Hierro', $Hierro);
     }
 
@@ -246,7 +263,20 @@ class RegistroCompraController extends AppBaseController
             return redirect(route('registroCompras.index'));
         }
 
-        $registroCompra = $this->registroCompraRepository->update($request->all(), $id);
+        $datos=$request->all();
+
+        if($request->file('documento')){
+            $documento=$request->file('documento')->store('public');
+            $datos['documento']=$documento;
+        }
+
+        if($request->file('documento_factura')){
+            $documento_factura=$request->file('documento_factura')->store('public');
+            $datos['documento_factura']=$documento_factura;
+        }
+
+
+        $registroCompra = $this->registroCompraRepository->update($datos, $id);
 
         Flash::success('Registro Compra Actualizado con exito.');
 
@@ -397,6 +427,51 @@ class RegistroCompraController extends AppBaseController
         Flash::success('Registro de Animal Borrado con exito.');
 
         return redirect()->back();
+    }
+
+    public function pdf($id)
+    {
+
+        $data = Session::all();
+        
+        $registroCompras = DB::table('registro_compras')
+                    ->join('lugar_procedencias', 'registro_compras.lugar_procedencia_id', '=', 'lugar_procedencias.id')
+                    ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
+                    ->join('compradores', 'registro_compras.comprador_id', '=', 'compradores.id')
+                    ->join('estado_compras', 'registro_compras.estado_id', '=', 'estado_compras.id')
+                    ->join('empresas', 'registro_compras.empresas_id', '=', 'empresas.id')
+                    ->where('registro_compras.id',$id)
+                    ->select('vendedores.nombre as vendedor','vendedores.direccion as direccion_v','vendedores.contacto as contacto_v','compradores.nombre as comprador','empresas.razon_social as razon_social','empresas.logo as logo','estado_compras.descripcion as estado_compra','registro_compras.*','lugar_procedencias.descripcion as lugar_procedencias')
+                    ->get();
+
+        $tipo_ganado = DB::table('tipo_ganados')->pluck('descripcion','id');
+
+        $compra_lote = DB::table('compra_lote')
+                        ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
+                        ->where('compra_lote.compra_lote_id',$id)
+                        ->select('compra_lote.*','tipo_ganados.descripcion')
+                        ->get();
+
+        $Fincas = Fincas::where('users_id',Auth::id())
+               ->where('id',$data['finca'])->get();
+
+        $CompraLoteGanado = CompraLoteGanado::where('users_id',Auth::id())
+               ->where('fincas_id',$data['finca'])->get();
+
+
+        $pdf = PDF::loadView('pdf.RegistroCompra',compact('registroCompras','Fincas','tipo_ganado','compra_lote','CompraLoteGanado'));
+
+
+        return $pdf->download('Registro_de_Compra.pdf');
+/*
+        return view('pdf.RegistroCompra')
+                    ->with('Fincas', $Fincas)
+                    ->with('registroCompras', $registroCompras);
+
+*/
+
+
+
     }
 
 }

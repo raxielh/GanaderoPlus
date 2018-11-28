@@ -37,20 +37,21 @@ table td {
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
+                      <h4 style="text-align: center;font-weight: bold;">Numero de Registro de Compra ( {{($rc->numero_compra)}} )</h4>
                       <h4 class="card-title" style="color: #3ca2e0">Información General de compra Uno a Uno</h4>
                       <div class="row">
                         @foreach ($registroCompras as $registroCompras)
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p><strong>Fecha compra: </strong> {{$registroCompras->fecha_compra}}</p>
                                 <p><strong>Lugar procedencias: </strong> {{$registroCompras->lugar_procedencias}}</p>
                                 <p><strong>Vendedor: </strong> {{$registroCompras->vendedor}}</p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p><strong>Direccion: </strong> {{$registroCompras->direccion_v}}</p>
                                 <p><strong>Contacto: </strong> {{$registroCompras->contacto_v}}</p>
                                 <p><strong>Deduccion: </strong> {{$registroCompras->deduccion}}</p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p><strong>Comprador: </strong> {{$registroCompras->comprador}}</p>
                                 <p><strong># Factura: </strong> {{$registroCompras->factura}}</p>
                                 <p><strong>Empresa: </strong> {{$registroCompras->razon_social}}</p>
@@ -119,17 +120,17 @@ table td {
                             </table>
                             <div>
                             <?php $suma_pesos;array_push($pesos,$suma_pesos);array_push($cantidad,$x); ?>
-                            <p style="text-align: center;margin-bottom: -3px;"><strong>Peso Acumulado (kilos): </strong> {{number_format($suma_pesos)}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;"><strong>Peso Acumulado (kilos): </strong> {{number_format($suma_pesos)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
                             <?php $suma_pesos_total=$suma_pesos_total+$suma_pesos; ?>
 
                             <?php if($x<>0){ ?>
-                            <p style="text-align: center;margin-bottom: -3px;"><strong>Peso Promedio: </strong> {{$peso_promedio=$suma_pesos/$x}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;"><strong>Peso Promedio: </strong> {{$peso_promedio=$suma_pesos/$x}}</p>
                             <?php $suma_pesos_promedio=$suma_pesos_promedio+$peso_promedio; ?>
                             <?php } ?>
-                            <p style="text-align: center;margin-bottom: -3px;" ><strong>Cantidad Animales :</strong> {{$x}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;" ><strong>Cantidad Animales :</strong> {{$x}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
                             </div>
                           </div>
                         </div>
@@ -275,20 +276,21 @@ table td {
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
+                      <h4 style="text-align: center;font-weight: bold;">Numero de Registro de Compra ( {{($rc->numero_compra)}} )</h4>
                       <h4 class="card-title" style="color: #3ca2e0">Información General de compra Global</h4>
                       <div class="row">
                         @foreach ($registroCompras as $registroCompras)
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p><strong>Fecha compra: </strong> {{$registroCompras->fecha_compra}}</p>
                                 <p><strong>Lugar procedencias: </strong> {{$registroCompras->lugar_procedencias}}</p>
                                 <p><strong>Vendedor: </strong> {{$registroCompras->vendedor}}</p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p><strong>Direccion: </strong> {{$registroCompras->direccion_v}}</p>
                                 <p><strong>Contacto: </strong> {{$registroCompras->contacto_v}}</p>
                                 <p><strong>Deduccion: </strong> {{$registroCompras->deduccion}}</p>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <p><strong>Comprador: </strong> {{$registroCompras->comprador}}</p>
                                 <p><strong># Factura: </strong> {{$registroCompras->factura}}</p>
                                 <p><strong>Empresa: </strong> {{$registroCompras->razon_social}}</p>
@@ -297,6 +299,9 @@ table td {
                                 <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
                                 <?php if($registroCompras->documento){ ?>
                                 <a href="{{ env('APP_URL') }}{{ Storage::url($registroCompras->documento) }}" class="btn btn-info btn-sm" target="_new">Ver Documento {{ ($registroCompras->codigo) }}</a>
+                                <?php } ?>
+                                <?php if($registroCompras->documento_factura){ ?>
+                                <a href="{{ env('APP_URL') }}{{ Storage::url($registroCompras->documento_factura) }}" class="btn btn-info btn-sm" target="_new">Ver Factura {{ ($registroCompras->factura) }}</a>
                                 <?php } ?>
                                 
                             </div>
@@ -362,17 +367,17 @@ table td {
                             </table>
                             <div>
                             <?php $suma_pesos;array_push($pesos,$suma_pesos);array_push($cantidad,$x); ?>
-                            <p style="text-align: center;margin-bottom: -3px;display: block;"><strong>Peso Acumulado (kilos): </strong> {{($suma_pesos)}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;display: block;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;display: block;"><strong>Peso Acumulado (kilos): </strong> {{($suma_pesos)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;display: block;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
                             <?php $suma_pesos_total=$suma_pesos_total+$suma_pesos; ?>
 
                             <?php if($x<>0){ ?>
-                            <p style="text-align: center;margin-bottom: -3px;display: block;"><strong>Peso Promedio: </strong> {{$peso_promedio=$suma_pesos/$x}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;display: block;"><strong>Peso Promedio: </strong> {{$peso_promedio=$suma_pesos/$x}}</p>
                             <?php $suma_pesos_promedio=$suma_pesos_promedio+$peso_promedio; ?>
                             <?php } ?>
-                            <p style="text-align: center;margin-bottom: -3px;" style="display: block;"><strong>Cantidad Animales :</strong> {{$x}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;" style="display: block;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
-                            <p style="text-align: center;margin-bottom: -3px;" style="display: block;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;" style="display: block;"><strong>Cantidad Animales :</strong> {{$x}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;" style="display: block;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
+                            <p style="text-align: right;margin-bottom: -3px;" style="display: block;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
                             </div>
                           </div>
                         </div>

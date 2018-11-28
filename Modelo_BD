@@ -19,6 +19,10 @@ php artisan infyom:scaffold Pregunta_licencia
 	descripcion string,100 text
 		required
 
+php artisan infyom:scaffold PreguntaFacturas
+	descripcion string,100 text
+		required
+
 php artisan infyom:scaffold deduccion
 	descripcion string,100 text
 		required

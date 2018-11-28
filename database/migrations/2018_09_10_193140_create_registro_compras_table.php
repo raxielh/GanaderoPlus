@@ -15,15 +15,18 @@ class CreateRegistroComprasTable extends Migration
     {
         Schema::create('registro_compras', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('numero_compra')->unsigned();
             $table->date('fecha_compra', 100);
             $table->integer('deduccion')->unsigned();
-            $table->integer('factura')->unsigned();
+            $table->integer('factura')->nullable();
             $table->string('codigo', 100)->nullable();
             $table->string('documento', 199)->nullable();
+            $table->string('documento_factura', 199)->nullable();
             $table->integer('lugar_procedencia_id')->unsigned();
             $table->integer('tipo_compras_id')->unsigned();
             $table->integer('empresas_id')->unsigned();
             $table->integer('pregunta_licencias_id')->unsigned();
+            $table->integer('pregunta_facturas_id')->unsigned();
             $table->integer('deduccions_id')->unsigned();
             $table->integer('vendedor_id')->unsigned();
             $table->integer('comprador_id')->unsigned();
@@ -31,6 +34,7 @@ class CreateRegistroComprasTable extends Migration
             $table->integer('fincas_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->timestamps();
+            $table->foreign('pregunta_facturas_id')->references('id')->on('pregunta_facturas');
             $table->foreign('pregunta_licencias_id')->references('id')->on('pregunta_licencias');
             $table->foreign('deduccions_id')->references('id')->on('deduccions');
             $table->foreign('lugar_procedencia_id')->references('id')->on('lugar_procedencias');

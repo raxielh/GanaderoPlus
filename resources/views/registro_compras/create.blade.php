@@ -14,7 +14,9 @@
             <div class="box-body">
                 <div class="row">
                     {!! Form::open(['route' => 'registroCompras.store','enctype'=>'multipart/form-data']) !!}
-
+@foreach ($NumeroregistroCompras as $NumeroregistroCompras)
+<input type="hidden" value="{{$NumeroregistroCompras->count+1}}" id="numero_compra" name="numero_compra">
+@endforeach
                         @include('registro_compras.fields')
 
                     {!! Form::close() !!}

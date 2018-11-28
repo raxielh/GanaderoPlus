@@ -1,3 +1,4 @@
+
 <div class="col-12 grid-margin">
     <div class="card">
         <div class="card-body">
@@ -13,13 +14,7 @@
     @endif
 </div>
 
-<!-- Estado Id Field -->
-<div class="form-group col-sm-2" style="z-index: 1">
-    {!! Form::label('factura', 'Numero de factura:') !!}
-     {!! Form::text('factura', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Numero de factura','value' => old('factura')]) !!}
-</div>
-
-<div class="form-group col-sm-2" style="z-index: 1">
+<div class="form-group col-sm-3" style="z-index: 1">
     <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
         {!! Form::label('deduccions_id', 'Tipo de Deduccion:') !!}
         {!! Form::select('deduccions_id',$deduccion, old('deduccions_id'), ['class' => 'form-control chosen-select']) !!}
@@ -27,9 +22,12 @@
 </div>
 
 <!-- Estado Id Field -->
-<div class="form-group col-sm-2" style="z-index: 1">
+<div class="form-group col-sm-3" style="z-index: 1">
     {!! Form::label('deduccion', 'Deduccion:') !!}
-    {!! Form::number('deduccion', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Porcentaje de deduccion','value' => old('deduccion')]) !!}
+    <input type="text" name="deduccion_v" id="deduccion_v" class="form-control" required="true" placeholder="Deduccion" value="{{old('deduccion')}}" onkeyup="format(this)">
+
+    {!! Form::hidden('deduccion', null, ['class' => 'form-control']) !!}
+
 </div>
 
 <!-- Estado Id Field -->
@@ -99,16 +97,49 @@
 <!-- Estado Id Field -->
 <div class="form-group col-sm-3" style="z-index: 1" id="c">
     {!! Form::label('codigo', 'Codigo de asentamiento:') !!}
-     {!! Form::text('codigo', null, ['class' => 'form-control','required' => 'true','placeholder' => 'Codigo de asentamiento','value' => old('codigo')]) !!}
+    {!! Form::text('codigo', null, ['class' => 'form-control','placeholder' => 'Codigo de asentamiento','value' => old('codigo')]) !!}
 </div>
 
 
 <!-- Estado Id Field -->
 <div class="form-group col-sm-5" style="z-index: 1" id="d">
-    {!! Form::label('documento', 'Documento asentamiento de licencia:') !!}
-     {!! Form::file('documento', null, ['class' => 'form-control','required' => 'true','placeholder' => 'documento','value' => old('documento')]) !!}
+
+        <div class="col-md-10 col-xs-10 col-sm-10" style="padding-left: 0px;padding-right: 0px;">
+            {!! Form::label('documento', 'Documento asentamiento de licencia:') !!}
+             {!! Form::file('documento', null, ['class' => 'form-control','placeholder' => 'documento','value' => old('documento')]) !!}
+        </div>
+        <div class="col-md-2 col-xs-2 col-sm-2" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;text-align: center;">
+            <br>
+            <a href="#" class="btn btn-danger btn-sm" id="delete_documento"><i class="mdi mdi-close"></i></a>
+        </div>
 </div>
 
+<div class="col-md-12">
+    <!-- Estado Id Field -->
+    <div class="form-group col-sm-3" style="z-index: 1">
+        {!! Form::label('pregunta_facturas_id', 'Factura?') !!}
+        {!! Form::select('pregunta_facturas_id',$PreguntaFacturas, null, ['class' => 'form-control chosen-select']) !!}
+    </div>
+
+    <!-- Estado Id Field -->
+    <div class="form-group col-sm-3" style="z-index: 1" id="f">
+        {!! Form::label('factura', 'Numero de factura:') !!}
+         {!! Form::text('factura', null, ['class' => 'form-control','placeholder' => 'Numero de factura','value' => old('factura')]) !!}
+    </div>
+    <!-- Estado Id Field -->
+    <div class="form-group col-sm-6" style="z-index: 1" id="df">
+
+        <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
+            {!! Form::label('documento_factura', 'Documento Factura:') !!}
+             {!! Form::file('documento_factura', null, ['class' => 'form-control','value' => old('documento_factura')]) !!}
+        </div>
+        <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
+            <br>
+            <a href="#" class="btn btn-danger btn-sm" id="delete_factura"><i class="mdi mdi-close"></i></a>
+        </div>
+
+    </div>
+</div>
 <!--
 <div class="form-group col-sm-6" style="z-index: 0">
     
@@ -145,16 +176,77 @@
 
 <script>
     $(function() {
+
+        var de=$("#deduccion").val();
+        $("#deduccion_v").val(format2(de));
+
+        $('#delete_factura').click(function(event) {
+            $("#documento_factura").val(null);
+        });
+
+        $('#delete_documento').click(function(event) {
+            $("#documento").val(null);
+        });
+    
+        if($('#deduccions_id').val()==1){
+            console.log(1);
+            $("#deduccion_v").attr("placeholder", "Porcentaje deduccion");
+        }else{
+            console.log(2);
+            $("#deduccion_v").attr("placeholder", "Valor deduccion");
+        }
+
+        $('#deduccions_id').change(function(event) {
+            if($('#deduccions_id').val()==1){
+                console.log(1);
+                $("#deduccion_v").attr("placeholder", "Porcentaje deduccion");
+            }else{
+                console.log(2);
+                $("#deduccion_v").attr("placeholder", "Valor deduccion");
+            }
+        });
+
         if($('#pregunta_licencias_id').val()==1){
             mostrar();
         }else{                
             ocultar();
         }
+        
+        if($('#pregunta_facturas_id').val()==1){
+            $('#f').show();
+            $('#df').show();
+            $('#f').val('');
+            $('#df').val('');
+        }else{
+            $('#f').hide();
+            $('#df').hide();
+            $('#f').val('');
+            $('#df').val('');
+        }
         $('#pregunta_licencias_id').change(function(event) {
             if($('#pregunta_licencias_id').val()==1){
-                mostrar();
+                $('#c').show();
+                $('#d').show();
+                $('#c').val('');
+                $('#d').val('');
             }else{
-                ocultar();
+                $('#c').hide();
+                $('#d').hide();
+                $('#c').val('');
+                $('#d').val('');
+            }
+        });
+        $('#pregunta_facturas_id').change(function(event) {
+            if($('#pregunta_facturas_id').val()==1){
+                $('#f').show();
+                $('#df').show();
+                $('#f').val('');
+                $('#df').val('');
+            }else{
+                $('#f').hide();
+                $('#df').hide();
+                $('#f').val('');
+                $('#df').val('');
             }
         });
     });
@@ -162,23 +254,51 @@
     function mostrar(){
         $('#c').show();
         $('#d').show();
-        $("#documento").attr("required", "true");
-        $("#codigo").attr("required", "true");
         $('#c').val('');
         $('#d').val('');
     }
     function ocultar(){
         $('#c').hide();
         $('#d').hide();
-        $("#documento").removeAttr("required");
-        $("#codigo").removeAttr("required");
         $('#c').val('');
         $('#d').val('');
     }
-</script>
 
+    function format(input)
+    {
+
+        if($('#deduccions_id').val()==1){
+            $('#deduccion').val($('#deduccion_v').val());
+        }else{
+            var num = input.value.replace(/\./g,'');
+            if(!isNaN(num)){
+                $('#deduccion').val(num);
+                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+                num = num.split('').reverse().join('').replace(/^[\.]/,'');
+                input.value = num;
+            }else{ alert('Solo se permiten numeros');
+                input.value = input.value.replace(/[^\d\.]*/g,'');
+                $('#deduccion').val('');
+            }
+        }
+
+    }
+    function format2(input)
+    {
+        if($('#deduccions_id').val()==1){
+            var d=$('#deduccion').val();
+            return d;
+        }else{
+            var num = input;
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            return num;
+        }
+    }
+</script>
+<br><br><br><br>
 <!-- Submit Field -->
-<div class="form-group col-sm-12 col-xs-12">
+<div class="form-group col-sm-12 col-xs-12" style="margin-top: 1em">
     {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
     <a href="{!! route('registroCompras.index') !!}" class="btn btn-danger btn-fw"><i class="mdi mdi-close"></i>Cancelar</a>
 </div>

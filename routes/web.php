@@ -60,26 +60,12 @@ Route::resource('ingresoAnimals', 'IngresoAnimalController');
 Route::post('ingresoAnimals/ingreso', 'IngresoAnimalController@ingreso')->name('ingresar_ganado');
 Route::delete('ingresoAnimals/ingreso/{id}', 'IngresoAnimalController@delete_ingreso')->name('ingreso.destroy');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::resource('deduccions', 'deduccionController');
 
 Route::resource('deduccions', 'deduccionController');
 
 Route::resource('preguntaLicencias', 'Pregunta_licenciaController');
+
+Route::resource('preguntaFacturas', 'PreguntaFacturasController');
+
+Route::get('descargar-registro_compra/{id}', 'RegistroCompraController@pdf')->name('RegistroCompra.pdf');

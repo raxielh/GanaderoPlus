@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h4>
-            Registro Compra
+            Pregunta Facturas
         </h4>
    </section>
    <div class="content">
@@ -11,11 +11,9 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($registroCompra, ['route' => ['registroCompras.update', $registroCompra->id], 'method' => 'patch','enctype'=>'multipart/form-data']) !!}
+                   {!! Form::model($preguntaFacturas, ['route' => ['preguntaFacturas.update', $preguntaFacturas->id], 'method' => 'patch']) !!}
 
-                   <input type="hidden" value="{{$registroCompra->numero_compra}}" id="numero_compra" name="numero_compra">
-
-                        @include('registro_compras.fields')
+                        @include('pregunta_facturas.fields')
 
                    {!! Form::close() !!}
                </div>

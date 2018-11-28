@@ -37,6 +37,9 @@ class RegistroCompra extends Model
         'deduccion',
         'estado_id',
         'lugar_procedencia_id',
+        'numero_compra',
+        'pregunta_facturas_id',
+        'documento_factura',
         'vendedor_id',
         'comprador_id',
         'tipo_compras_id',
@@ -56,6 +59,9 @@ class RegistroCompra extends Model
     protected $casts = [
         'fecha_compra' => 'date',
         'factura' => 'string',
+        'numero_compra'=> 'integer',
+        'pregunta_facturas_id'=> 'integer',
+        'documento_factura'=> 'string',
         'deduccions_id' => 'integer',
         'deduccion' => 'integer',
         'estado_id' => 'integer',
@@ -87,7 +93,8 @@ class RegistroCompra extends Model
         'tipo_compras_id' => 'required',   
         'empresas_id' => 'required',
         'estado_id' => 'required',
-        'factura' => 'required',
+        'numero_compra'=> 'required',
+        'pregunta_facturas_id'=> 'required',
     ];
 
     
