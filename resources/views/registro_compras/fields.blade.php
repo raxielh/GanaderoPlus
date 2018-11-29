@@ -14,24 +14,15 @@
     @endif
 </div>
 
-<div class="form-group col-sm-3" style="z-index: 1">
+<div class="form-group col-sm-5" style="z-index: 1">
     <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
-        {!! Form::label('deduccions_id', 'Tipo de Deduccion:') !!}
-        {!! Form::select('deduccions_id',$deduccion, old('deduccions_id'), ['class' => 'form-control chosen-select']) !!}
+    {!! Form::label('tipo_compras_id', 'Tipo de Compra:') !!}
+    {!! Form::select('tipo_compras_id',$tipo_compras, null, ['class' => 'form-control chosen-select']) !!}
     </div>
 </div>
 
 <!-- Estado Id Field -->
-<div class="form-group col-sm-3" style="z-index: 1">
-    {!! Form::label('deduccion', 'Deduccion:') !!}
-    <input type="text" name="deduccion_v" id="deduccion_v" class="form-control" required="true" placeholder="Deduccion" value="{{old('deduccion')}}" onkeyup="format(this)">
-
-    {!! Form::hidden('deduccion', null, ['class' => 'form-control']) !!}
-
-</div>
-
-<!-- Estado Id Field -->
-<div class="form-group col-sm-3" style="z-index: 1">
+<div class="form-group col-sm-4" style="z-index: 1">
     {!! Form::label('estado_id', 'Estado:') !!}
     {!! Form::select('estado_id',$estado_compra, null, ['class' => 'form-control chosen-select']) !!}
 </div>
@@ -80,15 +71,10 @@
     </div>
 </div>
 
-<div class="form-group col-sm-2" style="z-index: 1">
-    <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
-    {!! Form::label('tipo_compras_id', 'Tipo de Compra:') !!}
-    {!! Form::select('tipo_compras_id',$tipo_compras, null, ['class' => 'form-control chosen-select']) !!}
-    </div>
-</div>
+
 
 <!-- Estado Id Field -->
-<div class="form-group col-sm-2" style="z-index: 1">
+<div class="form-group col-sm-3" style="z-index: 1">
     {!! Form::label('pregunta_licencias_id', 'Licencia?') !!}
     {!! Form::select('pregunta_licencias_id',$Pregunta_licencia, null, ['class' => 'form-control chosen-select']) !!}
 </div>
@@ -102,7 +88,7 @@
 
 
 <!-- Estado Id Field -->
-<div class="form-group col-sm-5" style="z-index: 1" id="d">
+<div class="form-group col-sm-6" style="z-index: 1" id="d">
 
         <div class="col-md-10 col-xs-10 col-sm-10" style="padding-left: 0px;padding-right: 0px;">
             {!! Form::label('documento', 'Documento asentamiento de licencia:') !!}
@@ -114,7 +100,7 @@
         </div>
 </div>
 
-<div class="col-md-12">
+<div class="col-md-12" style="margin: 0px;padding: 0px">
     <!-- Estado Id Field -->
     <div class="form-group col-sm-3" style="z-index: 1">
         {!! Form::label('pregunta_facturas_id', 'Factura?') !!}
@@ -177,8 +163,6 @@
 <script>
     $(function() {
 
-        var de=$("#deduccion").val();
-        $("#deduccion_v").val(format2(de));
 
         $('#delete_factura').click(function(event) {
             $("#documento_factura").val(null);
@@ -188,29 +172,13 @@
             $("#documento").val(null);
         });
     
-        if($('#deduccions_id').val()==1){
-            console.log(1);
-            $("#deduccion_v").attr("placeholder", "Porcentaje deduccion");
-        }else{
-            console.log(2);
-            $("#deduccion_v").attr("placeholder", "Valor deduccion");
-        }
-
-        $('#deduccions_id').change(function(event) {
-            if($('#deduccions_id').val()==1){
-                console.log(1);
-                $("#deduccion_v").attr("placeholder", "Porcentaje deduccion");
-            }else{
-                console.log(2);
-                $("#deduccion_v").attr("placeholder", "Valor deduccion");
-            }
-        });
 
         if($('#pregunta_licencias_id').val()==1){
             mostrar();
         }else{                
             ocultar();
         }
+
         
         if($('#pregunta_facturas_id').val()==1){
             $('#f').show();
@@ -264,37 +232,6 @@
         $('#d').val('');
     }
 
-    function format(input)
-    {
-
-        if($('#deduccions_id').val()==1){
-            $('#deduccion').val($('#deduccion_v').val());
-        }else{
-            var num = input.value.replace(/\./g,'');
-            if(!isNaN(num)){
-                $('#deduccion').val(num);
-                num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
-                num = num.split('').reverse().join('').replace(/^[\.]/,'');
-                input.value = num;
-            }else{ alert('Solo se permiten numeros');
-                input.value = input.value.replace(/[^\d\.]*/g,'');
-                $('#deduccion').val('');
-            }
-        }
-
-    }
-    function format2(input)
-    {
-        if($('#deduccions_id').val()==1){
-            var d=$('#deduccion').val();
-            return d;
-        }else{
-            var num = input;
-            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
-            num = num.split('').reverse().join('').replace(/^[\.]/,'');
-            return num;
-        }
-    }
 </script>
 <br><br><br><br>
 <!-- Submit Field -->

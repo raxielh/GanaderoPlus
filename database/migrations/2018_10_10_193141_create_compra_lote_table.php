@@ -22,7 +22,10 @@ class CreateCompraLoteTable extends Migration
             $table->integer('compra_lote_id')->unsigned();
             $table->integer('estado_lote_id')->unsigned();
             $table->string('observaciones', 200)->nullable();
+            $table->integer('deduccions_id')->unsigned();
+            $table->integer('deduccion')->unsigned();
             $table->foreign('tipo_ganados_id')->references('id')->on('tipo_ganados');
+            $table->foreign('deduccions_id')->references('id')->on('deduccions');
             $table->foreign('fincas_id')->references('id')->on('fincas');
             $table->foreign('users_id')->references('id')->on('users');
             $table->foreign('compra_lote_id')->references('id')->on('registro_compras');

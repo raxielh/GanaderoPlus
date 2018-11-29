@@ -15,7 +15,7 @@ class CreateDetalleIngresoAnimalsTable extends Migration
     {
         Schema::create('detalle_ingreso_animals', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('peso', 100);
+            $table->integer('peso')->unsigned();
             $table->string('observaciones', 200)->nullable();
             $table->integer('registro_compra_lote_id')->unsigned();
             $table->integer('fincas_id')->unsigned();

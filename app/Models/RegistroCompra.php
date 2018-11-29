@@ -33,8 +33,6 @@ class RegistroCompra extends Model
     public $fillable = [
         'fecha_compra',
         'factura',
-        'deduccions_id',
-        'deduccion',
         'estado_id',
         'lugar_procedencia_id',
         'numero_compra',
@@ -62,8 +60,6 @@ class RegistroCompra extends Model
         'numero_compra'=> 'integer',
         'pregunta_facturas_id'=> 'integer',
         'documento_factura'=> 'string',
-        'deduccions_id' => 'integer',
-        'deduccion' => 'integer',
         'estado_id' => 'integer',
         'lugar_procedencia_id' => 'integer',
         'vendedor_id' => 'integer',
@@ -85,8 +81,6 @@ class RegistroCompra extends Model
      */
     public static $rules = [
         'fecha_compra' => 'required',
-        'deduccions_id' => 'required',
-        'deduccion' => 'required',
         'lugar_procedencia_id' => 'required',
         'vendedor_id' => 'required',
         'comprador_id' => 'required',

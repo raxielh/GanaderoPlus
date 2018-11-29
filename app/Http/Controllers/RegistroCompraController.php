@@ -97,7 +97,6 @@ class RegistroCompraController extends AppBaseController
 
         $estado_compra = estado_compra::all()->pluck('descripcion','id');
         $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
-        $deduccion=deduccion::all()->pluck('descripcion','id');
         $Pregunta_licencia=Pregunta_licencia::all()->pluck('descripcion','id');
         $PreguntaFacturas=PreguntaFacturas::all()->pluck('descripcion','id');
         
@@ -117,7 +116,6 @@ class RegistroCompraController extends AppBaseController
                     ->with('tipo_compras', $tipo_compras)
                     ->with('Compradores', $Compradores)
                     ->with('Vendedores', $Vendedores)
-                    ->with('deduccion', $deduccion)
                     ->with('ResponsableCompras', $ResponsableCompras)
                     ->with('LugarProcedencia', $LugarProcedencia)
                     ->with('Pregunta_licencia', $Pregunta_licencia)
@@ -336,11 +334,21 @@ class RegistroCompraController extends AppBaseController
         $CompraLoteGanado = CompraLoteGanado::where('users_id',Auth::id())
                ->where('fincas_id',$data['finca'])->get();
 
+        $estadistica = DB::table('estaditica_compra')
+                    ->join('tipo_ganados', 'estaditica_compra.tipo_ganados_id', '=', 'tipo_ganados.id')
+                    ->where('id_registro_compras',$id)
+                    ->select('estaditica_compra.*','tipo_ganados.descripcion as tipo')
+                    ->get();
+
+        $deduccion=deduccion::all()->pluck('descripcion','id');
+
         return view('registro_compras.add_ficha')
                 ->with('registroCompras', $registroCompras)
                 ->with('Fincas', $Fincas)
                 ->with('tipo_ganado', $tipo_ganado)
                 ->with('compra_lote', $compra_lote)
+                ->with('estadistica', $estadistica)
+                ->with('deduccion', $deduccion)
                 ->with('CompraLoteGanado', $CompraLoteGanado);
     }
 
@@ -353,6 +361,8 @@ class RegistroCompraController extends AppBaseController
         $CompraLote->compra_lote_id = $request->registro_compra;
         $CompraLote->precio = $request->precio;
         $CompraLote->observaciones = $request->observaciones;
+        $CompraLote->deduccions_id = $request->deduccions_id;
+        $CompraLote->deduccion = $request->deduccion;
         $CompraLote->fincas_id = $data['finca'];
         $CompraLote->estado_lote_id = 1;
         $CompraLote->users_id = Auth::id();
@@ -372,20 +382,20 @@ class RegistroCompraController extends AppBaseController
 
                 $data = Session::all();
                 $CompraLoteGanado = new CompraLoteGanado;
-                $CompraLoteGanado->peso = $request->peso;
+                $CompraLoteGanado->peso = $request->peso/$request->cantidad;
                 $CompraLoteGanado->observaciones = $request->observaciones;
                 $CompraLoteGanado->fincas_id = $data['finca'];
                 $CompraLoteGanado->users_id = Auth::id();
-                $CompraLoteGanado->compra_lote_id = $request->registro_compra;
+                $CompraLoteGanado->compra_lote_id = $request->lote;
             
                 $CompraLoteGanado->save();
             }
 
             Flash::success('Animales Guardado exitosamente.');
 
-            return redirect()->back();
-        
+            //DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
 
+            return redirect()->back();
 
         }else{
 
@@ -395,11 +405,14 @@ class RegistroCompraController extends AppBaseController
             $CompraLoteGanado->observaciones = $request->observaciones;
             $CompraLoteGanado->fincas_id = $data['finca'];
             $CompraLoteGanado->users_id = Auth::id();
-            $CompraLoteGanado->compra_lote_id = $request->registro_compra;
+            $CompraLoteGanado->compra_lote_id = $request->lote;
             //return $CompraLoteGanado;
             $CompraLoteGanado->save();
 
             Flash::success('Animal Guardado exitosamente.');
+
+            //DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
+
 
             return redirect()->back();
 
@@ -418,11 +431,13 @@ class RegistroCompraController extends AppBaseController
         return redirect()->back();
     }
 
-    public function delete_animal($id)
+    public function delete_animal(Request $request,$id)
     {
 
         $CompraLoteGanado = CompraLoteGanado::find($id);
         $CompraLoteGanado->delete();
+
+        //DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
 
         Flash::success('Registro de Animal Borrado con exito.');
 
