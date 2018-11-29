@@ -27,6 +27,7 @@ class CreateEstaditicaCompraTable extends Migration
             $table->float('prome_peso');
             $table->float('peso_total');
             $table->float('valor_total');
+            $table->float('valor_porce_deduc');
             $table->float('descuento');
             $table->float('valor_pagar');
             $table->timestamps();

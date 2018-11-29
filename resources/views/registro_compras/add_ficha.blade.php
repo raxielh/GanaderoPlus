@@ -13,11 +13,11 @@ table td {
 }
 </style>
 <section class="content-header">
-  <h4 class="pull-left"><a href="{!! route('registroCompras.index') !!}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Atras</a> Registro de Compra</h4> 
+  <h4 class="pull-left"><a href="{!! route('registroCompras.index') !!}" class="btn btn-danger"><i class="fa fa-arrow-left"></i> Atras</a> Registro de Compra</h4>
   <div style="display: none;">
   @foreach ($registroCompras as $rcc)
     {{ $tipo=$rcc->tipo_compras_id }}
-  @endforeach  
+  @endforeach
   </div>
 
 </section>
@@ -35,7 +35,7 @@ table td {
                   <div class="card">
                     <div class="card-body">
                       <h4 style="text-align: center;font-weight: bold;">Numero de Registro de Compra ( {{($rc->numero_compra)}} )</h4>
-                      <h4 class="card-title" style="color: #3ca2e0">Información General de compra 
+                      <h4 class="card-title" style="color: #3ca2e0">Información General de compra
                           @if ($rc->tipo_compras_id  === 2)
                             Uno a Uno
                           @else
@@ -80,9 +80,16 @@ table td {
                                 <th>Valor total lote</th>
                                 <th>Deducción</th>
                                 <th>Valor Deducción</th>
+                                <th>Deducción</th>
                                 <th>Valor a Pagar</th>
                               </tr>
+                              @php
+                                $total=0;
+                              @endphp
                               @foreach ($estadistica as $estadistica)
+                              @php
+                                  $total=$total+$estadistica->valor_pagar;
+                              @endphp
                               <tr>
                                 <td>{{$estadistica->tipo}}</td>
                                 <td>{{$estadistica->numer_gan}}</td>
@@ -91,9 +98,9 @@ table td {
                                 <td>{{number_format($estadistica->precio_kilo)}}</td>
                                 <td>{{number_format($estadistica->valor_total)}}</td>
                                 <td>{{$estadistica->descdeducion}}</td>
-                                <td>{{$estadistica->deduccion}}</td>
-                                <td>{{$estadistica->descuento}}</td>
-                                <td>{{$estadistica->valor_total}}</td>
+                                <td>{{number_format($estadistica->deduccion)}}</td>
+                                <td>{{number_format($estadistica->descuento)}}</td>
+                                <td>{{number_format($estadistica->valor_pagar)}}</td>
                               </tr>
                               @endforeach
                               <tr>
@@ -106,17 +113,17 @@ table td {
                                 <td></td>
                                 <td></td>
                                 <td><strong>Total</strong></td>
-                                <td>{{number_format(0)}}</td>
+                                <td><strong>{{number_format($total)}}</strong></td>
                               </tr>
                             </tbody>
                           </table>
                         </div>
                       </div>
-                      
+
                       <div class="row" style="margin-top: 1em">
                         <?php $suma_pesos_total=0; ?>
                         <?php $suma_pesos_promedio=0; ?>
-                      <?php $cl=$compra_lote; 
+                      <?php $cl=$compra_lote;
                       $pesos = array();
                       $cantidad = array();
                       ?>
@@ -128,10 +135,10 @@ table td {
                             <p style="margin-top: 10px;font-weight: bold">Lote de {{$compra_lote->descripcion}}</p>
 
                               @if ($rc->tipo_compras_id  === 2)
-                              
+
 
                                       <h6 class="modal-title">Nuevo Animal</h6>
-  
+
                                       {!! Form::open(['route' => 'add_lote_ganado']) !!}
                                         <div class="form-group">
                                           <input type="number" name="peso" required="" placeholder="Peso en Kilos" class="form-control" value="{{old('peso')}}" id="<?php echo 'p'.$y;?>">
@@ -150,8 +157,8 @@ table td {
                                           <input type="hidden" name="registro_compra" value="{{$rc->id}}">
                                         {!! Form::button('<i class="mdi mdi-delete"></i> Borrar lote', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Estas seguro de borrar este lote?')"]) !!}
                                       {!! Form::close() !!}
-                             
-                              
+
+
                               @else
                               {!! Form::open(['route' => ['lote.destroy', $compra_lote->id], 'method' => 'delete']) !!}
                               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_lote_ganado_{{ $compra_lote->id}}"><i class="mdi mdi-plus"></i>Agregar Animal</button>
@@ -234,7 +241,7 @@ table td {
                             <?php } ?>
                             <p style="text-align: right;margin-bottom: -3px;" ><strong>Cantidad Animales :</strong> {{$x}}</p>
                             <p style="text-align: right;margin-bottom: -3px;"><strong>Precio del Kilo: </strong> {{number_format($compra_lote->precio)}}</p>
-                            <p style="text-align: right;margin-bottom: -3px;"><strong>Deduccion: </strong> 
+                            <p style="text-align: right;margin-bottom: -3px;"><strong>Deduccion: </strong>
                               <?php if($compra_lote->deduccions_id==1){echo '%';}else{echo '$';} ?>
                               {{number_format($compra_lote->deduccion)}}</p>
                             <p style="text-align: right;margin-bottom: -3px;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
@@ -305,7 +312,7 @@ table td {
       </div>
     </div>
 
-@endforeach    
+@endforeach
 
 <script>
   $(function() {
@@ -326,7 +333,7 @@ table td {
         $('#delete_documento').click(function(event) {
             $("#documento").val(null);
         });
-    
+
         if($('#deduccions_id').val()==1){
             console.log(1);
             $("#deduccion_v").attr("placeholder", "Porcentaje deduccion");
@@ -349,11 +356,11 @@ table td {
 
         if($('#pregunta_licencias_id').val()==1){
             mostrar();
-        }else{                
+        }else{
             ocultar();
         }
 
-        
+
         if($('#pregunta_facturas_id').val()==1){
             $('#f').show();
             $('#df').show();

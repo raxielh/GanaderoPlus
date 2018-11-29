@@ -53,8 +53,8 @@ class RegistroCompraController extends AppBaseController
         //$registroCompras = $this->registroCompraRepository->all();
 
         $data = Session::all();
-        
-        
+
+
         $registroCompras = DB::table('registro_compras')
                     ->join('lugar_procedencias', 'registro_compras.lugar_procedencia_id', '=', 'lugar_procedencias.id')
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
@@ -66,7 +66,7 @@ class RegistroCompraController extends AppBaseController
                     ->orderByRaw('registro_compras.id DESC')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
-        
+
 
         #$registroCompras = DB::table('registro_compras')->get();
 
@@ -99,7 +99,7 @@ class RegistroCompraController extends AppBaseController
         $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
         $Pregunta_licencia=Pregunta_licencia::all()->pluck('descripcion','id');
         $PreguntaFacturas=PreguntaFacturas::all()->pluck('descripcion','id');
-        
+
         $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
         $Compradores=Compradores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
         $Vendedores = Vendedores::all()->where('fincas_id',$data['finca'])->pluck('nombre','id');
@@ -223,11 +223,11 @@ class RegistroCompraController extends AppBaseController
         $Hierro=Hierro::all()->where('fincas_id',$data['finca']);
 
         $tipo_compras=TipoCompra::all()->pluck('descripcion','id');
-        
+
         $empresa = Empresa::all()->where('fincas_id',$data['finca'])->pluck('razon_social','id');
         $PreguntaFacturas=PreguntaFacturas::all()->pluck('descripcion','id');
 
-        return view('registro_compras.edit')    
+        return view('registro_compras.edit')
                     ->with('registroCompra', $registroCompra)
                     ->with('Fincas', $Fincas)
                     ->with('estado_compra', $estado_compra)
@@ -309,7 +309,7 @@ class RegistroCompraController extends AppBaseController
     {
 
         $data = Session::all();
-        
+
         $registroCompras = DB::table('registro_compras')
                     ->join('lugar_procedencias', 'registro_compras.lugar_procedencia_id', '=', 'lugar_procedencias.id')
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
@@ -387,13 +387,13 @@ class RegistroCompraController extends AppBaseController
                 $CompraLoteGanado->fincas_id = $data['finca'];
                 $CompraLoteGanado->users_id = Auth::id();
                 $CompraLoteGanado->compra_lote_id = $request->lote;
-            
+
                 $CompraLoteGanado->save();
             }
 
             Flash::success('Animales Guardado exitosamente.');
 
-            //DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
+            DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
 
             return redirect()->back();
 
@@ -411,7 +411,7 @@ class RegistroCompraController extends AppBaseController
 
             Flash::success('Animal Guardado exitosamente.');
 
-            //DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
+            DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
 
 
             return redirect()->back();
@@ -437,7 +437,7 @@ class RegistroCompraController extends AppBaseController
         $CompraLoteGanado = CompraLoteGanado::find($id);
         $CompraLoteGanado->delete();
 
-        //DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
+        DB::select('SELECT * FROM pro_estadistica_compra('.$request->registro_compra.','.$request->lote.')');
 
         Flash::success('Registro de Animal Borrado con exito.');
 
@@ -448,7 +448,7 @@ class RegistroCompraController extends AppBaseController
     {
 
         $data = Session::all();
-        
+
         $registroCompras = DB::table('registro_compras')
                     ->join('lugar_procedencias', 'registro_compras.lugar_procedencia_id', '=', 'lugar_procedencias.id')
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')

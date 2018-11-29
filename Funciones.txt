@@ -1,19 +1,11 @@
 Funciones=====================
-
 _____________________________ Estadistica Compra _____________________________________
-
-CREATE OR REPLACE FUNCTION public.pro_estadistica_compra (
-  p_id_registrocompra integer,
-  p_id_compralote integer,
-  out idmesnaje varchar,
-  out mensaje varchar,
-  out tipo varchar,
-  out mensajeuser varchar
-)
-RETURNS record AS
-$body$
+CREATE OR REPLACE FUNCTION public.pro_estadistica_compra(p_id_registrocompra integer, p_id_compralote integer, OUT idmesnaje character varying, OUT mensaje character varying, OUT tipo character varying, OUT mensajeuser character varying)
+ RETURNS record
+ LANGUAGE plpgsql
+AS $function$
 DECLARE
- 
+
 
 BEGIN
 
@@ -23,13 +15,13 @@ BEGIN
     mensaje =   'OK, Estadisticas Actualizadas '||'.('||now()||')';
     idmesnaje ='1';
     tipo='alert-info';
-   
+
 delete from estaditica_compra
 where id_registro_compras=p_id_registrocompra
 and id_compra_lote=  p_id_compralote ;
 
-   
- 
+
+
   insert into estaditica_compra(fincas_id,
 tipo_ganados_id,
 id_registro_compras,
@@ -42,56 +34,52 @@ numer_gan,
 prome_peso,
 peso_total,
 valor_total,
+valor_porce_deduc,
 descuento,
 valor_pagar)
-    SELECT  rc.fincas_id,cl.tipo_ganados_id  , rc.id id_registro_compras,cl.id id_registro_compras, cl.precio precio_kilo ,    
-    rc.deduccion, rc.deduccions_id,de.descripcion descdeducion,
+
+ SELECT  rc.fincas_id,cl.tipo_ganados_id  , rc.id id_registro_compras,cl.id id_registro_compras, cl.precio precio_kilo ,
+    cl.deduccion, cl.deduccions_id,de.descripcion descdeducion,
     count(*)numer_gan,sum( clt.peso::numeric)/count(*) prome_peso,
     sum( clt.peso::numeric) peso_total,
     sum( clt.peso::numeric)*cl.precio valor_total,
-    
-    
- CASE WHEN rc.deduccions_id=1 THEN  round((sum( clt.peso::numeric)*cl.precio)*(( rc.deduccion::numeric /100)::numeric))
-      WHEN rc.deduccions_id=2 THEN rc.deduccion
+    cl.deduccion valor_porce_deduc,
+
+ CASE WHEN cl.deduccions_id=1 THEN  round((sum( clt.peso::numeric)*cl.precio)*(( cl.deduccion::numeric /100)::numeric))
+      WHEN cl.deduccions_id=2 THEN cl.deduccion
       else 0
-             
+
 END descuento,
 
- CASE WHEN rc.deduccions_id=1 THEN  round((sum( clt.peso::numeric)*cl.precio)-( rc.deduccion))
-      WHEN rc.deduccions_id=2 THEN 0
+ CASE WHEN cl.deduccions_id=1 THEN  round((sum( clt.peso::numeric)*cl.precio)*(1-( cl.deduccion::numeric /100)::numeric))
+      WHEN cl.deduccions_id=2 THEN round((sum( clt.peso::numeric)*cl.precio)-( cl.deduccion))
       else 0
-             
+
 END valor_pagar
 FROM  registro_compras rc,
        deduccions de,
       compra_lote cl,
       compra_lote_ganado clt
-   where rc.id=p_id_registrocompra
-   
+   where  1=1
+   and rc.id=p_id_registrocompra
+
     and cl.id =  p_id_compralote
-   and rc.deduccions_id=de.id
+   and cl.deduccions_id=de.id
    and cl.compra_lote_id =rc.id
-   and clt.compra_lote_id=cl.id  
-   group by rc.fincas_id,cl.tipo_ganados_id  ,rc.id,cl.id, cl.precio,rc.deduccion,rc.deduccions_id,de.descripcion;
+   and clt.compra_lote_id=cl.id
+   group by rc.fincas_id,cl.tipo_ganados_id  ,rc.id,cl.id, cl.precio,cl.deduccion,cl.deduccions_id,de.descripcion;
+
 
 
 	EXCEPTION WHEN  others THEN
           mensaje = SQLERRM||'Hora ultima Transaccción("'||now()||' ")';
        mensajeuser = public.fun_nombreconstein(SQLERRM)|| 'Hora ultima Transaccción("'||now() ||' ")';
        idmesnaje ='0';
-       tipo='alert-danger';   
-	   
- 
+       tipo='alert-danger';
+
+
  end;
 
 
 END;
-$body$
-LANGUAGE 'plpgsql'
-VOLATILE
-CALLED ON NULL INPUT
-SECURITY INVOKER
-COST 100;
-
-ALTER FUNCTION public.pro_estadistica_compra (p_id_registrocompra integer, p_id_compralote integer, out idmesnaje varchar, out mensaje varchar, out tipo varchar, out mensajeuser varchar)
-  OWNER TO postgres;
+$function$

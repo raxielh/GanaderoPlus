@@ -32,7 +32,7 @@
         font-weight: 600;
         text-transform: uppercase;
         display:inline-block;
-        margin: 40px 8px 10px 8px; 
+        margin: 40px 8px 10px 8px;
         color: #cccccc;
       }
 
@@ -43,7 +43,7 @@
       .wrapper {
         display: flex;
         align-items: center;
-        flex-direction: column; 
+        flex-direction: column;
         justify-content: center;
         width: 100%;
         min-height: 100%;
@@ -262,7 +262,7 @@
 
       *:focus {
           outline: none;
-      } 
+      }
 
       #icon {
         width:60%;
@@ -286,10 +286,10 @@
 
       <!-- Login Form -->
       <form method="post" action="{{ url('/login') }}">
-        
+
         {!! csrf_field() !!}
 
-        <input type="text" id="login" class="fadeIn second" name="email" value="{{ old('email') }}" placeholder="Correo">
+        <input type="text" id="login" class="fadeIn second" name="email" value="{{ old('email') }}" placeholder="CORREO">
         @if ($errors->has('email'))
           <span class="help-block">
             <strong>{{ $errors->first('email') }}</strong>
