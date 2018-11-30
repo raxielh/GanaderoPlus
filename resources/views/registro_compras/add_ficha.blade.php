@@ -98,7 +98,7 @@ table td {
                                 <td>{{number_format($estadistica->precio_kilo)}}</td>
                                 <td>{{number_format($estadistica->valor_total)}}</td>
                                 <td>{{$estadistica->descdeducion}}</td>
-                                <td>{{number_format($estadistica->deduccion)}}</td>
+                                <td>{{number_format($estadistica->deduccion,2)}}</td>
                                 <td>{{number_format($estadistica->descuento)}}</td>
                                 <td>{{number_format($estadistica->valor_pagar)}}</td>
                               </tr>

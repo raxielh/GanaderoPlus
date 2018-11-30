@@ -44,10 +44,9 @@ class IngresoAnimalController extends AppBaseController
                ->where('id',$data['finca'])->get();
 
         $ingresoAnimals = DB::table('ingreso_animals')
-                    ->join('potreros', 'ingreso_animals.potreros_id', '=', 'potreros.id')
                     ->join('registro_compras', 'ingreso_animals.registro_compra_id', '=', 'registro_compras.id')
                     ->where('ingreso_animals.fincas_id',$data['finca'])
-                    ->select('ingreso_animals.*','potreros.codigo as potreros','registro_compras.factura')
+                    ->select('ingreso_animals.*','registro_compras.numero_compra')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
 
@@ -66,7 +65,7 @@ class IngresoAnimalController extends AppBaseController
         $data = Session::all();
         //$compra = RegistroCompra::all()->where('fincas_id',$data['finca'])->pluck('fecha_compra','id');
         $compra =DB::table('registro_compras')
-            ->select(DB::raw("CONCAT (factura,' | ',fecha_compra)AS des"), 'id')
+            ->select(DB::raw("CONCAT (numero_compra,' | ',fecha_compra)AS des"), 'id')
             ->pluck('des','id');
         #dd($compra);
         $potreros = Potreros::all()->where('fincas_id',$data['finca'])->pluck('codigo','id');
@@ -92,7 +91,7 @@ class IngresoAnimalController extends AppBaseController
         $input['users_id']=Auth::id();
 
         $input['fincas_id']=$data['finca'];
-        
+
         $ingresoAnimal = $this->ingresoAnimalRepository->create($input);
 
         Flash::success('Ingreso Animal Guardado exitosamente.');
@@ -117,10 +116,9 @@ class IngresoAnimalController extends AppBaseController
         //$ingresoAnimal = $this->ingresoAnimalRepository->findWithoutFail($id);
 
         $ingresoAnimal = DB::table('ingreso_animals')
-                    ->join('potreros', 'ingreso_animals.potreros_id', '=', 'potreros.id')
                     ->join('registro_compras', 'ingreso_animals.registro_compra_id', '=', 'registro_compras.id')
                     ->where('ingreso_animals.fincas_id',$data['finca'])
-                    ->select('ingreso_animals.*','potreros.codigo as potreros','registro_compras.factura')
+                    ->select('ingreso_animals.*','registro_compras.numero_compra')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
 
@@ -130,11 +128,21 @@ class IngresoAnimalController extends AppBaseController
                     ->select('compra_lote.*','tipo_ganados.descripcion')
                     ->get();
 
-        //dd($compra_lote
+        $lotes=DB::table('estaditica_compra')
+                    ->join('compra_lote', 'estaditica_compra.id_compra_lote', '=', 'compra_lote.id')
+                    ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
+                    ->where('id_registro_compras',$ingresoAnimal[0]->registro_compra_id)
+                    ->select('estaditica_compra.*','compra_lote.*','tipo_ganados.descripcion')
+                    ->get();
+
+        //dd($lotes);
+
 
         $detalle =DB::table('detalle_ingreso_animals')->where('detalle_ingreso_animals.fincas_id',$data['finca'])->get();
 
-        //dd($detalle);
+        //dd($lotes);
+
+        $potreros = Potreros::all()->where('fincas_id',$data['finca'])->pluck('codigo','id');
 
         if (empty($ingresoAnimal)) {
             Flash::error('Ingreso Animal not found');
@@ -142,10 +150,14 @@ class IngresoAnimalController extends AppBaseController
             return redirect(route('ingresoAnimals.index'));
         }
 
+        $tipo_ganado = DB::table('tipo_ganados')->pluck('descripcion','id');
         return view('ingreso_animals.show')
                                             ->with('ingresoAnimal', $ingresoAnimal)
                                             ->with('Fincas', $Fincas)->with('detalle', $detalle)
-                                            ->with('compra_lote', $compra_lote);
+                                            ->with('compra_lote', $compra_lote)
+                                            ->with('tipo_ganado', $tipo_ganado)
+                                            ->with('potreros', $potreros)
+                                            ->with('lotes', $lotes);
     }
 
     /**
@@ -170,10 +182,10 @@ class IngresoAnimalController extends AppBaseController
                ->where('id',$data['finca'])->get();
 
         $compra =DB::table('registro_compras')
-            ->select(DB::raw("CONCAT (factura,' | ',fecha_compra)AS des"), 'id')
+            ->select(DB::raw("CONCAT (numero_compra,' | ',fecha_compra)AS des"), 'id')
             ->pluck('des','id');
 
-        $potreros = Potreros::all()->where('fincas_id',$data['finca'])->pluck('codigo','id');
+
 
         return view('ingreso_animals.edit')->with('ingresoAnimal', $ingresoAnimal)->with('Fincas', $Fincas)->with('compra', $compra)->with('potreros', $potreros);
     }
@@ -230,7 +242,7 @@ class IngresoAnimalController extends AppBaseController
     public function ingreso(Request $request)
     {
 
-       
+
 
         $data = Session::all();
         $IngresoLote = new IngresoLote;

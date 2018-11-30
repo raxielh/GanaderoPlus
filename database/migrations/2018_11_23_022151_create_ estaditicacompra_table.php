@@ -20,7 +20,7 @@ class CreateEstaditicaCompraTable extends Migration
             $table->integer('id_registro_compras')->unsigned();
             $table->integer('id_compra_lote')->unsigned();
             $table->integer('precio_kilo')->unsigned();
-            $table->integer('deduccion')->unsigned();
+            $table->float('deduccion')->unsigned();
             $table->integer('deduccions_id')->unsigned();
             $table->string('descdeducion', 100);
             $table->float('numer_gan');

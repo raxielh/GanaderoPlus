@@ -2,7 +2,6 @@
     <thead>
         <tr>
             <th>Fecha</th>
-        <th>Potrero</th>
         <th>Registro de Compra</th>
             <th width="90px">Acciones</th>
         </tr>
@@ -11,8 +10,7 @@
     @foreach($ingresoAnimals as $ingresoAnimal)
         <tr>
             <td>{!! $ingresoAnimal->fecha !!}</td>
-            <td>{!! $ingresoAnimal->potreros !!}</td>
-            <td>{!! $ingresoAnimal->factura !!}</td>
+            <td>{!! $ingresoAnimal->numero_compra!!}</td>
             <td>
                 {!! Form::open(['route' => ['ingresoAnimals.destroy', $ingresoAnimal->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

@@ -16,12 +16,10 @@ class CreateIngresoAnimalsTable extends Migration
         Schema::create('ingreso_animals', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
-            $table->integer('potreros_id')->unsigned();
             $table->integer('registro_compra_id')->unsigned();
             $table->integer('fincas_id')->unsigned();
             $table->integer('users_id')->unsigned();
             $table->timestamps();
-            $table->foreign('potreros_id')->references('id')->on('potreros');
             $table->foreign('registro_compra_id')->references('id')->on('registro_compras');
             $table->foreign('fincas_id')->references('id')->on('fincas');
             $table->foreign('users_id')->references('id')->on('users');

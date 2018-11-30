@@ -8,12 +8,6 @@
     @endif
 </div>
 
-<!-- Potreros Id Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('potreros_id', 'Potrero:') !!}
-    {!! Form::select('potreros_id',$potreros, null, ['class' => 'form-control']) !!}
-</div>
-
 <!-- Registro Compra Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('registro_compra_id', 'Registro de Compra:') !!}

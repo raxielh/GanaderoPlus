@@ -69,8 +69,6 @@ FROM  registro_compras rc,
    and clt.compra_lote_id=cl.id
    group by rc.fincas_id,cl.tipo_ganados_id  ,rc.id,cl.id, cl.precio,cl.deduccion,cl.deduccions_id,de.descripcion;
 
-
-
 	EXCEPTION WHEN  others THEN
           mensaje = SQLERRM||'Hora ultima Transaccción("'||now()||' ")';
        mensajeuser = public.fun_nombreconstein(SQLERRM)|| 'Hora ultima Transaccción("'||now() ||' ")';

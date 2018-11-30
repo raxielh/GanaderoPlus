@@ -19,12 +19,11 @@ class IngresoAnimal extends Model
 {
 
     public $table = 'ingreso_animals';
-    
+
 
 
     public $fillable = [
         'fecha',
-        'potreros_id',
         'registro_compra_id',
         'fincas_id',
         'users_id'
@@ -37,7 +36,6 @@ class IngresoAnimal extends Model
      */
     protected $casts = [
         'fecha' => 'date',
-        'potreros_id' => 'integer',
         'registro_compra_id' => 'integer',
         'fincas_id' => 'integer',
         'users_id' => 'integer'
@@ -50,9 +48,8 @@ class IngresoAnimal extends Model
      */
     public static $rules = [
         'fecha' => 'required',
-        'potreros_id' => 'required',
         'registro_compra_id' => 'required'
     ];
 
-    
+
 }
