@@ -25,6 +25,14 @@ class CreateCompradoresTable extends Migration
             $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();
         });
+        DB::table('compradores')->insert([
+            'nombre' => 'Cristian Hoyos',
+            'identificacion' => '1067879307',
+            'direccion' => 'cr 8c',
+            'contacto' => '310676',
+            'fincas_id' => '1',
+            'users_id' => '1',
+        ]);
     }
 
     /**

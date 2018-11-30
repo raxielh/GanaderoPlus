@@ -24,6 +24,14 @@ class CreateTableFinca extends Migration
             $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();
         });
+
+        DB::table('fincas')->insert([
+            'nombre' => 'Prueba',
+            'descripcion' => 'Finca de Prueba',
+            'lat' => '8.768501',
+            'lon' => '-75.886583',
+            'users_id' => 1,
+        ]);
     }
 
     /**

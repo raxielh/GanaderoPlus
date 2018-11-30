@@ -26,6 +26,13 @@ class CreateEmpresasTable extends Migration
             $table->foreign('fincas_id')->references('id')->on('fincas');
             $table->foreign('users_id')->references('id')->on('users');
         });
+
+        DB::table('empresas')->insert([
+            'nit' => '678686',
+            'razon_social' => 'Empresa EJEMPLO',
+            'fincas_id' => '1',
+            'users_id' => '1',
+        ]);
     }
 
     /**

@@ -22,6 +22,13 @@ class CreateLugarProcedenciasTable extends Migration
             $table->foreign('fincas_id')->references('id')->on('fincas');
             $table->foreign('users_id')->references('id')->on('users');
         });
+
+        DB::table('lugar_procedencias')->insert([
+            'descripcion' => 'Subastar',
+            'fincas_id' => '1',
+            'users_id' => 1,
+        ]);
+
     }
 
     /**

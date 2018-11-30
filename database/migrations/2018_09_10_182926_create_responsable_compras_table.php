@@ -25,6 +25,14 @@ class CreateResponsableComprasTable extends Migration
             $table->foreign('users_id')->references('id')->on('users');
             $table->timestamps();
         });
+        DB::table('responsable_compras')->insert([
+            'nombre' => 'Julio Hoyos',
+            'identificacion' => '1067879304',
+            'direccion' => 'cr 8c',
+            'contacto' => '310676',
+            'fincas_id' => '1',
+            'users_id' => 1,
+        ]);
     }
 
     /**

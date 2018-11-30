@@ -1,6 +1,6 @@
 @foreach ($ingresoAnimal as $ingresoAnimal)
 <div class="row">
-    <div class="col-md-6 col-sm-4 col-xs-6">
+    <div class="col-md-6 col-sm-6 col-xs-6">
         <div class="form-group">
             <p><strong>Fecha de Ingreso:</strong> {!! $ingresoAnimal->fecha !!}</p>
         </div>
@@ -39,6 +39,7 @@
                   @php
                       $total=$total+$lote->valor_total;
                       $c=$c+$lote->numer_gan;
+                      $p=$p+$lote->peso_total;
                   @endphp
                   <tr>
                     <td>{{$lote->descripcion}}</td>
@@ -69,13 +70,39 @@
 
 <div class="row">
     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
+</div>
 
+<div class="row">
 
+<?php $y=0; ?>
+@foreach ($lotes2 as $lotes2)
+<?php $y=$y+1; ?>
+<div class="col-md-3 col-sm-3 col-xs-3">
 
+    <h6 class="modal-title">Nuevo Animal</h6>
 
-
+    {!! Form::open(['route' => 'add_lote_ganado']) !!}
+        <div class="form-group">
+            <input type="number" name="peso" required="" placeholder="Peso en Kilos" class="form-control" value="{{old('peso')}}" id="<?php echo 'p'.$y;?>">
+            <script>document.getElementById("<?php echo 'p'.$y;?>").focus();</script>
+            <textarea name="observaciones" placeholder="Observaciones" class="form-control"></textarea>
+            <input type="hidden" name="lote" value="">
+            <input type="hidden" name="registro_compra" value="">
+            <div style="margin-top: 10px"></div>
+            {!! Form::submit('Agregar', ['class' => 'btn btn-primary']) !!}
+        </div>
+    {!! Form::close() !!}
 
 </div>
+@endforeach
+
+</div>
+
+
+
+
+
+
 
 <div id="add_lote" class="modal fade" role="dialog">
         <div class="modal-dialog modal-xs">
@@ -90,7 +117,9 @@
                   {!! Form::select('tipo_ganado',$tipo_ganado, null, ['class' => 'form-control','required'=>'true']) !!} <br>
                   {!! Form::label('potreros', 'Potreros:') !!}
                   {!! Form::select('potreros',$potreros, null, ['class' => 'form-control','required'=>'true']) !!} <br>
+                  <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Observaciones"></textarea>
                   <br>
+                  <input type="hidden" name="registro_compra_lote" value="{{$ingresoAnimal->id}}">
                   {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
                   <a href="#" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-close"></i> Cerrar</a>
                 </div>

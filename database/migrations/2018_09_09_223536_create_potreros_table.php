@@ -25,6 +25,28 @@ class CreatePotrerosTable extends Migration
             $table->foreign('fincas_id')->references('id')->on('fincas');
             $table->foreign('users_id')->references('id')->on('users');
         });
+
+        DB::table('potreros')->insert([
+            'codigo' => 'Potrero 1',
+            'area' => '120',
+            'estado_id' => '1',
+            'fincas_id' => '1',
+            'users_id' => '1',
+        ]);
+        DB::table('potreros')->insert([
+            'codigo' => 'Potrero 2',
+            'area' => '170',
+            'estado_id' => '1',
+            'fincas_id' => '1',
+            'users_id' => '1',
+        ]);
+        DB::table('potreros')->insert([
+            'codigo' => 'Potrero 3',
+            'area' => '220',
+            'estado_id' => '1',
+            'fincas_id' => '1',
+            'users_id' => '1',
+        ]);
     }
 
     /**
