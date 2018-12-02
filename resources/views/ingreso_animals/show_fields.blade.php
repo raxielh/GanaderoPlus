@@ -58,6 +58,14 @@
                     <td><strong>Total</strong></td>
                     <td><strong>{{number_format($total)}}</strong></td>
                   </tr>
+                  <tr>
+                    <td><strong>Animales Ingresados</strong></td>
+                    <td><strong>{{number_format($animales_ingresados)}}</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Faltan por Ingresar</strong></td>
+                    <td><strong>{{number_format($c-$animales_ingresados)}}</strong></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -71,27 +79,76 @@
 <div class="row">
     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
 </div>
-
+<hr>
 <div class="row">
 
 <?php $y=0; ?>
 @foreach ($lotes2 as $lotes2)
 <?php $y=$y+1; ?>
+
 <div class="col-md-3 col-sm-3 col-xs-3">
 
-    <h6 class="modal-title">Nuevo Animal</h6>
+    <div id="btn-{!! $lotes2->id !!}">
+        {!! Form::open(['route' => ['ingreso.destroy', $lotes2->id], 'method' => 'delete']) !!}
+        <input type="hidden" name="lote" value="{{$lotes2->id}}">
+        {!! Form::button('<i class="mdi mdi-delete"></i> Borrar este lote', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Estas seguro de borrar este lote?')"]) !!}
+        {!! Form::close() !!}
+    </div>
 
-    {!! Form::open(['route' => 'add_lote_ganado']) !!}
-        <div class="form-group">
-            <input type="number" name="peso" required="" placeholder="Peso en Kilos" class="form-control" value="{{old('peso')}}" id="<?php echo 'p'.$y;?>">
-            <script>document.getElementById("<?php echo 'p'.$y;?>").focus();</script>
-            <textarea name="observaciones" placeholder="Observaciones" class="form-control"></textarea>
-            <input type="hidden" name="lote" value="">
-            <input type="hidden" name="registro_compra" value="">
-            <div style="margin-top: 10px"></div>
-            {!! Form::submit('Agregar', ['class' => 'btn btn-primary']) !!}
+
+    @if ($c-$animales_ingresados>0)
+        <h5 class="modal-title">Nuevo Animal</h5>
+        {!! Form::open(['route' => 'add_ingreso_ganado']) !!}
+            <div class="form-group">
+                <input type="number" name="peso" required="" placeholder="Peso en Kilos" class="form-control" value="{{old('peso')}}" id="<?php echo 'p'.$y;?>">
+                <script>document.getElementById("<?php echo 'p'.$y;?>").focus();</script>
+                <textarea name="observaciones" placeholder="Observaciones" class="form-control"></textarea>
+                <input type="hidden" name="detalle_ingreso1" value="{!! $lotes2->id !!}">
+                <input type="hidden" name="registro_compra" value="{!! $lotes2->registro_compra_lote_id !!}">
+                <div style="margin-top: 10px"></div>
+                {!! Form::submit('Agregar', ['class' => 'btn btn-primary']) !!}
+            </div>
+        {!! Form::close() !!}
+    @endif
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">No</th>
+                        <th style="text-align: center;">Peso</th>
+                        <th style="text-align: center;">Observaciones</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php $x=0; ?>
+                @foreach ($animales as $a)
+
+                    @if ($a->detalle_ingreso_animals_id===$lotes2->id)
+                        <tr>
+                            <td>{{$x=$x+1}}</td>
+                            <td>{{$a->peso}}</td>
+                            <td>{{$a->observaciones}}</td>
+                            <td width="10%">
+                            {!! Form::open(['route' => ['animal_ingreso.destroy', $a->id], 'method' => 'delete']) !!}
+                            {!! Form::button('<i class="mdi mdi-delete"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
+                            {!! Form::close() !!}
+                            </td>
+                        </tr>
+                        <script>
+                            $('#btn-{!! $lotes2->id !!}').hide();
+                        </script>
+                    @endif
+
+                @endforeach
+                </tbody>
+            </table>
         </div>
-    {!! Form::close() !!}
+
+
+
+
 
 </div>
 @endforeach

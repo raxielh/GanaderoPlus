@@ -57,8 +57,12 @@ Route::resource('compraMedicamentos', 'CompraMedicamentoController');
 Route::get('api/buscar/precio/medicamento/{id}', 'MedicamentosController@buscar_precio');
 
 Route::resource('ingresoAnimals', 'IngresoAnimalController');
-Route::post('ingresoAnimals/ingreso', 'IngresoAnimalController@ingreso')->name('ingresar_ganado');
+Route::post('ingresoAnimals/ingreso_lote', 'IngresoAnimalController@ingreso')->name('ingresar_ganado');
+Route::post('ingresoAnimals/ingreso_animal', 'IngresoAnimalController@add_ingreso_ganado')->name('add_ingreso_ganado');
+
 Route::delete('ingresoAnimals/ingreso/{id}', 'IngresoAnimalController@delete_ingreso')->name('ingreso.destroy');
+
+Route::delete('ingresoAnimals/ingreso_animal/{id}', 'IngresoAnimalController@delete_animal_ingreso')->name('animal_ingreso.destroy');
 
 Route::resource('deduccions', 'deduccionController');
 

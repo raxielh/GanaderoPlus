@@ -14,6 +14,7 @@ use App\Models\Fincas;
 use App\Models\RegistroCompra;
 use App\Models\Potreros;
 use App\Models\IngresoLote;
+use App\Models\IngresoLoteAnimal;
 use Session;
 use Response;
 use Illuminate\Support\Facades\DB;
@@ -117,6 +118,7 @@ class IngresoAnimalController extends AppBaseController
 
         $ingreso = DB::table('ingreso_animals')
                     ->where('id',$id)
+                    ->where('fincas_id',$data['finca'])
                     ->select('registro_compra_id')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
@@ -125,13 +127,14 @@ class IngresoAnimalController extends AppBaseController
                     ->join('registro_compras', 'ingreso_animals.registro_compra_id', '=', 'registro_compras.id')
                     ->where('ingreso_animals.fincas_id',$data['finca'])
                     ->where('ingreso_animals.registro_compra_id',$ingreso[0]->registro_compra_id)
-                    ->select('ingreso_animals.*','ingreso_animals.id as ide','registro_compras.numero_compra')
+                    ->select('ingreso_animals.*','ingreso_animals.id as ide','registro_compras.numero_compra','registro_compras.id as ide')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
 
         $compra_lote = DB::table('compra_lote')
                     ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
                     ->where('compra_lote.compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('compra_lote.fincas_id',$data['finca'])
                     ->select('compra_lote.*','tipo_ganados.descripcion')
                     ->get();
 
@@ -139,16 +142,25 @@ class IngresoAnimalController extends AppBaseController
                     ->join('compra_lote', 'estaditica_compra.id_compra_lote', '=', 'compra_lote.id')
                     ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
                     ->where('id_registro_compras',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('estaditica_compra.fincas_id',$data['finca'])
                     ->select('estaditica_compra.*','compra_lote.*','tipo_ganados.descripcion')
                     ->get();
 
 
         $lotes2=DB::table('detalle_ingreso_animals')
                     ->where('registro_compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('detalle_ingreso_animals.fincas_id',$data['finca'])
                     ->get();
 
-        //dd($lotes);
+        $animales=DB::table('detalle_ingreso_animals2')
+                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('detalle_ingreso_animals2.fincas_id',$data['finca'])
+                    ->get();
 
+        $animales_ingresados=DB::table('detalle_ingreso_animals2')
+                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('detalle_ingreso_animals2.fincas_id',$data['finca'])
+                    ->count();
 
         $detalle =DB::table('detalle_ingreso_animals')->where('detalle_ingreso_animals.fincas_id',$data['finca'])->get();
 
@@ -170,6 +182,8 @@ class IngresoAnimalController extends AppBaseController
                                             ->with('tipo_ganado', $tipo_ganado)
                                             ->with('potreros', $potreros)
                                             ->with('lotes', $lotes)
+                                            ->with('animales', $animales)
+                                            ->with('animales_ingresados', $animales_ingresados)
                                             ->with('lotes2', $lotes2);
     }
 
@@ -282,9 +296,42 @@ class IngresoAnimalController extends AppBaseController
         $IngresoLote = IngresoLote::find($id);
         $IngresoLote->delete();
 
+        Flash::success('Lote Borrado con exito.');
+
+        return redirect()->back();
+    }
+
+    public function delete_animal_ingreso($id)
+    {
+
+        $IngresoLoteAnimal = IngresoLoteAnimal::find($id);
+
+        $IngresoLoteAnimal->delete();
+
         Flash::success('Animal Borrado con exito.');
 
         return redirect()->back();
+    }
+
+    public function add_ingreso_ganado(Request $request){
+
+        $data = Session::all();
+        $IngresoAnimal = new IngresoLoteAnimal;
+        $IngresoAnimal->peso = $request->peso;
+        $IngresoAnimal->observaciones = $request->observaciones;
+        $IngresoAnimal->detalle_ingreso_animals_id = $request->detalle_ingreso1;
+        $IngresoAnimal->registro_compra_lote_id = $request->registro_compra;
+        $IngresoAnimal->fincas_id = $data['finca'];
+        $IngresoAnimal->users_id = Auth::id();
+
+        //dd($IngresoAnimal);
+
+        $IngresoAnimal->save();
+
+        Flash::success('Animal Ingresado exitosamente.');
+
+        return redirect()->back();
+
     }
 
 }
