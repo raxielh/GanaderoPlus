@@ -86,19 +86,39 @@ class IngresoAnimalController extends AppBaseController
     public function store(CreateIngresoAnimalRequest $request)
     {
 
-        $input = $request->all();
-        $data = Session::all();
+        $ingresoAnimal = DB::table('ingreso_animals')
+                                ->where('registro_compra_id',$request->registro_compra_id)
+                                ->count();
 
-        $input['users_id']=Auth::id();
+        if($ingresoAnimal>0){
 
-        $input['fincas_id']=$data['finca'];
+            //dd($ingresoAnimal);
 
-        $ingresoAnimal = $this->ingresoAnimalRepository->create($input);
+            Flash::error('Este registro compra ya tiene ingreso.');
 
-        Flash::success('Ingreso Animal Guardado exitosamente.');
+            //return redirect(route('ingresoAnimals.index'));
+            return redirect('ingresoAnimals/');
 
-        //return redirect(route('ingresoAnimals.index'));
-        return redirect('ingresoAnimals/'.$ingresoAnimal->id);
+        }else{
+
+            //dd($ingresoAnimal);
+            $input = $request->all();
+
+            $data = Session::all();
+
+            $input['users_id']=Auth::id();
+
+            $input['fincas_id']=$data['finca'];
+
+            $ingresoAnimal = $this->ingresoAnimalRepository->create($input);
+
+            Flash::success('Ingreso Animal Guardado exitosamente.');
+
+            //return redirect(route('ingresoAnimals.index'));
+            return redirect('ingresoAnimals/'.$ingresoAnimal->id);
+
+        }
+
     }
 
     /**
@@ -131,6 +151,7 @@ class IngresoAnimalController extends AppBaseController
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
 
+
         $compra_lote = DB::table('compra_lote')
                     ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
                     ->where('compra_lote.compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
@@ -148,7 +169,7 @@ class IngresoAnimalController extends AppBaseController
 
 
         $lotes2=DB::table('detalle_ingreso_animals')
-                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->id)
                     ->where('detalle_ingreso_animals.fincas_id',$data['finca'])
                     ->get();
 
@@ -279,8 +300,6 @@ class IngresoAnimalController extends AppBaseController
         $IngresoLote->registro_compra_lote_id = $request->registro_compra_lote;
         $IngresoLote->fincas_id = $data['finca'];
         $IngresoLote->users_id = Auth::id();
-
-
 
         $IngresoLote->save();
 

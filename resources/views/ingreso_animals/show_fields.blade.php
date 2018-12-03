@@ -75,10 +75,11 @@
 
 
 </div>
-
+@if ($c-$animales_ingresados>0)
 <div class="row">
     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
 </div>
+@endif
 <hr>
 <div class="row">
 
@@ -122,7 +123,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php $x=0; ?>
+                <?php $x=0;$p=0; ?>
                 @foreach ($animales as $a)
 
                     @if ($a->detalle_ingreso_animals_id===$lotes2->id)
@@ -139,6 +140,9 @@
                         <script>
                             $('#btn-{!! $lotes2->id !!}').hide();
                         </script>
+                        @php
+                            $p=$p+$a->peso;
+                        @endphp
                     @endif
 
                 @endforeach
@@ -147,7 +151,7 @@
             <table class="table">
                 <tr>
                     <td><strong>Peso</strong></td>
-                    <td>{{$a->peso}}</td>
+                    <td>{{$p}}</td>
                     <td width="10%">
                 </tr>
                 <tr>
@@ -156,8 +160,14 @@
                     <td width="10%">
                 </tr>
                 <tr>
-                    <td><strong>Peso P</strong></td>
-                    <td>{{$a->peso}}</td>
+                    <td><strong>Peso Promedio</strong></td>
+                    <td>
+                        @php
+                            if($x<>0){
+                                echo number_format($p/$x);
+                            }
+                        @endphp
+                    </td>
                     <td width="10%">
                 </tr>
             </table>

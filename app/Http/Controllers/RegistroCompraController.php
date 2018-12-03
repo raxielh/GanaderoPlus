@@ -473,8 +473,16 @@ class RegistroCompraController extends AppBaseController
         $CompraLoteGanado = CompraLoteGanado::where('users_id',Auth::id())
                ->where('fincas_id',$data['finca'])->get();
 
+        $estadistica = DB::table('estaditica_compra')
+                    ->join('tipo_ganados', 'estaditica_compra.tipo_ganados_id', '=', 'tipo_ganados.id')
+                    ->where('id_registro_compras',$id)
+                    ->select('estaditica_compra.*','tipo_ganados.descripcion as tipo')
+                    ->get();
 
-        $pdf = PDF::loadView('pdf.RegistroCompra',compact('registroCompras','Fincas','tipo_ganado','compra_lote','CompraLoteGanado'));
+        $deduccion=deduccion::all()->pluck('descripcion','id');
+
+
+        $pdf = PDF::loadView('pdf.RegistroCompra',compact('registroCompras','Fincas','tipo_ganado','compra_lote','CompraLoteGanado','estadistica'));
 
 
         return $pdf->download('Registro_de_Compra.pdf');

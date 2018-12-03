@@ -23,7 +23,7 @@ class CreateDetalleIngresoAnimals2Table extends Migration
             $table->integer('users_id')->unsigned();
             $table->timestamps();
             $table->foreign('detalle_ingreso_animals_id')->references('id')->on('detalle_ingreso_animals');
-            $table->foreign('registro_compra_lote_id')->references('id')->on('compra_lote');
+            $table->foreign('registro_compra_lote_id')->references('id')->on('detalle_ingreso_animals');
             $table->foreign('fincas_id')->references('id')->on('fincas');
             $table->foreign('users_id')->references('id')->on('users');
         });
