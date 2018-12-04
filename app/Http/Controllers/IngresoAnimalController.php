@@ -174,18 +174,18 @@ class IngresoAnimalController extends AppBaseController
                     ->get();
 
         $animales=DB::table('detalle_ingreso_animals2')
-                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->id)
                     ->where('detalle_ingreso_animals2.fincas_id',$data['finca'])
                     ->get();
 
         $animales_ingresados=DB::table('detalle_ingreso_animals2')
-                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->registro_compra_id)
+                    ->where('registro_compra_lote_id',$ingresoAnimal[0]->id)
                     ->where('detalle_ingreso_animals2.fincas_id',$data['finca'])
                     ->count();
 
         $detalle =DB::table('detalle_ingreso_animals')->where('detalle_ingreso_animals.fincas_id',$data['finca'])->get();
 
-        //dd($lotes);
+
 
         $potreros = Potreros::all()->where('fincas_id',$data['finca'])->pluck('codigo','id');
 

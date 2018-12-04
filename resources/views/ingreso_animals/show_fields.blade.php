@@ -75,6 +75,20 @@
 
 
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <tr>
+                <td><strong>Peso Total:</strong></td>
+                <td>{{number_format($p)}}</td>
+                <td><strong>Valor Total:</strong></td>
+                <td>{{number_format($total)}}</td>
+                <td><strong>Valor Unitario:</strong></td>
+                <td>{{number_format($vu=$total/$p)}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
 @if ($c-$animales_ingresados>0)
 <div class="row">
     <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
@@ -131,7 +145,7 @@
                             <td>{{$x=$x+1}}</td>
                             <td>{{$a->peso}}</td>
                             <td>{{$a->observaciones}}</td>
-                            <td width="10%">
+                            <td width="5%">
                             {!! Form::open(['route' => ['animal_ingreso.destroy', $a->id], 'method' => 'delete']) !!}
                             {!! Form::button('<i class="mdi mdi-delete"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
                             {!! Form::close() !!}
@@ -152,12 +166,10 @@
                 <tr>
                     <td><strong>Peso</strong></td>
                     <td>{{$p}}</td>
-                    <td width="10%">
                 </tr>
                 <tr>
                     <td><strong>Cantidad</strong></td>
                     <td>{{$x}}</td>
-                    <td width="10%">
                 </tr>
                 <tr>
                     <td><strong>Peso Promedio</strong></td>
@@ -168,7 +180,10 @@
                             }
                         @endphp
                     </td>
-                    <td width="10%">
+                </tr>
+                <tr>
+                    <td><strong>Valor Inicial:</strong></td>
+                    <td>{{number_format($vu*$p)}}</td>
                 </tr>
             </table>
         </div>
