@@ -11,8 +11,13 @@
 					<!-- Area Field -->
 					<div class="form-group col-sm-6">
 					    {!! Form::label('area', 'Area:') !!}
-					    {!! Form::text('area', null, ['class' => 'form-control','placeholder'=>'mts2']) !!} 
+					    {!! Form::text('area', null, ['class' => 'form-control','placeholder'=>'mts2']) !!}
 					</div>
+
+					<div class="form-group col-sm-6">
+                            {!! Form::label('cantidad_max', 'Cantidad maxima:') !!}
+                            {!! Form::text('cantidad_max', null, ['class' => 'form-control','placeholder'=>'mts2']) !!}
+                        </div>
 
 					<!-- Estado Id Field -->
 					<div class="form-group col-sm-6">

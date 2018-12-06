@@ -6,6 +6,7 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Area mts2</th>
+                        <th>Cantidad Max</th>
                         <th>Estado</th>
                         <th width="90px">Acciones</th>
                     </tr>
@@ -17,6 +18,8 @@
                     <tr>
                         <td>{!! $potreros->codigo !!}</td>
                         <td>{!! $potreros->area !!}</td>
+                        <td>{!! $potreros->cantidad_max !!}</td>
+
                         <td>{!! $potreros->descripcion !!}</td>
                         <td  width="10%">
                             {!! Form::open(['route' => ['potreros.destroy', $potreros->id], 'method' => 'delete']) !!}

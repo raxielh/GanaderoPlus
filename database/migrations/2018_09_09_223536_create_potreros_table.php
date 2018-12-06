@@ -16,7 +16,8 @@ class CreatePotrerosTable extends Migration
         Schema::create('potreros', function (Blueprint $table) {
             $table->increments('id');
             $table->string('codigo', 100);
-            $table->string('area', 100);
+            $table->integer('area');
+            $table->integer('cantidad_max');
             $table->integer('estado_id')->unsigned();
             $table->integer('fincas_id')->unsigned();
             $table->integer('users_id')->unsigned();
@@ -29,6 +30,7 @@ class CreatePotrerosTable extends Migration
         DB::table('potreros')->insert([
             'codigo' => 'Potrero 1',
             'area' => '120',
+            'cantidad_max' => '30',
             'estado_id' => '1',
             'fincas_id' => '1',
             'users_id' => '1',
@@ -36,6 +38,7 @@ class CreatePotrerosTable extends Migration
         DB::table('potreros')->insert([
             'codigo' => 'Potrero 2',
             'area' => '170',
+            'cantidad_max' => '30',
             'estado_id' => '1',
             'fincas_id' => '1',
             'users_id' => '1',
@@ -43,6 +46,7 @@ class CreatePotrerosTable extends Migration
         DB::table('potreros')->insert([
             'codigo' => 'Potrero 3',
             'area' => '220',
+            'cantidad_max' => '30',
             'estado_id' => '1',
             'fincas_id' => '1',
             'users_id' => '1',

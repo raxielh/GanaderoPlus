@@ -23,6 +23,7 @@
               <table class="table table-striped">
                 <tbody>
                   <tr>
+                    <th style="width:5%;text-align:center">Id Lote</th>
                     <th>Tipo Ganado</th>
                     <th>Cantidad</th>
                     <th>Peso Promedio</th>
@@ -42,6 +43,7 @@
                       $p=$p+$lote->peso_total;
                   @endphp
                   <tr>
+                    <td style="width:5%;text-align:center"><strong>{{$lote->ide}}</strong></td>
                     <td>{{$lote->descripcion}}</td>
                     <td>{{$lote->numer_gan}}</td>
                     <td>{{number_format($lote->prome_peso)}}</td>
@@ -51,6 +53,7 @@
                   </tr>
                   @endforeach
                   <tr>
+                    <td></td>
                     <td><strong>Cantidad de Animales</strong></td>
                     <td><strong>{{number_format($c)}}</strong></td>
                     <td><strong>Peso Total</strong></td>
@@ -59,20 +62,18 @@
                     <td><strong>{{number_format($total)}}</strong></td>
                   </tr>
                   <tr>
+                    <td></td>
                     <td><strong>Animales Ingresados</strong></td>
                     <td><strong>{{number_format($animales_ingresados)}}</strong></td>
                   </tr>
                   <tr>
+                    <td></td>
                     <td><strong>Faltan por Ingresar</strong></td>
                     <td><strong>{{number_format($c-$animales_ingresados)}}</strong></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
-
-
-
 
 </div>
 <div class="row">
@@ -101,7 +102,7 @@
 @foreach ($lotes2 as $lotes2)
 <?php $y=$y+1; ?>
 
-<div class="col-md-3 col-sm-3 col-xs-3"style="border: 1px solid #eee;">
+<div class="col-md-4 col-sm-4 col-xs-4"style="border: 1px solid #eee;">
 
     <div id="btn-{!! $lotes2->id !!}">
         {!! Form::open(['route' => ['ingreso.destroy', $lotes2->id], 'method' => 'delete']) !!}
@@ -120,6 +121,13 @@
                 <textarea name="observaciones" placeholder="Observaciones" class="form-control"></textarea>
                 <input type="hidden" name="detalle_ingreso1" value="{!! $lotes2->id !!}">
                 <input type="hidden" name="registro_compra" value="{!! $lotes2->registro_compra_lote_id !!}">
+                Lote de Procedencia:
+                <select name="estadistica_id" id="estadistica_id" class="form-control">
+                    @foreach ($lotes as $lote)
+                        <option value="{{$lote->ide}}">{{$lote->ide}}</option>
+                    @endforeach
+                </select>
+
                 <div style="margin-top: 10px"></div>
                 {!! Form::submit('Agregar', ['class' => 'btn btn-primary']) !!}
             </div>
@@ -132,6 +140,7 @@
                     <tr>
                         <th style="text-align: center;">No</th>
                         <th style="text-align: center;">Peso</th>
+                        <th style="text-align: center;">lote P.</th>
                         <th style="text-align: center;">Observaciones</th>
                         <th></th>
                     </tr>
@@ -144,6 +153,7 @@
                         <tr>
                             <td>{{$x=$x+1}}</td>
                             <td>{{$a->peso}}</td>
+                            <td style="text-align:center">{{$a->estadistica_id}}</td>
                             <td>{{$a->observaciones}}</td>
                             <td width="5%">
                             {!! Form::open(['route' => ['animal_ingreso.destroy', $a->id], 'method' => 'delete']) !!}
@@ -163,6 +173,10 @@
                 </tbody>
             </table>
             <table class="table">
+               <tr>
+                    <td><strong>Potrero</strong></td>
+                    <td>{{$lotes2->codigo}}</td>
+                </tr>
                 <tr>
                     <td><strong>Peso</strong></td>
                     <td>{{$p}}</td>

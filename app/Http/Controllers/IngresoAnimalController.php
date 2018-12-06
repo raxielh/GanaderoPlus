@@ -164,13 +164,15 @@ class IngresoAnimalController extends AppBaseController
                     ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
                     ->where('id_registro_compras',$ingresoAnimal[0]->registro_compra_id)
                     ->where('estaditica_compra.fincas_id',$data['finca'])
-                    ->select('estaditica_compra.*','compra_lote.*','tipo_ganados.descripcion')
+                    ->select('estaditica_compra.*','estaditica_compra.id as ide','compra_lote.*','tipo_ganados.descripcion')
                     ->get();
 
 
         $lotes2=DB::table('detalle_ingreso_animals')
+                    ->join('potreros', 'detalle_ingreso_animals.potreros_id', '=', 'potreros.id')
                     ->where('registro_compra_lote_id',$ingresoAnimal[0]->id)
                     ->where('detalle_ingreso_animals.fincas_id',$data['finca'])
+                    ->select('detalle_ingreso_animals.*','potreros.codigo')
                     ->get();
 
         $animales=DB::table('detalle_ingreso_animals2')
@@ -340,6 +342,7 @@ class IngresoAnimalController extends AppBaseController
         $IngresoAnimal->observaciones = $request->observaciones;
         $IngresoAnimal->detalle_ingreso_animals_id = $request->detalle_ingreso1;
         $IngresoAnimal->registro_compra_lote_id = $request->registro_compra;
+        $IngresoAnimal->estadistica_id = $request->estadistica_id;
         $IngresoAnimal->fincas_id = $data['finca'];
         $IngresoAnimal->users_id = Auth::id();
 

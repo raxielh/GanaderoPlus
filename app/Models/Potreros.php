@@ -18,17 +18,18 @@ use Eloquent as Model;
  */
 class Potreros extends Model
 {
-    
+
 
     public $table = 'potreros';
-    
 
-    
+
+
 
 
     public $fillable = [
         'codigo',
         'area',
+        'cantidad_max',
         'estado_id',
         'fincas_id',
         'users_id'
@@ -41,7 +42,8 @@ class Potreros extends Model
      */
     protected $casts = [
         'codigo' => 'string',
-        'area' => 'string',
+        'area' => 'integer',
+        'cantidad_max' => 'integer',
         'estado_id' => 'integer',
         'fincas_id' => 'integer',
         'users_id' => 'integer'
@@ -55,8 +57,9 @@ class Potreros extends Model
     public static $rules = [
         'codigo' => 'required',
         'area' => 'required',
+        'cantidad_max' => 'required',
         'estado_id' => 'required'
     ];
 
-    
+
 }
