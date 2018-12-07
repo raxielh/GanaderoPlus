@@ -6,7 +6,7 @@
   </a>
 </li>
 
-<li class="treeview  
+<li class="treeview
                     {{ Request::is('estadoProtreros*') ? 'active' : '' }}
                     {{ Request::is('estadoCompras*') ? 'active' : '' }}
                     {{ Request::is('tipoGanados*') ? 'active' : '' }}
@@ -67,7 +67,7 @@
   </a>
 </li>
 
-<li class="treeview  
+<li class="treeview
                     {{ Request::is('hierros*') ? 'active' : '' }}
                     {{ Request::is('potreros*') ? 'active' : '' }}
                     {{ Request::is('lugarProcedencias*') ? 'active' : ''}}
@@ -76,7 +76,7 @@
                     {{ Request::is('responsableCompras*') ? 'active' : '' }}
                     {{ Request::is('empresas*') ? 'active' : '' }}
                     {{ Request::is('medicamentos*') ? 'active' : '' }}
-                    
+
 ">
   <a href="#">
     <i class="fa fa-folder"></i> <span>Configura tu finca</span>
@@ -109,9 +109,9 @@
 
 
 
-<li class="treeview  
+<li class="treeview
   {{ Request::is('registroCompras*') ? 'active' : '' }}
-  {{ Request::is('compraMedicamentos*') ? 'active' : '' }}                 
+  {{ Request::is('compraMedicamentos*') ? 'active' : '' }}
 ">
   <a href="#">
     <i class="fa fa-folder"></i> <span>Compras</span>
@@ -136,6 +136,10 @@
 
 <li class="{{ Request::is('ingresoAnimals*') ? 'active' : '' }}">
     <a href="{!! route('ingresoAnimals.index') !!}"><i class="fa fa-truck"></i><span>Ingreso de Animales</span></a>
+</li>
+
+<li class="{{ Request::is('mi_finca*') ? 'active' : '' }}">
+    <a href="{!! route('mi_finca.index') !!}"><i class="fa fa-map-o" aria-hidden="true"></i><span>Mi Finca</span></a>
 </li>
 
 

@@ -73,3 +73,5 @@ Route::resource('preguntaLicencias', 'Pregunta_licenciaController');
 Route::resource('preguntaFacturas', 'PreguntaFacturasController');
 
 Route::get('descargar-registro_compra/{id}', 'RegistroCompraController@pdf')->name('RegistroCompra.pdf');
+
+Route::get('mi_finca', 'MiFincaController@index')->name('mi_finca.index');
