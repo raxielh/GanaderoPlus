@@ -81,3 +81,84 @@ FROM  registro_compras rc,
 
 END;
 $function$
+
+____________________________Ubicacion Animal_________________________________-
+
+CREATE OR REPLACE FUNCTION public.pro_ubucacion_animal(v_id integer, v_observaciones character varying, v_peso integer, v_estado_id integer, v_potreros_id integer, v_detalle_ingreso_animals2_id integer, v_fincas_id integer, v_users_id integer, opc character varying, OUT idmesnaje character varying, OUT mensaje character varying, OUT tipo character varying, OUT mensajeuser character varying)
+ RETURNS record
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+
+BEGIN
+
+  if (opc=upper('insert'))  then
+
+    begin
+      mensajeuser  =  'OK, Registro Gurdado '||'.('||now()||')';
+      mensaje =   'OK,  Registro Gurdado '||'.('||now()||')';
+      idmesnaje ='1';
+      tipo='alert-info';
+      INSERT INTO public.ubicacion_animal(observaciones, peso, estado_id,
+        potreros_id, detalle_ingreso_animals2_id, fincas_id, users_id)
+      VALUES (v_observaciones, v_peso, v_estado_id, v_potreros_id,
+        v_detalle_ingreso_animals2_id, v_fincas_id, v_users_id);
+      EXCEPTION WHEN  others THEN
+      mensaje = SQLERRM||'Hora ultima Transaccción("'||now()||' ")';
+      mensajeuser = public.fun_nombreconstein(SQLERRM)||
+      'Hora ultima Transaccción("'||now() ||' ")';
+      idmesnaje ='0';
+      tipo='alert-danger';
+
+    end;
+
+    elsif (opc=upper('update'))  then
+
+    begin
+      mensajeuser  =  'OK, Registro Modificado '||'.('||now()||')';
+      mensaje =   'OK,  Registro Modificado '||'.('||now()||')';
+      idmesnaje ='1';
+      tipo='alert-info';
+      UPDATE public.ubicacion_animal
+      SET observaciones = v_observaciones,
+          peso = v_peso,
+          estado_id = v_estado_id,
+          potreros_id = v_potreros_id,
+          detalle_ingreso_animals2_id = v_detalle_ingreso_animals2_id,
+          fincas_id = v_fincas_id,
+          users_id = v_users_id,
+          updated_at = now()
+      WHERE id = v_id;
+
+      EXCEPTION WHEN  others THEN
+      mensaje = SQLERRM||'Hora ultima Transaccción("'||now()||' ")';
+      mensajeuser = public.fun_nombreconstein(SQLERRM)||
+      'Hora ultima Transaccción("'||now() ||' ")';
+      idmesnaje ='0';
+      tipo='alert-danger';
+
+    end;
+
+     elsif (opc=upper('delete'))  then
+
+    begin
+      mensajeuser  =  'OK, Registro Eliminado '||'.('||now()||')';
+      mensaje =   'OK,  Registro Eliminado '||'.('||now()||')';
+      idmesnaje ='1';
+      tipo='alert-info';
+      delete from public.ubicacion_animal
+      WHERE id = v_id;
+
+      EXCEPTION WHEN  others THEN
+      mensaje = SQLERRM||'Hora ultima Transaccción("'||now()||' ")';
+      mensajeuser = public.fun_nombreconstein(SQLERRM)||
+      'Hora ultima Transaccción("'||now() ||' ")';
+      idmesnaje ='0';
+      tipo='alert-danger';
+
+    end;
+
+  end if;
+
+END;
+$function$

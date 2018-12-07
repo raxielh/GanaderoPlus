@@ -48,13 +48,32 @@ class MiFincaController extends AppBaseController
                     ->where('detalle_ingreso_animals2.fincas_id',$data['finca'])
                     ->get();
 
+        $animales=DB::table('ubicacion_animal')
+                    ->where('fincas_id',$data['finca'])
+                    ->where('estado_id',1)
+                    ->get();
+
         return view('mi_finca.index')
             ->with('potreros', $potreros)
             ->with('potreros2', $potreros2)
             ->with('detalle_ingreso_animals', $detalle_ingreso_animals)
             ->with('detalle_ingreso_animals2', $detalle_ingreso_animals2)
+            ->with('animales', $animales)
             ->with('Fincas', $Fincas);
     }
 
+    public function transferencia(Request $request)
+    {
+        $data = Session::all();
+        $Fincas = Fincas::where('users_id',Auth::id())
+               ->where('id',$data['finca'])->get();
+
+
+        $potreros2 = DB::select('UPDATE ubicacion_animal SET potreros_id = ? WHERE id= ?', [$request->potreros_id,$request->id]);
+
+        Flash::success('Transferencia con exito.');
+
+        return redirect()->back();
+    }
 
 }

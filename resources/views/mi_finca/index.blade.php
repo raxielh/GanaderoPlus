@@ -38,66 +38,63 @@
                     </div>
                 </div>
 
-                    @foreach($detalle_ingreso_animals as $dia)
-                        @if($p->id==$dia->p_id)
-@php
-    $x=0;
-    $suma=0;
-@endphp
-                        <table class="table" style="background:#ffff">
-                            <thead>
-                                <tr>
-                                    <th scope="">#</th>
-                                    <th scope="col">Peso</th>
-                                    <th scope="col">Observaciones</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($detalle_ingreso_animals2 as $dia2)
-                                @if($dia->id==$dia2->detalle_ingreso_animals_id)
-                                <tr>
-                                    <th>
-                                        @php
-                                            echo $x=$x+1;
-                                            $suma=$suma+$dia2->peso;
-                                        @endphp
-                                    </th>
-                                    <td>{{$dia2->peso}}</td>
-                                    <td>{{$dia2->observaciones}}</td>
-                                    <td>
-                                        <select name="" id="">
-                                            @foreach($potreros as $po)
-                                            @if($dia->potreros_id==$po->id)
-                                            @else
-                                            <option value="{{$po->id}}">{{$po->codigo}}</option>
+                @php
+                $x=0;
+                $suma=0;
+            @endphp
+                                    <table class="table" style="background:#ffff">
+                                        <thead>
+                                            <tr>
+                                                <th scope="">#</th>
+                                                <th scope="col">Peso</th>
+                                                <th scope="col">Observaciones</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($animales as $a)
+                                            @if($p->id==$a->potreros_id)
+
+                                            {!! Form::open(['route' => 'transferencia.ready']) !!}
+                                            <tr>
+                                                <th>
+                                                    @php
+                                                        echo $x=$x+1;
+                                                        $suma=$suma+$a->peso;
+                                                    @endphp
+                                                </th>
+                                                <td>{{$a->peso}} <input type="hidden" name="id" value="{{$a->id}}"></td>
+                                                <td>{{$a->observaciones}}</td>
+                                                <td>
+                                                    <select name="potreros_id">
+                                                        @foreach($potreros as $po)
+                                                        @if($p->id==$po->id)
+                                                        @else
+                                                        <option value="{{$po->id}}">{{$po->codigo}}</option>
+                                                        @endif
+                                                        @endforeach
+                                                    </select>
+                                                    <button type="submit" class="btn btn-warning">Transferir</button>
+                                                </td>
+                                            </tr>
+                                            {!! Form::close() !!}
+
                                             @endif
                                             @endforeach
-                                        </select>
-                                        <button type="submit" class="btn btn-warning">Transferir</button>
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                <td>Peso Total</td>
-                                <td><strong>{{number_format($suma)}}</strong></td>
-                                </tr>
-                                <tr>
-                                        <td></td>
-                                        <td></td>
-                                    <td>Peso Promedio</td>
-                                    <td><strong>{{number_format($suma/$x)}}</strong></td>
-                                    </tr>
-                            </tbody>
-                        </table>
-
-
-
-                    @endif
-                @endforeach
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            <td>Peso Total</td>
+                                            <td><strong>{{number_format($suma)}}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                <td>Peso Promedio</td>
+                                                <td><strong>{{number_format($suma/$x)}}</strong></td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
 
             </div>
             @endforeach

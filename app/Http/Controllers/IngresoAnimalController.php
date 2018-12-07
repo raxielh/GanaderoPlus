@@ -172,7 +172,7 @@ class IngresoAnimalController extends AppBaseController
                     ->join('potreros', 'detalle_ingreso_animals.potreros_id', '=', 'potreros.id')
                     ->where('registro_compra_lote_id',$ingresoAnimal[0]->id)
                     ->where('detalle_ingreso_animals.fincas_id',$data['finca'])
-                    ->select('detalle_ingreso_animals.*','potreros.codigo')
+                    ->select('detalle_ingreso_animals.*','potreros.codigo','potreros.id as idp')
                     ->get();
 
         $animales=DB::table('detalle_ingreso_animals2')
@@ -307,6 +307,7 @@ class IngresoAnimalController extends AppBaseController
 
         Flash::success('Lote Ingresado exitosamente.');
 
+
         return redirect()->back();
 
     }
@@ -325,9 +326,16 @@ class IngresoAnimalController extends AppBaseController
     public function delete_animal_ingreso($id)
     {
 
+        $sql="SELECT * FROM pro_ubucacion_animal(0,'',0,0,0,$id,0,0,'DELETE')";
+
+        DB::select($sql);
         $IngresoLoteAnimal = IngresoLoteAnimal::find($id);
 
         $IngresoLoteAnimal->delete();
+
+
+
+
 
         Flash::success('Animal Borrado con exito.');
 
@@ -346,9 +354,18 @@ class IngresoAnimalController extends AppBaseController
         $IngresoAnimal->fincas_id = $data['finca'];
         $IngresoAnimal->users_id = Auth::id();
 
-        //dd($IngresoAnimal);
-
         $IngresoAnimal->save();
+
+        $IngresoLoteAnimal= IngresoLoteAnimal::all();
+
+        //dd($IngresoLoteAnimal->last()->id);
+
+        $sql="SELECT * FROM pro_ubucacion_animal(0,'".$request->observaciones."',".$request->peso.",1,".$request->potreros_id.",".$IngresoLoteAnimal->last()->id.",".$data["finca"].",".Auth::id().",'INSERT')";
+
+
+        DB::select($sql);
+
+
 
         Flash::success('Animal Ingresado exitosamente.');
 

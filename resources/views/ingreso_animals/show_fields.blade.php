@@ -121,6 +121,7 @@
                 <textarea name="observaciones" placeholder="Observaciones" class="form-control"></textarea>
                 <input type="hidden" name="detalle_ingreso1" value="{!! $lotes2->id !!}">
                 <input type="hidden" name="registro_compra" value="{!! $lotes2->registro_compra_lote_id !!}">
+                <input type="hidden" name="potreros_id" value="{{$lotes2->idp}}">
                 Lote de Procedencia:
                 <select name="estadistica_id" id="estadistica_id" class="form-control">
                     @foreach ($lotes as $lote)

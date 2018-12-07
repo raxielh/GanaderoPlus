@@ -4,6 +4,9 @@ php artisan infyom:scaffold $MODEL_NAME
 php artisan infyom:scaffold EstadoProtrero
 	descripcion string,100 text
 
+php artisan infyom:scaffold EstadoAnimal
+	descripcion string,100 text
+
 php artisan infyom:scaffold TipoGanado
 	descripcion string,100 text
 
@@ -63,7 +66,7 @@ php artisan infyom:scaffold Medicamentos
 	tipo_medicamentos_id integer:unsigned:foreign,tipo_medicamentos,id select
 		required
 	valor integer,100 text
-		required	
+		required
 	presentacion string,100 text
 		required
 	unidad string,100 text
@@ -73,7 +76,7 @@ php artisan infyom:scaffold Medicamentos
 
 php artisan infyom:scaffold Dosificaciones
 	peso_inicial string text
-		required	
+		required
 	peso_final string text
 		required
 	dosis string,100 text
@@ -84,9 +87,9 @@ php artisan infyom:scaffold Dosificaciones
 
 php artisan infyom:scaffold CompraMedicamento
 	precio integer text
-		required	
+		required
 	cantidad integer text
-		required	
+		required
 	fecha date date
 		required
 	medicamento_id integer:unsigned:foreign,medicamentos,id select
@@ -248,7 +251,7 @@ faturacion
 faturacion_detalle
 	factura
 	concepto
-	descuento 
+	descuento
 	valor
 	users_id integer:unsigned:foreign,users,id hidden
 
