@@ -91,6 +91,11 @@
                                                     <td></td>
                                                     <td></td>
                                                 <td>Peso Promedio</td>
+                                                @php
+                                                    if($x==0){
+                                                        $x=1;
+                                                    }
+                                                @endphp
                                                 <td><strong>{{number_format($suma/$x)}}</strong></td>
                                                 </tr>
                                         </tbody>
