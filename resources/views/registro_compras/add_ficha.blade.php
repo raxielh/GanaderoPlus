@@ -130,7 +130,7 @@ table td {
                       <?php $y=0 ?>
                       @foreach ($compra_lote as $compra_lote)
                       <?php $y=$y+1; ?>
-                        <div class="col-md-3 col-sm-3" style="border-right: 1px solid #33333347;">
+                        <div class="col-md-4 col-sm-4" style="border-right: 1px solid #33333347;border-bottom: 1px solid #33333347;height: 600px;overflow: scroll">
                           <div style="display: block;">
                             <p style="margin-top: 10px;font-weight: bold">Lote de {{$compra_lote->descripcion}}</p>
 
@@ -152,6 +152,7 @@ table td {
                                           {!! Form::submit('Agregar', ['class' => 'btn btn-primary']) !!}
                                         </div>
                                       {!! Form::close() !!}
+
                                       {!! Form::open(['route' => ['lote.destroy', $compra_lote->id], 'method' => 'delete']) !!}
                                           <input type="hidden" name="lote" value="{{$compra_lote->id}}">
                                           <input type="hidden" name="registro_compra" value="{{$rc->id}}">
@@ -160,9 +161,12 @@ table td {
 
 
                               @else
+
+
                               {!! Form::open(['route' => ['lote.destroy', $compra_lote->id], 'method' => 'delete']) !!}
                               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_lote_ganado_{{ $compra_lote->id}}"><i class="mdi mdi-plus"></i>Agregar Animal</button>
                               {!! Form::button('<i class="mdi mdi-delete"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Estas seguro de borrar este lote?')"]) !!}
+
                             {!! Form::close() !!}
                               <div id="add_lote_ganado_{{ $compra_lote->id}}" class="modal fade" role="dialog">
                                 <div class="modal-dialog modal-xs">
@@ -193,7 +197,7 @@ table td {
                           </div>
 
 
-                          <div class="table-responsive">
+                          <div>
                             <table class="table">
                               <thead>
                                 <tr>

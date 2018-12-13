@@ -35,7 +35,7 @@
     </style>
 </head>
 
-<body class="skin-green-light">
+<body class="skin-green-light skin-green-light sidebar-collapse">
 @if (!Auth::guest())
     <div class="wrapper">
         <!-- Main Header -->

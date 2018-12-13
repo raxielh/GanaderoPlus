@@ -102,7 +102,7 @@
 @foreach ($lotes2 as $lotes2)
 <?php $y=$y+1; ?>
 
-<div class="col-md-4 col-sm-4 col-xs-4"style="border: 1px solid #eee;">
+<div class="col-md-4 col-sm-4 col-xs-4" style="border-right: 1px solid #33333347;border-bottom: 1px solid #33333347;height: 600px;overflow: scroll">
 
     <div id="btn-{!! $lotes2->id !!}">
         {!! Form::open(['route' => ['ingreso.destroy', $lotes2->id], 'method' => 'delete']) !!}
@@ -135,7 +135,7 @@
         {!! Form::close() !!}
     @endif
 
-        <div class="table-responsive">
+        <div>
             <table class="table">
                 <thead>
                     <tr>
