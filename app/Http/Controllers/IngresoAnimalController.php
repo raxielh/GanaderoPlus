@@ -170,9 +170,10 @@ class IngresoAnimalController extends AppBaseController
 
         $lotes2=DB::table('detalle_ingreso_animals')
                     ->join('potreros', 'detalle_ingreso_animals.potreros_id', '=', 'potreros.id')
+                    ->join('tipo_ganados', 'detalle_ingreso_animals.tipo_ganados_id', '=', 'tipo_ganados.id')
                     ->where('registro_compra_lote_id',$ingresoAnimal[0]->id)
                     ->where('detalle_ingreso_animals.fincas_id',$data['finca'])
-                    ->select('detalle_ingreso_animals.*','potreros.codigo','potreros.id as idp')
+                    ->select('detalle_ingreso_animals.*','potreros.codigo','potreros.id as idp','tipo_ganados.descripcion as tipo')
                     ->get();
 
         $animales=DB::table('detalle_ingreso_animals2')

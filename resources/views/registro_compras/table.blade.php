@@ -4,8 +4,8 @@
             <table class="table table-striped">
     <thead>
         <tr>
+            <th width="15px">ID</th>
             <th width="85px">Fecha</th>
-            <th width="85px">Factura</th>
             <th>Procedencia</th>
             <th>Vendedor</th>
             <th>Comprador</th>
@@ -17,8 +17,8 @@
     <tbody>
     @foreach($registroCompras as $registroCompra)
         <tr>
+            <td>{!! $registroCompra->numero_compra !!}</td>
             <td>{!! $registroCompra->fecha_compra !!}</td>
-            <td>{!! $registroCompra->factura !!}</td>
             <td>{!! $registroCompra->lugar_procedencias !!}</td>
             <td>{!! $registroCompra->vendedor !!}</td>
             <td>{!! $registroCompra->comprador !!}</td>

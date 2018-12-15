@@ -174,7 +174,11 @@
                 </tbody>
             </table>
             <table class="table">
-               <tr>
+                <tr>
+                    <td><strong>Tipo Ganado</strong></td>
+                    <td>{{$lotes2->tipo}}</td>
+                </tr>
+                <tr>
                     <td><strong>Potrero</strong></td>
                     <td>{{$lotes2->codigo}}</td>
                 </tr>

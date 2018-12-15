@@ -56,7 +56,7 @@
         <a href="{!! route('preguntaFacturas.index') !!}"><i class="fa fa-gear"></i><span>Pregunta Facturas</span></a>
     </li>
     <li class="{{ Request::is('estadoAnimals*') ? 'active' : '' }}">
-            <a href="{!! route('estadoAnimals.index') !!}"><i class="fa fa-edit"></i><span>Estado Animal</span></a>
+            <a href="{!! route('estadoAnimals.index') !!}"><i class="fa fa-gear"></i><span>Estado Animal</span></a>
         </li>
 
 

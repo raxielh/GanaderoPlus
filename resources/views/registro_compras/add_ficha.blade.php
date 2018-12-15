@@ -55,7 +55,6 @@ table td {
                             </div>
                             <div class="col-md-4">
                                 <p><strong>Comprador: </strong> {{$registroCompras->comprador}}</p>
-                                <p><strong># Factura: </strong> {{$registroCompras->factura}}</p>
                                 <p><strong>Empresa: </strong> {{$registroCompras->razon_social}}</p>
                             </div>
                             <div class="col-md-12">
@@ -72,13 +71,14 @@ table td {
                           <table class="table table-striped">
                             <tbody>
                               <tr>
+                                <th>Factura</th>
                                 <th>Tipo Ganado</th>
                                 <th>Cantidad</th>
                                 <th>Peso Promedio</th>
                                 <th>Peso Total</th>
                                 <th>Precio</th>
                                 <th>Valor total lote</th>
-                                <th>Deducción</th>
+                                <th>Tipo Deducción</th>
                                 <th>Valor Deducción</th>
                                 <th>Deducción</th>
                                 <th>Valor a Pagar</th>
@@ -91,6 +91,7 @@ table td {
                                   $total=$total+$estadistica->valor_pagar;
                               @endphp
                               <tr>
+                                <td>{{$estadistica->factura}}</td>
                                 <td>{{$estadistica->tipo}}</td>
                                 <td>{{$estadistica->numer_gan}}</td>
                                 <td>{{number_format($estadistica->prome_peso)}}</td>
@@ -104,6 +105,7 @@ table td {
                               </tr>
                               @endforeach
                               <tr>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -130,7 +132,7 @@ table td {
                       <?php $y=0 ?>
                       @foreach ($compra_lote as $compra_lote)
                       <?php $y=$y+1; ?>
-                        <div class="col-md-4 col-sm-4" style="border-right: 1px solid #33333347;border-bottom: 1px solid #33333347;height: 600px;overflow: scroll">
+                        <div class="col-md-4 col-sm-4" style="border-right: 1px solid #33333347;border: 0.5px solid #33333347;max-height: 800px;min-height: 400px;overflow: scroll">
                           <div style="display: block;">
                             <p style="margin-top: 10px;font-weight: bold">Lote de {{$compra_lote->descripcion}}</p>
 
@@ -277,7 +279,7 @@ table td {
             <h4 class="modal-title">Crear nuevo lote</h4>
           </div>
           <div class="modal-body">
-            {!! Form::open(['route' => 'add_lote']) !!}
+            {!! Form::open(['route' => 'add_lote','enctype'=>'multipart/form-data']) !!}
               <div class="form-group">
                 {!! Form::label('tipo_ganado', 'Tipo de Ganado:') !!}
                 {!! Form::select('tipo_ganado',$tipo_ganado, null, ['class' => 'form-control','required'=>'true']) !!} <br>
@@ -299,6 +301,32 @@ table td {
 
                 </div>
 
+                <div class="col-md-12" style="margin: 0px;padding: 0px">
+                        <!-- Estado Id Field -->
+                        <div class="form-group col-sm-6" style="z-index: 1">
+                            {!! Form::label('pregunta_facturas_id', 'Factura?') !!}
+                            {!! Form::select('pregunta_facturas_id',$PreguntaFacturas, null, ['class' => 'form-control chosen-select']) !!}
+                        </div>
+
+                        <!-- Estado Id Field -->
+                        <div class="form-group col-sm-6" style="z-index: 1" id="f">
+                            {!! Form::label('factura', 'Numero de factura:') !!}
+                             {!! Form::text('factura', null, ['class' => 'form-control','placeholder' => 'Numero de factura','value' => old('factura')]) !!}
+                        </div>
+                        <!-- Estado Id Field -->
+                        <div class="form-group col-sm-12" style="z-index: 1" id="df">
+
+                            <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
+                                {!! Form::label('documento_factura', 'Documento Factura:') !!}
+                                 {!! Form::file('documento_factura', null, ['class' => 'form-control','value' => old('documento_factura')]) !!}
+                            </div>
+                            <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
+                                <br>
+                                <a href="#" class="btn btn-danger btn-sm" id="delete_factura"><i class="mdi mdi-close"></i></a>
+                            </div>
+
+                        </div>
+                    </div>
 
 
 

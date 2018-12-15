@@ -144,11 +144,6 @@ class RegistroCompraController extends AppBaseController
             $input['documento']=$documento;
         }
 
-        if($request->file('documento_factura')){
-            $documento_factura=$request->file('documento_factura')->store('public');
-            $input['documento_factura']=$documento_factura;
-        }
-
         //dd($input);
 
         $registroCompra = $this->registroCompraRepository->create($input);
@@ -334,11 +329,26 @@ class RegistroCompraController extends AppBaseController
         $CompraLoteGanado = CompraLoteGanado::where('users_id',Auth::id())
                ->where('fincas_id',$data['finca'])->get();
 
+
+  /*
         $estadistica = DB::table('estaditica_compra')
                     ->join('tipo_ganados', 'estaditica_compra.tipo_ganados_id', '=', 'tipo_ganados.id')
+                    ->join('compra_lote', 'estaditica_compra.id_registro_compras', '=', 'compra_lote.id')
                     ->where('id_registro_compras',$id)
-                    ->select('estaditica_compra.*','tipo_ganados.descripcion as tipo')
+                    ->select('estaditica_compra.*','tipo_ganados.descripcion as tipo','compra_lote.factura as factura')
                     ->get();
+*/
+        $estadistica = DB::select('select e.*,t.descripcion_corta as tipo,c.factura from registro_compras r,compra_lote c,tipo_ganados t,estaditica_compra e where r.id=c.compra_lote_id AND c.tipo_ganados_id=t.id and e.id_compra_lote=c.id AND r.id=?', [$id]);
+    /*
+        $estadistica = DB::table('compra_lote')
+                    ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
+                    ->join('estaditica_compra', 'registro_compras.tipo_ganados_id', '=', 'estaditica_compra.id')
+                    ->select('tipo_ganados.descripcion as tipo','compra_lote.factura as factura')
+                    ->get();
+
+        dd($estadistica);
+   */
+        $PreguntaFacturas=PreguntaFacturas::all()->pluck('descripcion','id');
 
         $deduccion=deduccion::all()->pluck('descripcion','id');
 
@@ -349,6 +359,7 @@ class RegistroCompraController extends AppBaseController
                 ->with('compra_lote', $compra_lote)
                 ->with('estadistica', $estadistica)
                 ->with('deduccion', $deduccion)
+                ->with('PreguntaFacturas', $PreguntaFacturas)
                 ->with('CompraLoteGanado', $CompraLoteGanado);
     }
 
@@ -363,9 +374,23 @@ class RegistroCompraController extends AppBaseController
         $CompraLote->observaciones = $request->observaciones;
         $CompraLote->deduccions_id = $request->deduccions_id;
         $CompraLote->deduccion = $request->deduccion;
+
+        $CompraLote->pregunta_facturas_id = $request->pregunta_facturas_id;
+        $CompraLote->factura = $request->factura;
+
+        //dd($request->file('documento_factura'));
+
+        if($request->file('documento_factura')){
+            $documento_factura=$request->file('documento_factura')->store('public');
+            $CompraLote->documento_factura=$documento_factura;
+        }
+
         $CompraLote->fincas_id = $data['finca'];
         $CompraLote->estado_lote_id = 1;
         $CompraLote->users_id = Auth::id();
+
+        //dd($CompraLote);
+
         $CompraLote->save();
 
         Flash::success('Lote Guardado exitosamente.');
@@ -473,11 +498,9 @@ class RegistroCompraController extends AppBaseController
         $CompraLoteGanado = CompraLoteGanado::where('users_id',Auth::id())
                ->where('fincas_id',$data['finca'])->get();
 
-        $estadistica = DB::table('estaditica_compra')
-                    ->join('tipo_ganados', 'estaditica_compra.tipo_ganados_id', '=', 'tipo_ganados.id')
-                    ->where('id_registro_compras',$id)
-                    ->select('estaditica_compra.*','tipo_ganados.descripcion as tipo')
-                    ->get();
+        $estadistica = DB::select('select e.*,t.descripcion_corta as tipo,c.factura from registro_compras r,compra_lote c,tipo_ganados t,estaditica_compra e where r.id=c.compra_lote_id AND c.tipo_ganados_id=t.id and e.id_compra_lote=c.id AND r.id=?', [$id]);
+
+
 
         $deduccion=deduccion::all()->pluck('descripcion','id');
 

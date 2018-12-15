@@ -6,7 +6,7 @@
 <!-- Fecha Compra Field -->
 <div class="form-group col-sm-3" style="z-index: 1">
     {!! Form::label('fecha_compra', 'Fecha Compra:') !!}
-    
+
     @if ($registroCompra === 0)
         {!! Form::date('fecha_compra', date('Y-m-d'), ['class' => 'form-control','value' => old('fecha_compra')]) !!}
     @else
@@ -100,64 +100,6 @@
         </div>
 </div>
 
-<div class="col-md-12" style="margin: 0px;padding: 0px">
-    <!-- Estado Id Field -->
-    <div class="form-group col-sm-3" style="z-index: 1">
-        {!! Form::label('pregunta_facturas_id', 'Factura?') !!}
-        {!! Form::select('pregunta_facturas_id',$PreguntaFacturas, null, ['class' => 'form-control chosen-select']) !!}
-    </div>
-
-    <!-- Estado Id Field -->
-    <div class="form-group col-sm-3" style="z-index: 1" id="f">
-        {!! Form::label('factura', 'Numero de factura:') !!}
-         {!! Form::text('factura', null, ['class' => 'form-control','placeholder' => 'Numero de factura','value' => old('factura')]) !!}
-    </div>
-    <!-- Estado Id Field -->
-    <div class="form-group col-sm-6" style="z-index: 1" id="df">
-
-        <div class="col-md-11 col-xs-11 col-sm-11" style="padding-left: 0px;padding-right: 0px;">
-            {!! Form::label('documento_factura', 'Documento Factura:') !!}
-             {!! Form::file('documento_factura', null, ['class' => 'form-control','value' => old('documento_factura')]) !!}
-        </div>
-        <div class="col-md-1 col-xs-1 col-sm-1" style="margin-top: 7px;padding-left: 0px; padding-right: 0px;">
-            <br>
-            <a href="#" class="btn btn-danger btn-sm" id="delete_factura"><i class="mdi mdi-close"></i></a>
-        </div>
-
-    </div>
-</div>
-<!--
-<div class="form-group col-sm-6" style="z-index: 0">
-    
-     <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-        <h5 style="font-weight: bold;">Elija un hierro</h5>
-        @foreach ($Hierro as $Hierro)
-            @if ($registroCompra === 0)
-                <div class="form-group col-sm-2 col-xs-3" style="text-align: center;">
-                    <input type="radio" name="hierro_id" value="{{$Hierro->id}}"><img width="100%" src="{{ Storage::url($Hierro->hierro) }}" >
-                </div>    
-            @else
-                <div class="form-group col-sm-2 col-xs-3" style="text-align: center;">
-                    <?php
-                        $rc=$registroCompra->hierro_id;
-                        $h=$Hierro->id;
-                        if($rc==$h){
-                    ?>
-                        <input type="radio" name="hierro_id" value="{{$Hierro->id}}" checked="checked"><img width="100%" src="{{ Storage::url($Hierro->hierro) }}" >
-                    <?php
-                        }else{
-                    ?>
-                        <input type="radio" name="hierro_id" value="{{$Hierro->id}}"><img width="100%" src="{{ Storage::url($Hierro->hierro) }}" >
-                    <?php
-                        }
-                    ?>
-                </div>
-            @endif
-        @endforeach
-    </div>
-
-</div>
--->
 <br><br><br>
 
 <script>
@@ -171,15 +113,15 @@
         $('#delete_documento').click(function(event) {
             $("#documento").val(null);
         });
-    
+
 
         if($('#pregunta_licencias_id').val()==1){
             mostrar();
-        }else{                
+        }else{
             ocultar();
         }
 
-        
+
         if($('#pregunta_facturas_id').val()==1){
             $('#f').show();
             $('#df').show();

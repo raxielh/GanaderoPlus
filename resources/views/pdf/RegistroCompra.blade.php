@@ -7,7 +7,7 @@
     <title>PDF</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
-<body style="font-size:8px">
+<body style="font-size:8px;margin:0px;padding:0px">
 <div style="width: 100%">
     <section class="content-header">
         <div style="display: none;">
@@ -47,7 +47,6 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>Comprador: </strong> {{$registroCompras->comprador}}</td>
-                                                <td><strong># Factura: </strong> {{$registroCompras->factura}}</td>
                                                 <td><strong>Empresa: </strong> {{$registroCompras->razon_social}}</td>
                                             </tr>
                                             <tr>
@@ -112,7 +111,7 @@
                                         </div>
                                       </div>
 
-                                      <div class="row" style="margin-top: 1em">
+
                                         <?php $suma_pesos_total=0; ?>
                                         <?php $suma_pesos_promedio=0; ?>
                                       <?php $cl=$compra_lote;
@@ -122,19 +121,13 @@
                                       <?php $y=0 ?>
                                       @foreach ($compra_lote as $compra_lote)
                                       <?php $y=$y+1; ?>
-                                        <div class="col-md-3 col-sm-3">
-                                          <div style="display: block;">
-                                            <p style="margin-top: 10px;font-weight: bold">Lote de {{$compra_lote->descripcion}}</p>
-                                          </div>
-
-
-                                          <div class="table-responsive">
+                                      <p style="margin-top: 10px;font-weight: bold">Lote de {{$compra_lote->descripcion}}</p>
                                             <table class="table">
                                               <thead>
                                                 <tr>
-                                                  <th style="text-align: center;">No</th>
-                                                  <th style="text-align: center;">Peso</th>
-                                                  <th style="text-align: center;">Observaciones</th>
+                                                  <th style="text-align: center;" style="padding:0px">No</th>
+                                                  <th style="text-align: center;" style="padding:0px">Peso</th>
+                                                  <th style="text-align: center;" style="padding:0px">Observaciones</th>
                                                   <th></th>
                                                 </tr>
                                               </thead>
@@ -145,18 +138,18 @@
                                                 @foreach ($CompraLoteGanado as $lote)
                                                 @if ($lote->compra_lote_id==$compra_lote->id)
                                                 <tr>
-                                                  <td width="5%">{{$x=$x+1}}</td>
+                                                  <td width="5%" style="padding:0px">{{$x=$x+1}}</td>
                                                   <?php $suma_pesos=$suma_pesos+$lote->peso; ?>
-                                                  <td>{{number_format($lote->peso)}}</td>
-                                                  <td>{{$lote->observaciones}}</td>
-                                                  <td width="10%">
+                                                  <td style="padding:0px">{{number_format($lote->peso)}}</td>
+                                                  <td style="padding:0px">{{$lote->observaciones}}</td>
+                                                  <td width="10%" style="padding:0px">
                                                   </td>
                                                   @endif
                                                   @endforeach
                                                 </tr>
                                               </tbody>
                                             </table>
-                                            <div>
+
                                             <?php $suma_pesos;array_push($pesos,$suma_pesos);array_push($cantidad,$x); ?>
                                             <p style="text-align: right;margin-bottom: -3px;"><strong>Peso Acumulado (kilos): </strong> {{number_format($suma_pesos)}}</p>
                                             <p style="text-align: right;margin-bottom: -3px;"><strong>Valor del Lote: </strong> {{number_format($compra_lote->precio*$suma_pesos)}}</p>
@@ -172,9 +165,7 @@
                                               <?php if($compra_lote->deduccions_id==1){echo '%';}else{echo '$';} ?>
                                               {{number_format($compra_lote->deduccion)}}</p>
                                             <p style="text-align: right;margin-bottom: -3px;"><strong>Observaciones: </strong><br> {{($compra_lote->observaciones)}}</p>
-                                            </div>
-                                          </div>
-                                        </div>
+                                            <br>
 
 
 
@@ -182,7 +173,7 @@
                                       @endforeach
 
 
-                                      </div>
+
 
 
                                     </div>
