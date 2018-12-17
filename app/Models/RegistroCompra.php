@@ -41,6 +41,7 @@ class RegistroCompra extends Model
         'pregunta_licencias_id',
         'empresas_id',
         'codigo',
+        'flete',
         'documento',
         'fincas_id',
         'users_id'
@@ -61,6 +62,7 @@ class RegistroCompra extends Model
         'tipo_compras_id' => 'integer',
         'pregunta_licencias_id' => 'integer',
         'codigo' => 'string',
+        'flete' => 'integer',
         'documento' => 'string',
         'empresas_id' => 'integer',
         'fincas_id' => 'integer',

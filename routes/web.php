@@ -76,5 +76,6 @@ Route::get('descargar-registro_compra/{id}', 'RegistroCompraController@pdf')->na
 
 Route::get('mi_finca', 'MiFincaController@index')->name('mi_finca.index');
 Route::post('mi_finca/transferencia', 'MiFincaController@transferencia')->name('transferencia.ready');
+Route::get('rotar/{id}', 'MiFincaController@rotar')->name('rotar');
 
 Route::resource('estadoAnimals', 'EstadoAnimalController');

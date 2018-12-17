@@ -23,6 +23,7 @@ class CreateRegistroComprasTable extends Migration
             $table->integer('tipo_compras_id')->unsigned();
             $table->integer('empresas_id')->unsigned();
             $table->integer('pregunta_licencias_id')->unsigned();
+            $table->integer('flete')->unsigned()->nullable();
             $table->integer('vendedor_id')->unsigned();
             $table->integer('comprador_id')->unsigned();
             $table->integer('estado_id')->unsigned();

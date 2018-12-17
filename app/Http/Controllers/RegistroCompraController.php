@@ -404,7 +404,7 @@ where "registro_compras"."fincas_id" ='.$data['finca'].'
                     ->select('estaditica_compra.*','tipo_ganados.descripcion as tipo','compra_lote.factura as factura')
                     ->get();
 */
-        $estadistica = DB::select('select e.*,t.descripcion_corta as tipo,c.factura from registro_compras r,compra_lote c,tipo_ganados t,estaditica_compra e where r.id=c.compra_lote_id AND c.tipo_ganados_id=t.id and e.id_compra_lote=c.id AND r.id=?', [$id]);
+        $estadistica = DB::select('select e.*,t.descripcion_corta as tipo,c.factura,c.documento_factura,r.flete from registro_compras r,compra_lote c,tipo_ganados t,estaditica_compra e where r.id=c.compra_lote_id AND c.tipo_ganados_id=t.id and e.id_compra_lote=c.id AND r.id=?', [$id]);
     /*
         $estadistica = DB::table('compra_lote')
                     ->join('tipo_ganados', 'compra_lote.tipo_ganados_id', '=', 'tipo_ganados.id')
@@ -414,6 +414,7 @@ where "registro_compras"."fincas_id" ='.$data['finca'].'
 
         dd($estadistica);
    */
+  //dd($estadistica);
         $PreguntaFacturas=PreguntaFacturas::all()->pluck('descripcion','id');
 
         $deduccion=deduccion::all()->pluck('descripcion','id');

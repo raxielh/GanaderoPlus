@@ -44,6 +44,9 @@ table td {
                       </h4>
                       <div class="row">
                         @foreach ($registroCompras as $registroCompras)
+                        @php
+                            $flete=$registroCompras->flete
+                        @endphp
                             <div class="col-md-4">
                                 <p><strong>Fecha compra: </strong> {{$registroCompras->fecha_compra}}</p>
                                 <p><strong>Lugar procedencias: </strong> {{$registroCompras->lugar_procedencias}}</p>
@@ -91,7 +94,7 @@ table td {
                                   $total=$total+$estadistica->valor_pagar;
                               @endphp
                               <tr>
-                                <td>{{$estadistica->factura}}</td>
+                                <td><a href="{{ env('APP_URL') }}{{ Storage::url($estadistica->documento_factura) }}" target="_new">{{$estadistica->factura}}</a></td>
                                 <td>{{$estadistica->tipo}}</td>
                                 <td>{{$estadistica->numer_gan}}</td>
                                 <td>{{number_format($estadistica->prome_peso)}}</td>
@@ -114,9 +117,22 @@ table td {
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><strong>Total</strong></td>
-                                <td><strong>{{number_format($total)}}</strong></td>
+                                <td><strong>Flete</strong></td>
+                                <td><strong>{{number_format($flete)}}</strong></td>
                               </tr>
+                              <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><strong>Total</strong></td>
+                                    <td><strong>{{number_format($total-$flete)}}</strong></td>
+                                </tr>
                             </tbody>
                           </table>
                         </div>

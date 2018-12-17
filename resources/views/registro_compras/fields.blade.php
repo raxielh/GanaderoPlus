@@ -64,13 +64,16 @@
 </div>
 
 <!-- Responsable Id Field -->
-<div class="form-group col-sm-6" style="z-index: 1">
+<div class="form-group col-sm-4" style="z-index: 1">
     <div class="col-md-12 col-xs-12 col-sm-12" style="padding-left: 0px;padding-right: 0px;">
     {!! Form::label('empresas_id', 'Empresa:') !!}
     {!! Form::select('empresas_id',$empresa, null, ['class' => 'form-control chosen-select']) !!}
     </div>
 </div>
-
+<div class="form-group col-sm-2" style="z-index: 1">
+        {!! Form::label('flete', 'Valor de Flete:') !!}
+        {!! Form::text('flete', null, ['class' => 'form-control','placeholder' => 'Valor de Flete','value' => old('flete')]) !!}
+    </div>
 
 
 <!-- Estado Id Field -->

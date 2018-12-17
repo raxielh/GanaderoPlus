@@ -51,7 +51,7 @@
                                                 <th scope="" style="padding: 5px;">#</th>
                                                 <th scope="col" style="padding: 5px;">Peso</th>
                                                 <th scope="col" style="padding: 5px;">Observaciones</th>
-                                                <th scope="col" style="padding: 5px;"></th>
+                                            <th scope="col" style="padding: 5px;text-align: end"><a href="{!! route('rotar',[$p->id]) !!}" class="btn btn-info"><i class="fa fa-clock-o"></i> Rotar Lote</a></th>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -31,12 +31,10 @@ class MiFincaController extends AppBaseController
                     ->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
 
-        $potreros2 = DB::select('select potreros.codigo,potreros.area,count(*) as cantidad,detalle_ingreso_animals.potreros_id
-                    from detalle_ingreso_animals,detalle_ingreso_animals2,potreros
-                    where detalle_ingreso_animals.id=detalle_ingreso_animals2.detalle_ingreso_animals_id and
-                    detalle_ingreso_animals.potreros_id=potreros.id AND
-                    detalle_ingreso_animals.fincas_id=?
-                    group by detalle_ingreso_animals.potreros_id,potreros.codigo,potreros.area', [$data['finca']]);
+        $potreros2 = DB::select(' select potreros.codigo,potreros.area,count(*) as cantidad,potreros.id as potreros_id from ubicacion_animal,potreros
+        where ubicacion_animal.potreros_id=potreros.id and
+        potreros.fincas_id=?
+        group by potreros.codigo,potreros.area,potreros.id', [$data['finca']]);
 
         $detalle_ingreso_animals=DB::table('detalle_ingreso_animals')
                     ->join('potreros', 'detalle_ingreso_animals.potreros_id', '=', 'potreros.id')
@@ -74,6 +72,31 @@ class MiFincaController extends AppBaseController
         Flash::success('Transferencia con exito.');
 
         return redirect()->back();
+    }
+
+    public function rotar($id)
+    {
+
+        $data = Session::all();
+        $Fincas = Fincas::where('users_id',Auth::id())
+               ->where('id',$data['finca'])->get();
+
+        $potreros = DB::table('potreros')
+                    ->join('estado_protreros', 'potreros.estado_id', '=', 'estado_protreros.id')
+                    ->where('potreros.fincas_id',$data['finca'])
+                    ->select('potreros.*', 'estado_protreros.descripcion')
+                    ->get();
+
+        $animales=DB::table('ubicacion_animal')
+                    ->where('fincas_id',$data['finca'])
+                    ->where('potreros_id',$id)
+                    ->where('estado_id',1)
+                    ->get();
+
+        return view('mi_finca.rotar')
+        ->with('potreros', $potreros)
+        ->with('animales', $animales)
+        ->with('Fincas', $Fincas);
     }
 
 }

@@ -142,7 +142,7 @@
     <a href="{!! route('ingresoAnimals.index') !!}"><i class="fa fa-truck"></i><span>Ingreso de Animales</span></a>
 </li>
 
-<li class="{{ Request::is('mi_finca*') ? 'active' : '' }}">
+<li class="{{ Request::is('mi_finca*') ? 'active' : '' }}{{ Request::is('rotar*') ? 'active' : '' }}">
     <a href="{!! route('mi_finca.index') !!}"><i class="fa fa-map-o" aria-hidden="true"></i><span>Mi Finca</span></a>
 </li>
 

@@ -34,13 +34,13 @@
                   @php
                       $total=0;
                       $c=0;
-                      $p=0;
+                      $pe=0;
                   @endphp
                   @foreach ($lotes as $lote)
                   @php
                       $total=$total+$lote->valor_total;
                       $c=$c+$lote->numer_gan;
-                      $p=$p+$lote->peso_total;
+                      $pe=$pe+$lote->peso_total;
                   @endphp
                   <tr>
                     <td style="width:5%;text-align:center"><strong>{{$lote->ide}}</strong></td>
@@ -57,7 +57,7 @@
                     <td><strong>Cantidad de Animales</strong></td>
                     <td><strong>{{number_format($c)}}</strong></td>
                     <td><strong>Peso Total</strong></td>
-                    <td><strong>{{number_format($p)}}</strong></td>
+                    <td><strong>{{number_format($pe)}}</strong></td>
                     <td><strong>Total</strong></td>
                     <td><strong>{{number_format($total)}}</strong></td>
                   </tr>
@@ -81,11 +81,11 @@
         <table class="table table-striped">
             <tr>
                 <td><strong>Peso Total:</strong></td>
-                <td>{{number_format($p)}}</td>
+                <td>{{number_format($pe)}}</td>
                 <td><strong>Valor Total:</strong></td>
                 <td>{{number_format($total)}}</td>
                 <td><strong>Valor Unitario:</strong></td>
-                <td>{{number_format($vu=$total/$p)}}</td>
+                <td>{{number_format($vu=$total/$pe)}}</td>
             </tr>
         </table>
     </div>
@@ -98,9 +98,9 @@
 <hr>
 <div class="row">
 
-<?php $y=0; ?>
+<?php $y=0;$pesos_lotes=0; ?>
 @foreach ($lotes2 as $lotes2)
-<?php $y=$y+1; ?>
+<?php $y=$y+1;$p=0; ?>
 
 <div class="col-md-4 col-sm-4 col-xs-4" style="border-right: 1px solid #33333347;border-bottom: 1px solid #33333347;height: 600px;overflow: scroll">
 
@@ -184,7 +184,10 @@
                 </tr>
                 <tr>
                     <td><strong>Peso</strong></td>
-                    <td>{{$p}}</td>
+                    <td>{{number_format($p)}}</td>
+                    @php
+                        $pesos_lotes=$pesos_lotes+$p;
+                    @endphp
                 </tr>
                 <tr>
                     <td><strong>Cantidad</strong></td>
@@ -213,8 +216,28 @@
 
 </div>
 @endforeach
-
 </div>
+
+<div class="box-body table-responsive no-padding" style="padding:1em !important" >
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <th style="text-align:center">Peso Inicial</th>
+              <th style="text-align:center">Peso Final</th>
+              <th style="text-align:center">Peso Perdido</th>
+              <th style="text-align:center">Valor Unitario</th>
+              <th style="text-align:center">Perdida</th>
+            </tr>
+            <tr>
+              <td style="text-align:center">{{number_format($pe)}}</td>
+              <td style="text-align:center">{{number_format($pesos_lotes)}}</td>
+              <td style="text-align:center">{{number_format($pe-$pesos_lotes)}}</td>
+              <td style="text-align:center">${{number_format(($vu))}}</td>
+              <td style="text-align:center">${{number_format(($pe-$pesos_lotes)*$vu)}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
 
 
