@@ -10,6 +10,7 @@
             <th>Vendedor</th>
             <th>Comprador</th>
             <th>Empresa</th>
+            <th width="85px"># Animales</th>
             <th width="75px">Estado</th>
             <th width="110px">Acciones</th>
         </tr>
@@ -23,6 +24,7 @@
             <td>{!! $registroCompra->vendedor !!}</td>
             <td>{!! $registroCompra->comprador !!}</td>
             <td>{!! $registroCompra->razon_social !!}</td>
+            <td>{!! $registroCompra->numer_gan !!}</td>
             <td>
                 {{$registroCompra->estado_compra}}
             </td>

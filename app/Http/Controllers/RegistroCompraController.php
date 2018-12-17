@@ -55,6 +55,7 @@ class RegistroCompraController extends AppBaseController
         $data = Session::all();
 
 
+        /*
         $registroCompras = DB::table('registro_compras')
                     ->join('lugar_procedencias', 'registro_compras.lugar_procedencia_id', '=', 'lugar_procedencias.id')
                     ->join('vendedores', 'registro_compras.vendedor_id', '=', 'vendedores.id')
@@ -66,6 +67,71 @@ class RegistroCompraController extends AppBaseController
                     ->orderByRaw('registro_compras.id DESC')
                     //->select('potreros.*', 'estado_protreros.descripcion')
                     ->get();
+        */
+
+        $registroCompras = DB::select('
+
+        select "vendedores"."nombre" as "vendedor",
+       "compradores"."nombre" as "comprador",
+       "estado_compras"."descripcion" as "estado_compra",
+       "empresas"."razon_social" as "razon_social",
+        registro_compras.id,
+  registro_compras.numero_compra,
+  registro_compras.fecha_compra,
+  registro_compras.codigo,
+  registro_compras.documento,
+  registro_compras.lugar_procedencia_id,
+  registro_compras.tipo_compras_id,
+  registro_compras.empresas_id,
+  registro_compras.pregunta_licencias_id,
+  registro_compras.vendedor_id,
+  registro_compras.comprador_id,
+  registro_compras.estado_id,
+  registro_compras.fincas_id,
+  registro_compras.users_id,
+  registro_compras.created_at,
+  registro_compras.updated_at,
+  lugar_procedencias."descripcion" as "lugar_procedencias",
+    sum(  estaditica_compra.numer_gan )  as numer_gan
+from "registro_compras"
+     inner join "lugar_procedencias" on
+       "registro_compras"."lugar_procedencia_id" = "lugar_procedencias"."id"
+     inner join "vendedores" on "registro_compras"."vendedor_id" =
+       "vendedores"."id"
+     inner join "compradores" on "registro_compras"."comprador_id" =
+       "compradores"."id"
+     inner join "estado_compras" on "registro_compras"."estado_id" =
+       "estado_compras"."id"
+     inner join "empresas" on "registro_compras"."empresas_id" = "empresas"."id"
+       LEFT OUTER JOIN public.estaditica_compra ON (public.registro_compras.id = public.estaditica_compra.id_registro_compras)
+where "registro_compras"."fincas_id" ='.$data['finca'].'
+ group by "vendedores"."nombre"  ,
+       "compradores"."nombre" ,
+       "estado_compras"."descripcion"  ,
+       "empresas"."razon_social"  ,
+        registro_compras.id,
+  registro_compras.numero_compra,
+  registro_compras.fecha_compra,
+  registro_compras.codigo,
+  registro_compras.documento,
+  registro_compras.lugar_procedencia_id,
+  registro_compras.tipo_compras_id,
+  registro_compras.empresas_id,
+  registro_compras.pregunta_licencias_id,
+  registro_compras.vendedor_id,
+  registro_compras.comprador_id,
+  registro_compras.estado_id,
+  registro_compras.fincas_id,
+  registro_compras.users_id,
+  registro_compras.created_at,
+  registro_compras.updated_at,
+  lugar_procedencias.descripcion
+
+
+
+
+        ');
+
 
 
         #$registroCompras = DB::table('registro_compras')->get();
