@@ -35,12 +35,12 @@
                                             @php
                                                 $p=$p+$a->peso;
                                             @endphp
-                                            <td style="padding: 5px;">
+                                            <td style="padding: 5px;" id="frm_{{ $x }}">
 
 
                                                     <input type="date"  placeholder="Fecha Pesaje" name="fecha" value="{{ date('Y-m-d') }}" required>
                                                     <input type="hidden" value="{{$a->id}}" name="ubicacion_animal_id" >
-                                                    <input type="number" value="" placeholder="Peso kilo" name="peso_final" required>
+                                                    <input type="number" value="" placeholder="Peso kilo" name="peso_final" required autofocus>
                                                     <input type="hidden" value="{{$a->peso}}" placeholder="Peso kilo" name="peso_inicial">
                                                     <input type="hidden" value="{{$a->potreros_id}}" name="potrero_inicial">
                                                     <input type="hidden" value="{{$a->potreros_id}}" name="potrero_final">
@@ -60,7 +60,7 @@
                                             <th style="padding: 5px;width: 90px">
                                                 Peso Total
                                             </th>
-                                            <td style="padding: 5px;">{{$p}}</td>
+                                            <td style="padding: 5px;">{{ number_format($p) }}</td>
                                             <td style="padding: 5px;"></td>
                                         </tr>
                                     </tbody>
@@ -97,22 +97,28 @@
                                         $pf=$pf+$e->peso_final;
                                     @endphp
                                 </tr>
+                                <script>
+                                    $(function () {
+                                        $('#frm_{{ $x }}').hide();
+                                        $('#frm_{{ $x+1 }}').focus();
+                                    });
+                                </script>
                                 @endforeach
                             </tbody>
                         </table>
                         <table class="table" style="background:#ffff" >
                             <tbody>
                                 <tr>
-                                    <th style="padding: 5px;width: 120px">
+                                    <th style="padding: 5px;width: 140px">
                                         Peso Total Inicial
                                     </th>
-                                    <td style="padding: 5px;">{{$p}}</td>
+                                    <td style="padding: 5px;">{{ number_format($p)}}</td>
                                 </tr>
                                 <tr>
-                                    <th style="padding: 5px;width: 120px">
+                                    <th style="padding: 5px;width: 140px">
                                         Peso Total Final
                                     </th>
-                                    <td style="padding: 5px;">{{$pf}}</td>
+                                    <td style="padding: 5px;">{{ number_format( $pf)}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -128,13 +134,14 @@
                                         if(count($animales)===count($existe)){
                                 @endphp
 
-                                <div class="col-md-10">
+                                <div class="col-md-5">
+                                    <input type="date"  placeholder="Fecha Rotacion" name="fecha_rotacion" value="{{ date('Y-m-d') }}" class="form-control" required>
+                                </div>
+
+                                <div class="col-md-5">
                                         <select name="potreros_id" class="form-control">
                                                 @foreach($potreros as $po)
-                                                @if($a->potreros_id==$po->id)
-                                                @else
                                                 <option value="{{$po->id}}">{{$po->codigo}}</option>
-                                                @endif
                                                 @endforeach
                                         </select>
                                 </div>

@@ -172,11 +172,29 @@ class MiFincaController extends AppBaseController
             DB::select($sql);
         }
 
+        $s="UPDATE rotacion_animal SET potrero_final = ".$request->potreros_id.", fecha_rotacion ='". $request->fecha_rotacion."' WHERE potrero_inicial=".$request->potrero_inicial;
 
-        $pasar_lote = DB::select('UPDATE rotacion_animal
-        SET potrero_final = ? WHERE potrero_inicial=?;', [$request->potreros_id,$request->potrero_inicial]);
+        $s_log='INSERT INTO log_rotacion_animal ( "created_at", "fecha", "fecha_rotacion", "fincas_id", "id", "peso_final", "peso_inicial", "potrero_final", "potrero_inicial", "ubicacion_animal_id", "updated_at", "users_id") 
+        SELECT
+            "created_at",
+            "fecha",
+            "fecha_rotacion",
+            "fincas_id",
+            "id",
+            "peso_final",
+            "peso_inicial",
+            "potrero_final",
+            "potrero_inicial",
+            "ubicacion_animal_id",
+            "updated_at",
+            "users_id"
+        FROM rotacion_animal
+         WHERE potrero_inicial='.$request->potrero_inicial;
 
-        $pasar_lote = DB::select('DELETE FROM rotacion_animal where potrero_inicial = ?;', [$request->potrero_inicial]);
+        DB::select($s);
+        DB::select($s_log);
+
+        DB::select('DELETE FROM rotacion_animal where potrero_inicial = ?;', [$request->potrero_inicial]);
 
         $cambiar_ubicacion = DB::select('UPDATE ubicacion_animal SET potreros_id = ? WHERE potreros_id=?;', [$request->potreros_id,$request->potrero_inicial]);
 

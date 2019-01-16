@@ -419,6 +419,13 @@ where "registro_compras"."fincas_id" ='.$data['finca'].'
 
         $deduccion=deduccion::all()->pluck('descripcion','id');
 
+
+        $hay_ingreso = DB::table('ingreso_animals')
+        ->where('registro_compra_id',$id)
+        ->count();
+
+        //dd($hay_ingreso);
+
         return view('registro_compras.add_ficha')
                 ->with('registroCompras', $registroCompras)
                 ->with('Fincas', $Fincas)
@@ -426,6 +433,7 @@ where "registro_compras"."fincas_id" ='.$data['finca'].'
                 ->with('compra_lote', $compra_lote)
                 ->with('estadistica', $estadistica)
                 ->with('deduccion', $deduccion)
+                ->with('hay_ingreso', $hay_ingreso)
                 ->with('PreguntaFacturas', $PreguntaFacturas)
                 ->with('CompraLoteGanado', $CompraLoteGanado);
     }

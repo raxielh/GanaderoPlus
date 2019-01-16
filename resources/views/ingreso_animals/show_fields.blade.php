@@ -255,7 +255,17 @@
               {!! Form::open(['route' => 'ingresar_ganado']) !!}
                 <div class="form-group">
                   {!! Form::label('tipo_ganado', 'Tipo de Ganado:') !!}
-                  {!! Form::select('tipo_ganado',$tipo_ganado, null, ['class' => 'form-control','required'=>'true']) !!} <br>
+
+                  <select name="tipo_ganado" class="form-control" required>
+                    @foreach($tipo_ganado as $tp)
+                        @foreach ($lotes as $lote)
+                            @if ($lote->tp==$tp->id )
+                               <option value="{{ $tp->id }}">{{ $tp->descripcion }}</option> 
+                            @endif                           
+                        @endforeach
+                    @endforeach
+                  </select>
+
                   {!! Form::label('potreros', 'Potreros:') !!}
                   {!! Form::select('potreros',$potreros, null, ['class' => 'form-control','required'=>'true']) !!} <br>
                   <textarea name="observaciones" id="observaciones" class="form-control" placeholder="Observaciones"></textarea>

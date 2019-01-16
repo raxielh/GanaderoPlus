@@ -5,12 +5,12 @@
     <thead>
         <tr>
             <th width="15px">ID</th>
-            <th width="85px">Fecha</th>
+            <th width="90px">Fecha</th>
             <th>Procedencia</th>
             <th>Vendedor</th>
             <th>Comprador</th>
             <th>Empresa</th>
-            <th width="85px"># Animales</th>
+            <th width="90px"># Animales</th>
             <th width="100px">Asentamiento</th>
             <th width="75px">Estado</th>
             <th width="110px">Acciones</th>

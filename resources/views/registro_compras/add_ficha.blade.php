@@ -61,7 +61,11 @@ table td {
                                 <p><strong>Empresa: </strong> {{$registroCompras->razon_social}}</p>
                             </div>
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>
+                                
+                                @if ($hay_ingreso==0)
+                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#add_lote"><i class="mdi mdi-plus"></i> Crear Lote</button>  
+                                @endif
+                                
                                 <?php if($registroCompras->documento){ ?>
                                 <a href="{{ env('APP_URL') }}{{ Storage::url($registroCompras->documento) }}" class="btn btn-info btn-sm" target="_new">Ver Documento {{ ($registroCompras->codigo) }}</a>
                                 <?php } ?>
@@ -180,12 +184,13 @@ table td {
 
                               @else
 
-
+                            @if ($hay_ingreso==0)
                               {!! Form::open(['route' => ['lote.destroy', $compra_lote->id], 'method' => 'delete']) !!}
                               <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_lote_ganado_{{ $compra_lote->id}}"><i class="mdi mdi-plus"></i>Agregar Animal</button>
                               {!! Form::button('<i class="mdi mdi-delete"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm', 'onclick' => "return confirm('Estas seguro de borrar este lote?')"]) !!}
 
                             {!! Form::close() !!}
+                            @endif
                               <div id="add_lote_ganado_{{ $compra_lote->id}}" class="modal fade" role="dialog">
                                 <div class="modal-dialog modal-xs">
                                   <div class="modal-content">
@@ -237,11 +242,13 @@ table td {
                                   <td>{{number_format($lote->peso)}}</td>
                                   <td>{{$lote->observaciones}}</td>
                                   <td width="10%">
+                                  @if ($hay_ingreso==0)
                                   {!! Form::open(['route' => ['animal.destroy', $lote->id], 'method' => 'delete']) !!}
-                                                                            <input type="hidden" name="lote" value="{{$compra_lote->id}}">
-                                          <input type="hidden" name="registro_compra" value="{{$rc->id}}">
+                                        <input type="hidden" name="lote" value="{{$compra_lote->id}}">
+                                        <input type="hidden" name="registro_compra" value="{{$rc->id}}">
                                       {!! Form::button('<i class="mdi mdi-delete"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('Estas seguro?')"]) !!}
                                   {!! Form::close() !!}
+                                  @endif
                                   </td>
                                   @endif
                                   @endforeach

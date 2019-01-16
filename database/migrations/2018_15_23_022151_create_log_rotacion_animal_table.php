@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateRotacionAnimalTable extends Migration
+class CreateLogRotacionAnimalTable extends Migration
 {
 
     /**
@@ -13,7 +13,7 @@ class CreateRotacionAnimalTable extends Migration
      */
     public function up()
     {
-        Schema::create('rotacion_animal', function (Blueprint $table) {
+        Schema::create('log_rotacion_animal', function (Blueprint $table) {
             $table->increments('id');
             $table->date('fecha');
             $table->date('fecha_rotacion')->nullable();
@@ -40,6 +40,6 @@ class CreateRotacionAnimalTable extends Migration
      */
     public function down()
     {
-        Schema::drop('rotacion_animal');
+        Schema::drop('log_rotacion_animal');
     }
 }

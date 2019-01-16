@@ -11,6 +11,7 @@
              $con=0;
             @endphp
             @foreach($potreros as $p)
+            
             <div class="col-md-4 col-sm-4"  style="max-height: 800px;min-height: 400px;margin-bottom: 1em; overflow: scroll">
                 <div style="background: url({{URL::asset('img/pasto.jpg')}}) no-repeat center;
                 -webkit-background-size: cover;
@@ -35,7 +36,10 @@
 
                     @foreach($potreros2 as $p2)
                         @if($p->id==$p2->potreros_id)
+                            
                             {{($p2->cantidad)}}
+
+
                         @endif
                     @endforeach
                     </div>
